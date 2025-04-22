@@ -30,8 +30,8 @@
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm font-medium text-gray-900">M. Koffi JOHNSON</div>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Direction des Systèmes d'Information</div>
+                  <td class="px-6 py-4">
+                    <div class="text-sm text-gray-900 break-words">Direction des Systèmes d'Information</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm text-gray-900">k.johnson@mef.bj</div>
