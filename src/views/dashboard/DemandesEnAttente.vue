@@ -350,3 +350,58 @@ export default {
   }
 }
 </script> 
+<template>
+  <div class="p-6">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold">Demandes en attente</h1>
+      <div class="flex gap-4">
+        <button class="btn-primary">
+          <i class="fas fa-filter mr-2"></i> Filtrer
+        </button>
+        <button class="btn-outline">
+          <i class="fas fa-download mr-2"></i> Exporter
+        </button>
+      </div>
+    </div>
+
+    <!-- Table des demandes -->
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stagiaire</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Structure</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr v-for="n in 5" :key="n" class="hover:bg-gray-50">
+            <td class="px-6 py-4 whitespace-nowrap">Jean Dupont</td>
+            <td class="px-6 py-4 whitespace-nowrap">Stage académique</td>
+            <td class="px-6 py-4 whitespace-nowrap">Direction des Finances</td>
+            <td class="px-6 py-4 whitespace-nowrap">23/02/2025</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <button class="text-primary hover:text-primary-dark mr-3" title="Voir les détails">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="text-success hover:text-green-700 mr-3" title="Approuver">
+                <i class="fas fa-check"></i>
+              </button>
+              <button class="text-danger hover:text-red-700" title="Refuser">
+                <i class="fas fa-times"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'DemandesEnAttente'
+}
+</script>
