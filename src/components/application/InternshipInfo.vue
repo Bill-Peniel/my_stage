@@ -17,8 +17,6 @@
             <option value="" disabled selected>Sélectionnez le type de stage</option>
             <option value="academic">Stage académique</option>
             <option value="professional">Stage professionnel</option>
-            <option value="research">Stage de recherche</option>
-            <option value="observation">Stage d'observation</option>
           </select>
           <p v-if="v$.internshipType.$error" class="error-message">
             {{ v$.internshipType.$errors[0].$message }}
@@ -85,8 +83,8 @@
           </p>
         </div>
         
-        <!-- University Name -->
-        <div class="form-group">
+        <!-- University Name (uniquement pour stage académique) -->
+        <div v-if="form.internshipType === 'academic'" class="form-group">
           <label for="universityName" class="form-label">Établissement d'enseignement <span class="text-red-600">*</span></label>
           <input
             id="universityName"
@@ -117,21 +115,7 @@
           </p>
         </div>
         
-        <!-- Study Year -->
-        <div class="form-group">
-          <label for="studyYear" class="form-label">Année d'études <span class="text-red-600">*</span></label>
-          <input
-            id="studyYear"
-            v-model="form.studyYear"
-            type="text"
-            class="input-field"
-            :class="{ 'border-red-500': v$.studyYear.$error }"
-            @blur="v$.studyYear.$touch()"
-          />
-          <p v-if="v$.studyYear.$error" class="error-message">
-            {{ v$.studyYear.$errors[0].$message }}
-          </p>
-        </div>
+        
         
         <!-- Previous Experience -->
         <div class="form-group md:col-span-2">
