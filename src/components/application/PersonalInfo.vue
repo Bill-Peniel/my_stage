@@ -31,25 +31,39 @@
         </div>
 
 
-        <!-- First Name -->
-        <div class="form-group">
-          <label for="firstName" class="form-label flex items-center">
-            <i class="fas fa-user text-primary-light mr-2"></i>
-            Prénom <span class="text-red-600 ml-1">*</span>
-          </label>
-          <input
-            id="firstName"
-            v-model="form.firstName"
-            type="text"
-            class="input-field focus:border-primary focus:ring focus:ring-primary-light focus:ring-opacity-30"
-            :class="{ 'border-red-500 bg-red-50': v$.firstName.$error }"
-            @blur="v$.firstName.$touch()"
-            placeholder="Votre prénom"
-          />
-          <p v-if="v$.firstName.$error" class="error-message">
-            <i class="fas fa-exclamation-circle mr-1"></i> {{ v$.firstName.$errors[0].$message }}
-          </p>
-        </div>
+        <!-- Accordion pour le candidat principal -->
+        <div class="form-group md:col-span-2 border rounded-lg overflow-hidden">
+          <button 
+            @click="toggleAccordion('candidat1')" 
+            class="w-full p-4 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center"
+          >
+            <span class="text-lg font-semibold flex items-center">
+              <i class="fas fa-user text-primary-light mr-2"></i>
+              Candidat 1 (Principal)
+            </span>
+            <i :class="['fas', accordionStates.candidat1 ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
+          </button>
+          
+          <div v-show="accordionStates.candidat1" class="p-4 space-y-4">
+            <!-- First Name -->
+            <div class="form-group">
+              <label for="firstName" class="form-label flex items-center">
+                <i class="fas fa-user text-primary-light mr-2"></i>
+                Prénom <span class="text-red-600 ml-1">*</span>
+              </label>
+              <input
+                id="firstName"
+                v-model="form.firstName"
+                type="text"
+                class="input-field focus:border-primary focus:ring focus:ring-primary-light focus:ring-opacity-30"
+                :class="{ 'border-red-500 bg-red-50': v$.firstName.$error }"
+                @blur="v$.firstName.$touch()"
+                placeholder="Votre prénom"
+              />
+              <p v-if="v$.firstName.$error" class="error-message">
+                <i class="fas fa-exclamation-circle mr-1"></i> {{ v$.firstName.$errors[0].$message }}
+              </p>
+            </div>
 
         <!-- Last Name -->
         <div class="form-group">
@@ -254,9 +268,21 @@
           </p>
         </div>
 
-        <div v-if="form.stageType === 'binome' || form.stageType === 'groupe'" class="form-group md:col-span-2">
-          <h3 class="text-lg font-bold text-gray-700 mb-2">Membres du groupe</h3>
-          <div v-for="(member, index) in form.groupMembers" :key="index" class="mb-4">
+        <!-- Accordion pour le candidat 2 (si binôme ou groupe) -->
+        <div v-if="form.stageType === 'binome' || form.stageType === 'groupe'" class="form-group md:col-span-2 border rounded-lg overflow-hidden mt-4">
+          <button 
+            @click="toggleAccordion('candidat2')" 
+            class="w-full p-4 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center"
+          >
+            <span class="text-lg font-semibold flex items-center">
+              <i class="fas fa-user-friends text-primary-light mr-2"></i>
+              Candidat 2
+            </span>
+            <i :class="['fas', accordionStates.candidat2 ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
+          </button>
+          
+          <div v-show="accordionStates.candidat2" class="p-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label for="firstName" class="form-label">Prénom</label>
@@ -305,6 +331,16 @@ export default {
   name: 'PersonalInfo',
   setup(props, { emit }) {
     const store = useStore()
+    
+    const accordionStates = reactive({
+      candidat1: true,
+      candidat2: false,
+      candidat3: false
+    })
+
+    const toggleAccordion = (accordion) => {
+      accordionStates[accordion] = !accordionStates[accordion]
+    }
 
     const form = reactive({
       stageType: '',
