@@ -11,9 +11,9 @@
         </div>
       </header>
 
-      <main class="p-6">
-        <div class="bg-white shadow rounded-lg">
-          <div class="overflow-x-auto">
+      <main class="p-6 overflow-x-hidden">
+        <div class="bg-white shadow rounded-lg w-full">
+          <div class="overflow-x-auto max-w-full">
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
