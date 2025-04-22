@@ -1,4 +1,3 @@
-
 <template>
   <div class="min-h-screen bg-gray-100">
     <div class="flex-1">
@@ -11,7 +10,7 @@
         </div>
       </header>
 
-      <main class="p-6">
+      <main class="p-6 overflow-x-hidden">
         <div class="bg-white shadow rounded-lg">
           <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
