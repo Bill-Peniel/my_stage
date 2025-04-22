@@ -1,8 +1,8 @@
 
 <template>
-  <div class="min-h-screen bg-gray-100">
-    <div class="flex-1 overflow-x-hidden">
-      <header class="bg-primary shadow">
+  <div class="min-h-screen bg-gray-100 overflow-x-hidden">
+    <div class="flex-1">
+      <header class="bg-primary shadow w-full">
         <div class="px-4 py-4 flex justify-between items-center">
           <h1 class="text-2xl font-bold text-white">Gestion des tuteurs</h1>
           <button @click="showAddModal = true" class="bg-white text-primary px-4 py-2 rounded hover:bg-gray-100">
@@ -11,9 +11,9 @@
         </div>
       </header>
 
-      <main class="p-6 overflow-x-hidden">
-        <div class="bg-white shadow rounded-lg w-full">
-          <div class="overflow-x-auto max-w-full">
+      <main class="p-6">
+        <div class="bg-white shadow rounded-lg">
+          <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
