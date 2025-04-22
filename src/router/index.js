@@ -116,6 +116,17 @@ const routes = [
   }
 ]
 
+// Navigation guard global
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  if (requiresAuth && !store.getters.isAuthenticated) {
+    next('/login')
+  } else {
+    next()
+  }
+})
+]
+
 const router = createRouter({
   history: createWebHistory(),
   routes,

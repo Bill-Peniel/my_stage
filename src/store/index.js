@@ -256,6 +256,7 @@ export default createStore({
         commit('clearUser')
         // Simuler la déconnexion d'une API
         setTimeout(() => {
+          window.location.href = '/login'
           resolve()
         }, 300)
       })
