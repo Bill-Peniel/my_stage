@@ -118,11 +118,23 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
-  scrollBehavior() {
-    // Always scroll to top
-    return { top: 0 }
+  routes
+})
+
+// Navigation guard
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  const store = useStore()
+
+  if (requiresAuth && !store.getters.isAuthenticated) {
+    next('/login')
+  } else {
+    next()
   }
 })
+
+router.scrollBehavior = () => {
+  return { top: 0 }
+}
 
 export default router
