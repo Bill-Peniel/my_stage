@@ -3,10 +3,7 @@
     <button @click="toggleSidebar" class="md:hidden fixed top-20 left-4 z-50 bg-primary text-white p-2 rounded-full">
       <i class="fas" :class="isSidebarOpen ? 'fa-times' : 'fa-bars'"></i>
     </button>
-    <div class="p-4 border-b border-primary-dark sticky top-0 bg-primary z-10">
-      <h2 class="text-xl font-bold text-gray-100">Administration</h2>
-    </div>
-    <nav class="p-2">
+    <nav class="p-2 mt-4">
       <!-- Tableau de bord -->
       <div class="mb-4">
         <router-link 
