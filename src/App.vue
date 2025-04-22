@@ -1,10 +1,8 @@
 <template>
   <div class="flex flex-col min-h-screen">
     <Header v-if="!isDashboardRoute" />
-    <main class="flex-grow ml-64">
-      <router-view v-slot="{ Component }">
-        <component :is="Component" />
-      </router-view>
+    <main class="flex-grow">
+      <router-view />
     </main>
     <Footer v-if="!isDashboardRoute" />
   </div>
