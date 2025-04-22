@@ -130,10 +130,11 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-  scrollBehavior() {
-    // Always scroll to top
-    return { top: 0 }
-  }
-})
+  })
+
+router.scrollBehavior = () => {
+  // Always scroll to top
+  return { top: 0 }
+}
 
 export default router
