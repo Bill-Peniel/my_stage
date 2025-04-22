@@ -120,7 +120,7 @@
           Voir tout <i class="fas fa-arrow-right ml-1"></i>
         </button>
       </div>
-      
+
       <div class="space-y-4">
         <div v-for="(activite, index) in dernieresActivites" :key="index" 
              class="flex items-start p-3 hover:bg-gray-50 rounded-lg transition-colors duration-200">
@@ -193,7 +193,7 @@ export default {
     const formatDate = (date) => {
       const now = new Date()
       const diff = now - date
-      
+
       if (diff < 1000 * 60) {
         return 'À l\'instant'
       } else if (diff < 1000 * 60 * 60) {
@@ -224,48 +224,5 @@ export default {
       formatDate
     }
   }
-}
-</script> 
-<template>
-  <div class="p-6">
-    <h1 class="text-2xl font-bold mb-6">Vue d'ensemble</h1>
-    
-    <!-- Statistiques -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-      <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
-        <h3 class="text-lg font-medium text-gray-900">Demandes en attente</h3>
-        <p class="text-3xl font-bold text-primary mt-2">12</p>
-      </div>
-      <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
-        <h3 class="text-lg font-medium text-gray-900">Demandes en cours</h3>
-        <p class="text-3xl font-bold text-secondary mt-2">8</p>
-      </div>
-      <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
-        <h3 class="text-lg font-medium text-gray-900">Demandes terminées</h3>
-        <p class="text-3xl font-bold text-success mt-2">24</p>
-      </div>
-      <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
-        <h3 class="text-lg font-medium text-gray-900">Total des stagiaires</h3>
-        <p class="text-3xl font-bold text-accent-orange mt-2">44</p>
-      </div>
-    </div>
-
-    <!-- Graphiques -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-white p-6 rounded-lg shadow">
-        <h3 class="text-lg font-medium text-gray-900 mb-4">Répartition des demandes</h3>
-        <!-- Ajouter un graphique ici -->
-      </div>
-      <div class="bg-white p-6 rounded-lg shadow">
-        <h3 class="text-lg font-medium text-gray-900 mb-4">Évolution mensuelle</h3>
-        <!-- Ajouter un graphique ici -->
-      </div>
-    </div>
-  </div>
-</template>
-
-<script>
-export default {
-  name: 'Overview'
 }
 </script>
