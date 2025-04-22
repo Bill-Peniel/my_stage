@@ -1,5 +1,5 @@
 modules = ["vue-node-20", "nodejs-20", "web"]
-run = "npm run dev && cd backend/api && npm run start:dev"
+run = "npm run dev"
 
 [nix]
 channel = "stable-24_05"
@@ -50,7 +50,7 @@ task = "shell.exec"
 args = "npx vite --port 5000 --host 0.0.0.0"
 
 [deployment]
-run = ["sh", "-c", "npm run dev && cd backend/api && npm run start:dev"]
+run = ["sh", "-c", "npm run dev"]
 
 [[ports]]
 localPort = 5000
