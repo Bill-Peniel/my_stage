@@ -5,7 +5,7 @@ run = "npm run dev && cd backend/api && npm run start:dev"
 channel = "stable-24_05"
 
 [workflows]
-runButton = "Project"
+runButton = "Full Stack"
 
 [[workflows.workflow]]
 name = "Project"
@@ -40,9 +40,26 @@ mode = "sequential"
 task = "shell.exec"
 args = "cd backend/api && npm run start:dev"
 
+[[workflows.workflow]]
+name = "Full Stack"
+author = 41622404
+mode = "parallel"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx vite --port 5000 --host 0.0.0.0"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd backend/api && npm run start:dev"
+
 [deployment]
 run = ["sh", "-c", "npm run dev && cd backend/api && npm run start:dev"]
 
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 5001
+externalPort = 3000
