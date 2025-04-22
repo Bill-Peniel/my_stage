@@ -1,4 +1,3 @@
-
 <template>
   <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6 border-t-4 border-primary animate__animated animate__fadeIn">
     <h2 class="text-xl sm:text-2xl font-bold text-primary-dark mb-6 relative pb-2">
@@ -43,7 +42,7 @@
             </span>
             <i :class="['fas', accordionStates.candidat1 ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
           </button>
-          
+
           <div v-show="accordionStates.candidat1" class="p-4 space-y-4">
             <!-- First Name -->
             <div class="form-group">
@@ -282,52 +281,385 @@
             </span>
             <i :class="['fas', accordionStates.candidat2 ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
           </button>
-          
+
           <div v-show="accordionStates.candidat2" class="p-4 space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- First Name -->
               <div class="form-group">
-                <label for="member2FirstName" class="form-label">Prénom</label>
-                <input 
+                <label for="member2FirstName" class="form-label flex items-center">
+                  <i class="fas fa-user text-primary-light mr-2"></i>
+                  Prénom <span class="text-red-600 ml-1">*</span>
+                </label>
+                <input
                   id="member2FirstName"
-                  v-model="form.groupMembers[0].firstName" 
-                  type="text" 
+                  v-model="form.groupMembers[0].firstName"
+                  type="text"
                   class="input-field"
                   placeholder="Prénom du candidat 2"
                 />
               </div>
+
+              <!-- Last Name -->
               <div class="form-group">
-                <label for="member2LastName" class="form-label">Nom</label>
-                <input 
+                <label for="member2LastName" class="form-label flex items-center">
+                  <i class="fas fa-user text-primary-light mr-2"></i>
+                  Nom <span class="text-red-600 ml-1">*</span>
+                </label>
+                <input
                   id="member2LastName"
-                  v-model="form.groupMembers[0].lastName" 
-                  type="text" 
+                  v-model="form.groupMembers[0].lastName"
+                  type="text"
                   class="input-field"
                   placeholder="Nom du candidat 2"
                 />
               </div>
+
+              <!-- Email -->
               <div class="form-group">
-                <label for="member2Email" class="form-label">Email</label>
-                <input 
+                <label for="member2Email" class="form-label flex items-center">
+                  <i class="fas fa-envelope text-primary-light mr-2"></i>
+                  Email <span class="text-red-600 ml-1">*</span>
+                </label>
+                <input
                   id="member2Email"
-                  v-model="form.groupMembers[0].email" 
-                  type="email" 
+                  v-model="form.groupMembers[0].email"
+                  type="email"
                   class="input-field"
                   placeholder="Email du candidat 2"
                 />
               </div>
+
+              <!-- Phone -->
               <div class="form-group">
-                <label for="member2Phone" class="form-label">Téléphone</label>
-                <input 
+                <label for="member2Phone" class="form-label flex items-center">
+                  <i class="fas fa-phone-alt text-primary-light mr-2"></i>
+                  Téléphone <span class="text-red-600 ml-1">*</span>
+                </label>
+                <input
                   id="member2Phone"
-                  v-model="form.groupMembers[0].phone" 
-                  type="tel" 
+                  v-model="form.groupMembers[0].phone"
+                  type="tel"
                   class="input-field"
                   placeholder="Téléphone du candidat 2"
                 />
               </div>
+
+              <!-- Address -->
+              <div class="form-group">
+                <label for="member2Address" class="form-label flex items-center">
+                  <i class="fas fa-map-marker-alt text-primary-light mr-2"></i>
+                  Adresse <span class="text-red-600 ml-1">*</span>
+                </label>
+                <input
+                  id="member2Address"
+                  v-model="form.groupMembers[0].address"
+                  type="text"
+                  class="input-field"
+                  placeholder="Adresse du candidat 2"
+                />
+              </div>
+
+              <!-- City -->
+              <div class="form-group">
+                <label for="member2City" class="form-label flex items-center">
+                  <i class="fas fa-city text-primary-light mr-2"></i>
+                  Ville <span class="text-red-600 ml-1">*</span>
+                </label>
+                <input
+                  id="member2City"
+                  v-model="form.groupMembers[0].city"
+                  type="text"
+                  class="input-field"
+                  placeholder="Ville du candidat 2"
+                />
+              </div>
+
+              <!-- Date of Birth -->
+              <div class="form-group">
+                <label for="member2DateOfBirth" class="form-label flex items-center">
+                  <i class="fas fa-birthday-cake text-primary-light mr-2"></i>
+                  Date de naissance <span class="text-red-600 ml-1">*</span>
+                </label>
+                <input
+                  id="member2DateOfBirth"
+                  v-model="form.groupMembers[0].dateOfBirth"
+                  type="date"
+                  class="input-field"
+                />
+              </div>
+
+              <!-- Nationality -->
+              <div class="form-group">
+                <label for="member2Nationality" class="form-label flex items-center">
+                  <i class="fas fa-flag text-primary-light mr-2"></i>
+                  Nationalité <span class="text-red-600 ml-1">*</span>
+                </label>
+                <input
+                  id="member2Nationality"
+                  v-model="form.groupMembers[0].nationality"
+                  type="text"
+                  class="input-field"
+                  placeholder="Nationalité du candidat 2"
+                />
+              </div>
+
+              <!-- Education Level -->
+              <div class="form-group">
+                <label for="member2EducationLevel" class="form-label flex items-center">
+                  <i class="fas fa-graduation-cap text-primary-light mr-2"></i>
+                  Niveau d'études <span class="text-red-600 ml-1">*</span>
+                </label>
+                <select
+                  id="member2EducationLevel"
+                  v-model="form.groupMembers[0].educationLevel"
+                  class="input-field"
+                >
+                  <option value="" disabled selected>Sélectionnez le niveau</option>
+                  <option value="bac">Baccalauréat</option>
+                  <option value="bac+1">BAC+1</option>
+                  <option value="bac+2">BAC+2</option>
+                  <option value="bac+3">BAC+3 (Licence)</option>
+                  <option value="bac+4">BAC+4</option>
+                  <option value="bac+5">BAC+5 (Master)</option>
+                  <option value="doctorate">Doctorat</option>
+                </select>
+              </div>
+
+              <!-- Gender -->
+              <div class="form-group">
+                <label class="form-label flex items-center mb-2">
+                  <i class="fas fa-venus-mars text-primary-light mr-2"></i>
+                  Genre <span class="text-red-600 ml-1">*</span>
+                </label>
+                <div class="flex flex-wrap gap-4">
+                  <label class="relative flex items-center p-3 rounded-md border border-gray-200 cursor-pointer hover:bg-gray-50">
+                    <input
+                      type="radio"
+                      v-model="form.groupMembers[0].gender"
+                      value="male"
+                      class="h-5 w-5 text-primary focus:ring-primary-light border-gray-300 cursor-pointer"
+                    />
+                    <span class="ml-2 text-gray-700 font-medium">
+                      <i class="fas fa-male text-blue-500 mr-1"></i> Masculin
+                    </span>
+                  </label>
+                  <label class="relative flex items-center p-3 rounded-md border border-gray-200 cursor-pointer hover:bg-gray-50">
+                    <input
+                      type="radio"
+                      v-model="form.groupMembers[0].gender"
+                      value="female"
+                      class="h-5 w-5 text-primary focus:ring-primary-light border-gray-300 cursor-pointer"
+                    />
+                    <span class="ml-2 text-gray-700 font-medium">
+                      <i class="fas fa-female text-pink-500 mr-1"></i> Féminin
+                    </span>
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- Bouton pour ajouter un candidat supplémentaire (mode groupe uniquement) -->
+        <div v-if="form.stageType === 'groupe'" class="form-group md:col-span-2 mt-4">
+          <button 
+            @click="addGroupMember" 
+            type="button"
+            class="btn-primary px-4 py-2 flex items-center justify-center w-full sm:w-auto"
+          >
+            <i class="fas fa-plus-circle mr-2"></i>
+            Ajouter un candidat
+          </button>
+        </div>
+
+        <!-- Candidats supplémentaires pour le mode groupe -->
+        <template v-if="form.stageType === 'groupe'">
+          <div 
+            v-for="(member, index) in form.groupMembers.slice(1)" 
+            :key="index + 2"
+            class="form-group md:col-span-2 border rounded-lg overflow-hidden mt-4"
+          >
+            <button 
+              @click="toggleAccordion(`candidat${index + 3}`)" 
+              class="w-full p-4 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center"
+            >
+              <span class="text-lg font-semibold flex items-center">
+                <i class="fas fa-user-friends text-primary-light mr-2"></i>
+                Candidat {{ index + 3 }}
+              </span>
+              <div class="flex items-center">
+                <button 
+                  @click.stop="removeGroupMember(index + 1)" 
+                  class="text-red-500 hover:text-red-700 mr-4"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+                <i :class="['fas', accordionStates[`candidat${index + 3}`] ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
+              </div>
+            </button>
+
+            <!-- Contenu identique au candidat 2 -->
+            <div v-show="accordionStates[`candidat${index + 3}`]" class="p-4 space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="form-group">
+                  <label for="memberFirstName" class="form-label flex items-center">
+                    <i class="fas fa-user text-primary-light mr-2"></i>
+                    Prénom <span class="text-red-600 ml-1">*</span>
+                  </label>
+                  <input
+                    :id="`member${index + 3}FirstName`"
+                    v-model="member.firstName"
+                    type="text"
+                    class="input-field"
+                    placeholder="Prénom du candidat"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="memberLastName" class="form-label flex items-center">
+                    <i class="fas fa-user text-primary-light mr-2"></i>
+                    Nom <span class="text-red-600 ml-1">*</span>
+                  </label>
+                  <input
+                    :id="`member${index + 3}LastName`"
+                    v-model="member.lastName"
+                    type="text"
+                    class="input-field"
+                    placeholder="Nom du candidat"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="memberEmail" class="form-label flex items-center">
+                    <i class="fas fa-envelope text-primary-light mr-2"></i>
+                    Email <span class="text-red-600 ml-1">*</span>
+                  </label>
+                  <input
+                    :id="`member${index + 3}Email`"
+                    v-model="member.email"
+                    type="email"
+                    class="input-field"
+                    placeholder="Email du candidat"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="memberPhone" class="form-label flex items-center">
+                    <i class="fas fa-phone-alt text-primary-light mr-2"></i>
+                    Téléphone <span class="text-red-600 ml-1">*</span>
+                  </label>
+                  <input
+                    :id="`member${index + 3}Phone`"
+                    v-model="member.phone"
+                    type="tel"
+                    class="input-field"
+                    placeholder="Téléphone du candidat"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="memberAddress" class="form-label flex items-center">
+                    <i class="fas fa-map-marker-alt text-primary-light mr-2"></i>
+                    Adresse <span class="text-red-600 ml-1">*</span>
+                  </label>
+                  <input
+                    :id="`member${index + 3}Address`"
+                    v-model="member.address"
+                    type="text"
+                    class="input-field"
+                    placeholder="Adresse du candidat"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="memberCity" class="form-label flex items-center">
+                    <i class="fas fa-city text-primary-light mr-2"></i>
+                    Ville <span class="text-red-600 ml-1">*</span>
+                  </label>
+                  <input
+                    :id="`member${index + 3}City`"
+                    v-model="member.city"
+                    type="text"
+                    class="input-field"
+                    placeholder="Ville du candidat"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="memberDateOfBirth" class="form-label flex items-center">
+                    <i class="fas fa-birthday-cake text-primary-light mr-2"></i>
+                    Date de naissance <span class="text-red-600 ml-1">*</span>
+                  </label>
+                  <input
+                    :id="`member${index + 3}DateOfBirth`"
+                    v-model="member.dateOfBirth"
+                    type="date"
+                    class="input-field"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="memberNationality" class="form-label flex items-center">
+                    <i class="fas fa-flag text-primary-light mr-2"></i>
+                    Nationalité <span class="text-red-600 ml-1">*</span>
+                  </label>
+                  <input
+                    :id="`member${index + 3}Nationality`"
+                    v-model="member.nationality"
+                    type="text"
+                    class="input-field"
+                    placeholder="Nationalité du candidat"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="memberEducationLevel" class="form-label flex items-center">
+                    <i class="fas fa-graduation-cap text-primary-light mr-2"></i>
+                    Niveau d'études <span class="text-red-600 ml-1">*</span>
+                  </label>
+                  <select
+                    :id="`member${index + 3}EducationLevel`"
+                    v-model="member.educationLevel"
+                    class="input-field"
+                  >
+                    <option value="" disabled selected>Sélectionnez le niveau</option>
+                    <option value="bac">Baccalauréat</option>
+                    <option value="bac+1">BAC+1</option>
+                    <option value="bac+2">BAC+2</option>
+                    <option value="bac+3">BAC+3 (Licence)</option>
+                    <option value="bac+4">BAC+4</option>
+                    <option value="bac+5">BAC+5 (Master)</option>
+                    <option value="doctorate">Doctorat</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label flex items-center mb-2">
+                    <i class="fas fa-venus-mars text-primary-light mr-2"></i>
+                    Genre <span class="text-red-600 ml-1">*</span>
+                  </label>
+                  <div class="flex flex-wrap gap-4">
+                    <label class="relative flex items-center p-3 rounded-md border border-gray-200 cursor-pointer hover:bg-gray-50">
+                      <input
+                        type="radio"
+                        :id="`member${index + 3}GenderMale`"
+                        v-model="member.gender"
+                        value="male"
+                        class="h-5 w-5 text-primary focus:ring-primary-light border-gray-300 cursor-pointer"
+                      />
+                      <span class="ml-2 text-gray-700 font-medium">
+                        <i class="fas fa-male text-blue-500 mr-1"></i> Masculin
+                      </span>
+                    </label>
+                    <label class="relative flex items-center p-3 rounded-md border border-gray-200 cursor-pointer hover:bg-gray-50">
+                      <input
+                        type="radio"
+                        :id="`member${index + 3}GenderFemale`"
+                        v-model="member.gender"
+                        value="female"
+                        class="h-5 w-5 text-primary focus:ring-primary-light border-gray-300 cursor-pointer"
+                      />
+                      <span class="ml-2 text-gray-700 font-medium">
+                        <i class="fas fa-female text-pink-500 mr-1"></i> Féminin
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
 
         <!-- Form actions -->
         <div class="mt-8 flex flex-col sm:flex-row justify-between items-center md:col-span-2">
@@ -354,7 +686,7 @@ export default {
   name: 'PersonalInfo',
   setup(props, { emit }) {
     const store = useStore()
-    
+
     const accordionStates = reactive({
       candidat1: true,
       candidat2: false,
@@ -406,17 +738,49 @@ export default {
           firstName: '',
           lastName: '',
           email: '',
-          phone: ''
+          phone: '',
+          address: '',
+          city: '',
+          dateOfBirth: '',
+          nationality: '',
+          gender: '',
+          educationLevel: ''
         })
       } else if (newType === 'groupe') {
         form.groupMembers.push({
           firstName: '',
           lastName: '',
           email: '',
-          phone: ''
+          phone: '',
+          address: '',
+          city: '',
+          dateOfBirth: '',
+          nationality: '',
+          gender: '',
+          educationLevel: ''
         })
       }
     })
+
+    const addGroupMember = () => {
+      form.groupMembers.push({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        address: '',
+        city: '',
+        dateOfBirth: '',
+        nationality: '',
+        gender: '',
+        educationLevel: ''
+      })
+      accordionStates[`candidat${form.groupMembers.length + 1}`] = false;
+    }
+
+    const removeGroupMember = (index) => {
+      form.groupMembers.splice(index, 1);
+    }
 
     const submitForm = async () => {
       const result = await v$.value.$validate()
@@ -431,7 +795,9 @@ export default {
       v$,
       submitForm,
       accordionStates,
-      toggleAccordion
+      toggleAccordion,
+      addGroupMember,
+      removeGroupMember
     }
   }
 }
