@@ -1,5 +1,5 @@
 <template>
-  <aside class="bg-primary w-64 text-white shadow-lg overflow-y-auto transform transition-all duration-300 ease-in-out fixed md:translate-x-0 z-50" :class="{ '-translate-x-full': !isSidebarOpen }" data-aos="fade-right">
+  <aside class="bg-primary w-64 text-white shadow-lg overflow-y-auto transform transition-all duration-300 ease-in-out fixed md:translate-x-0 z-50 sidebar-custom-scroll" :class="{ '-translate-x-full': !isSidebarOpen }" data-aos="fade-right">
     <button @click="toggleSidebar" class="md:hidden fixed top-20 left-4 z-50 bg-primary text-white p-2 rounded-full">
       <i class="fas" :class="isSidebarOpen ? 'fa-times' : 'fa-bars'"></i>
     </button>
@@ -107,3 +107,32 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.sidebar-custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.sidebar-custom-scroll:hover {
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.sidebar-custom-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-custom-scroll::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 3px;
+  transition: background-color 0.3s;
+}
+
+.sidebar-custom-scroll:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+</style>
