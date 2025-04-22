@@ -21,9 +21,9 @@
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-1/6">Nom</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-1/6">Email</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-1/6">Téléphone</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-1/6">Structure</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-1/6">Statut</th>
-              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase w-1/6">Actions</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-1/4">Structure</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-1/12">Statut</th>
+              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase w-1/12">Actions</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
