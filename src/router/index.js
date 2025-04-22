@@ -56,7 +56,7 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'Dashboard',
+        name: 'DashboardOverview',
         component: () => import('../views/dashboard/Overview.vue')
       },
       {
