@@ -17,6 +17,9 @@
           <router-link to="/application" class="text-gray-700 hover:text-green-800 transition duration-150">
             Faire une demande
           </router-link>
+          <router-link to="/status" class="text-gray-700 hover:text-green-800 transition duration-150">
+            Statut de la demande
+          </router-link>
           <router-link to="/contact" class="text-gray-700 hover:text-green-800 transition duration-150">
             Contact
           </router-link>
@@ -71,6 +74,9 @@
           </router-link>
           <router-link to="/application" class="block py-2 px-3 text-base font-medium rounded-md hover:bg-gray-50 hover:text-green-800">
             Faire une demande
+          </router-link>
+          <router-link to="/status" class="block py-2 px-3 text-base font-medium rounded-md hover:bg-gray-50 hover:text-green-800">
+            Statut de la demande
           </router-link>
           <router-link to="/contact" class="block py-2 px-3 text-base font-medium rounded-md hover:bg-gray-50 hover:text-green-800">
             Contact

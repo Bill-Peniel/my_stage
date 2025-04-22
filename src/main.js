@@ -7,6 +7,8 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 // Custom animations
 import './assets/animation.css'
+// Import des styles globaux
+import './assets/css/main.css'
 
 // Initialize AOS
 AOS.init({

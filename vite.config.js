@@ -10,18 +10,15 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  server: {
-    host: '0.0.0.0',
-    port: 5000,
-    strictPort: true,
-    https: false,
-    open: true,
-    proxy: {},
-    cors: true,
-    hmr: {
-      host: '0.0.0.0',
-      port: 5000,
-      protocol: 'ws'
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@/assets/css/main.css";`
+      }
     }
+  },
+  server: {
+    port: 3000,
+    open: true
   }
 })

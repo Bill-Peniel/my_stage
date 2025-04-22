@@ -7,15 +7,87 @@
       <h2 class="text-xl font-bold">Administration</h2>
     </div>
     <nav class="p-2">
-      <router-link 
-        v-for="(link, index) in links" 
-        :key="link.to"
-        :to="link.to" 
-        class="block px-4 py-2 my-1 rounded hover:bg-primary-dark" 
-        :class="{ 'bg-primary-dark': $route.path === link.to }"
-      >
-        <i :class="['mr-2', link.icon]"></i> {{ link.text }}
-      </router-link>
+      <!-- Tableau de bord -->
+      <div class="mb-4">
+        <router-link 
+          to="/dashboard" 
+          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          :class="{ 'bg-primary-dark': $route.path === '/dashboard' }"
+        >
+          <i class="fas fa-chart-line mr-2"></i> Tableau de bord
+        </router-link>
+      </div>
+
+      <!-- Gestion des demandes -->
+      <div class="mb-4">
+        <h3 class="px-4 py-2 text-sm font-semibold text-gray-300 uppercase">Gestion des demandes</h3>
+        <router-link 
+          to="/dashboard/demandes/en-attente" 
+          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          :class="{ 'bg-primary-dark': $route.path.includes('/demandes/en-attente') }"
+        >
+          <i class="fas fa-clock mr-2"></i> En attente
+        </router-link>
+        <router-link 
+          to="/dashboard/demandes/en-cours" 
+          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          :class="{ 'bg-primary-dark': $route.path.includes('/demandes/en-cours') }"
+        >
+          <i class="fas fa-spinner mr-2"></i> En cours
+        </router-link>
+        <router-link 
+          to="/dashboard/demandes/historique" 
+          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          :class="{ 'bg-primary-dark': $route.path.includes('/demandes/historique') }"
+        >
+          <i class="fas fa-history mr-2"></i> Historique
+        </router-link>
+      </div>
+
+      <!-- Gestion des utilisateurs -->
+      <div class="mb-4">
+        <h3 class="px-4 py-2 text-sm font-semibold text-gray-300 uppercase">Gestion des utilisateurs</h3>
+        <router-link 
+          to="/dashboard/structures" 
+          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          :class="{ 'bg-primary-dark': $route.path.includes('/structures') }"
+        >
+          <i class="fas fa-building mr-2"></i> Structures
+        </router-link>
+        <router-link 
+          to="/dashboard/tuteurs" 
+          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          :class="{ 'bg-primary-dark': $route.path.includes('/tuteurs') }"
+        >
+          <i class="fas fa-user-tie mr-2"></i> Tuteurs
+        </router-link>
+        <router-link 
+          to="/dashboard/stagiaires" 
+          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          :class="{ 'bg-primary-dark': $route.path.includes('/stagiaires') }"
+        >
+          <i class="fas fa-user-graduate mr-2"></i> Stagiaires
+        </router-link>
+      </div>
+
+      <!-- Configuration -->
+      <div class="mb-4">
+        <h3 class="px-4 py-2 text-sm font-semibold text-gray-300 uppercase">Configuration</h3>
+        <router-link 
+          to="/dashboard/parametres" 
+          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          :class="{ 'bg-primary-dark': $route.path.includes('/parametres') }"
+        >
+          <i class="fas fa-cog mr-2"></i> Paramètres
+        </router-link>
+        <router-link 
+          to="/dashboard/notifications" 
+          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          :class="{ 'bg-primary-dark': $route.path.includes('/notifications') }"
+        >
+          <i class="fas fa-bell mr-2"></i> Notifications
+        </router-link>
+      </div>
     </nav>
   </aside>
 </template>
@@ -25,24 +97,12 @@ export default {
   name: 'Sidebar',
   data() {
     return {
-      isSidebarOpen: true,
-      links: [
-        { 
-          to: '/dashboard', 
-          icon: 'fas fa-chart-line', 
-          text: 'Tableau de bord' 
-        },
-        { 
-          to: '/dashboard/communications', 
-          icon: 'fas fa-envelope', 
-          text: 'Communications' 
-        }
-      ]
+      isSidebarOpen: true
     }
   },
   methods: {
     toggleSidebar() {
-      this.isSidebarOpen = !this.isSidebarOpen;
+      this.isSidebarOpen = !this.isSidebarOpen
     }
   }
 }

@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,23 +8,216 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  role      String
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email         String          @unique
+  passwordHash  String          @map("password_hash")
+  role          UserRole
+  isActive      Boolean         @default(true) @map("is_active")
+  createdAt     DateTime        @default(now()) @map("created_at") @db.Timestamp()
+  profile       UserProfile?
+  tuteur        Tuteur?
+  stagiaire     Stagiaire?
+  dpaf          DPAF?
+  structure     Structure?
+  messagesSent  Message[]       @relation("expediteur")
+  messagesReceived Message[]    @relation("destinataire")
+  journalActions JournalAction[]
+
+  @@map("users")
+}
+
+model UserProfile {
+  userId       String    @id @db.Uuid @map("user_id")
+  nom          String?
+  prenom       String?
+  telephone    String?
+  photo        String?
+  adresse      String?
+  autresInfos  Json?    @map("autres_infos")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_profiles")
+}
+
+model Structure {
+  id              String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId          String      @unique @map("user_id") @db.Uuid
+  nomStructure    String      @map("nom_structure")
+  type           String?
+  adresse        String?
+  emailContact   String?     @map("email_contact")
+  telephoneContact String?    @map("telephone_contact")
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tuteurs        Tuteur[]
+  stagiaires     Stagiaire[]
+  demandesStages DemandeStage[] @relation("structure_cible")
+  stages         Stage[]
+
+  @@map("structures")
+}
+
+model Tuteur {
+  userId        String    @id @db.Uuid @map("user_id")
+  structureId   String?   @map("structure_id") @db.Uuid
+  fonction      String?
+  disponibilite Boolean   @default(true)
+  competences   String[]
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  structure     Structure? @relation(fields: [structureId], references: [id])
+  stagiaires    Stagiaire[]
+  stages        Stage[]
+  themes        ThemeTuteur[]
+  suggestions   SuggestionAffectation[]
+
+  @@map("tuteurs")
+}
+
+model Stagiaire {
+  userId             String    @id @db.Uuid @map("user_id")
+  codeDemande        String?   @unique @map("code_demande")
+  statutDemande      StatutDemande? @default(en_attente) @map("statut_demande")
+  structureAffecteeId String?  @map("structure_affectée_id") @db.Uuid
+  tuteurId           String?   @map("tuteur_id") @db.Uuid
+  dateDebut          DateTime? @map("date_debut") @db.Date
+  dateFin            DateTime? @map("date_fin") @db.Date
+  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  structure          Structure? @relation(fields: [structureAffecteeId], references: [id])
+  tuteur             Tuteur?   @relation(fields: [tuteurId], references: [userId])
+  demandesStages     DemandeStage[]
+  stages             Stage[]
+  candidatureScores  CandidatureScore[]
+  suggestions        SuggestionAffectation[]
+
+  @@map("stagiaires")
+}
+
+model DPAF {
+  userId    String @id @db.Uuid @map("user_id")
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("dpaf")
+}
+
+model DemandeStage {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  stagiaireId      String    @map("stagiaire_id") @db.Uuid
+  dateDemande      DateTime  @default(now()) @map("date_demande") @db.Timestamp()
+  etat             EtatDemande @default(en_attente)
+  motifRefus       String?   @map("motif_refus")
+  dateTraitement   DateTime? @map("date_traitement") @db.Timestamp()
+  structureCibleId String?   @map("structure_cible_id") @db.Uuid
+  stagiaire        Stagiaire @relation(fields: [stagiaireId], references: [userId], onDelete: Cascade)
+  structureCible   Structure? @relation("structure_cible", fields: [structureCibleId], references: [id])
+
+  @@map("demandes_stages")
 }
 
 model Stage {
-  id          Int      @id @default(autoincrement())
-  type        String
-  department  String
-  startDate   DateTime
-  endDate     DateTime
-  status      String
-  userId      Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  stagiaireId String    @map("stagiaire_id") @db.Uuid
+  tuteurId    String    @map("tuteur_id") @db.Uuid
+  structureId String    @map("structure_id") @db.Uuid
+  theme       String?
+  etat        EtatStage @default(en_cours)
+  dateDebut   DateTime  @map("date_debut") @db.Date
+  dateFin     DateTime  @map("date_fin") @db.Date
+  noteFinale  String?   @map("note_finale")
+  stagiaire   Stagiaire @relation(fields: [stagiaireId], references: [userId], onDelete: Cascade)
+  tuteur      Tuteur    @relation(fields: [tuteurId], references: [userId])
+  structure   Structure @relation(fields: [structureId], references: [id])
+
+  @@map("stages")
+}
+
+model CandidatureScore {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  stagiaireId     String    @map("stagiaire_id") @db.Uuid
+  scorePertinence Float     @map("score_pertinence")
+  dateEvaluation  DateTime  @default(now()) @map("date_evaluation") @db.Timestamp()
+  stagiaire       Stagiaire @relation(fields: [stagiaireId], references: [userId], onDelete: Cascade)
+
+  @@map("candidature_scores")
+}
+
+model SuggestionAffectation {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  stagiaireId String    @map("stagiaire_id") @db.Uuid
+  tuteurId    String    @map("tuteur_id") @db.Uuid
+  scoreMatch  Float     @map("score_match")
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamp()
+  stagiaire   Stagiaire @relation(fields: [stagiaireId], references: [userId])
+  tuteur      Tuteur    @relation(fields: [tuteurId], references: [userId])
+
+  @@map("suggestions_affectation")
+}
+
+model Message {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  expediteurId    String    @map("expediteur_id") @db.Uuid
+  destinataireId  String    @map("destinataire_id") @db.Uuid
+  contenu         String
+  fichierJoint    String?   @map("fichier_joint")
+  lu              Boolean   @default(false)
+  envoyeLe        DateTime  @default(now()) @map("envoyé_le") @db.Timestamp()
+  expediteur      User      @relation("expediteur", fields: [expediteurId], references: [id])
+  destinataire    User      @relation("destinataire", fields: [destinataireId], references: [id])
+
+  @@map("messages")
+}
+
+model ThemeTuteur {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tuteurId    String    @map("tuteur_id") @db.Uuid
+  titre       String
+  description String?
+  disponible  Boolean   @default(true)
+  tuteur      Tuteur    @relation(fields: [tuteurId], references: [userId])
+
+  @@map("themes_tuteur")
+}
+
+model ParametreSysteme {
+  id      Int     @id @default(autoincrement())
+  cle     String  @unique @map("clé")
+  valeur  String
+
+  @@map("parametres_systeme")
+}
+
+model JournalAction {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  action    String
+  cible     String
+  timestamp DateTime  @default(now()) @db.Timestamp()
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@map("journal_actions")
+}
+
+enum UserRole {
+  admin
+  dpaf
+  structure
+  tuteur
+  stagiaire
+}
+
+enum StatutDemande {
+  en_attente
+  confirmé
+  rejeté
+}
+
+enum EtatDemande {
+  en_attente
+  validée_par_dpaf
+  envoyée_structure
+  refusée
+}
+
+enum EtatStage {
+  en_cours
+  terminé
+  abandonné
 }

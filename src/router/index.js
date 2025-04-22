@@ -4,6 +4,7 @@ import Application from '../views/Application.vue'
 import Contact from '../views/Contact.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import Status from '../views/Status.vue'
 
 import Dashboard from '../views/Dashboard.vue'
 import store from '../store'
@@ -18,6 +19,11 @@ const routes = [
     path: '/application',
     name: 'Application',
     component: Application
+  },
+  {
+    path: '/status',
+    name: 'Status',
+    component: Status
   },
   {
     path: '/contact',
@@ -51,7 +57,22 @@ const routes = [
       {
         path: '',
         name: 'Dashboard',
-        component: Dashboard
+        component: () => import('../views/dashboard/Overview.vue')
+      },
+      {
+        path: 'demandes/en-attente',
+        name: 'DemandesEnAttente',
+        component: () => import('../views/dashboard/DemandesEnAttente.vue')
+      },
+      {
+        path: 'demandes/en-cours',
+        name: 'DemandesEnCours',
+        component: () => import('../views/dashboard/DemandesEnCours.vue')
+      },
+      {
+        path: 'demandes/historique',
+        name: 'DemandesHistorique',
+        component: () => import('../views/dashboard/DemandesHistorique.vue')
       },
       {
         path: 'structures',
@@ -62,6 +83,21 @@ const routes = [
         path: 'tuteurs',
         name: 'Tuteurs',
         component: () => import('../views/dashboard/Tuteurs.vue')
+      },
+      {
+        path: 'stagiaires',
+        name: 'Stagiaires',
+        component: () => import('../views/dashboard/Stagiaires.vue')
+      },
+      {
+        path: 'parametres',
+        name: 'Parametres',
+        component: () => import('../views/dashboard/Parametres.vue')
+      },
+      {
+        path: 'notifications',
+        name: 'Notifications',
+        component: () => import('../views/dashboard/Notifications.vue')
       }
     ]
   },
