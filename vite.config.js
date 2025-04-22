@@ -18,7 +18,8 @@ export default defineConfig({
     }
   },
   server: {
-    port: 3000,
-    open: true
+    port: 5000,
+    host: '0.0.0.0',
+    allowedHosts: ['a4131803-dd21-48e9-9fcc-59bac66bfa0a-00-2amhmm3fppdvx.picard.replit.dev']
   }
 })
