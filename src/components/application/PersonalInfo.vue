@@ -4,9 +4,33 @@
       Informations Personnelles
       <span class="absolute bottom-0 left-0 w-16 h-1 bg-primary-light"></span>
     </h2>
-    
+
     <form @submit.prevent="submitForm" class="max-w-4xl mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <!-- Stage Type -->
+        <div class="form-group md:col-span-2">
+          <label for="stageType" class="form-label flex items-center">
+            <i class="fas fa-users text-primary-light mr-2"></i>
+            Type de stage <span class="text-red-600 ml-1">*</span>
+          </label>
+          <select
+            id="stageType"
+            v-model="form.stageType"
+            class="input-field focus:border-primary focus:ring focus:ring-primary-light focus:ring-opacity-30"
+            :class="{ 'border-red-500 bg-red-50': v$.stageType.$error }"
+            @blur="v$.stageType.$touch()"
+          >
+            <option value="" disabled selected>Sélectionnez le type de stage</option>
+            <option value="solo">Solo</option>
+            <option value="binome">Binôme</option>
+            <option value="groupe">Groupe</option>
+          </select>
+          <p v-if="v$.stageType.$error" class="error-message">
+            <i class="fas fa-exclamation-circle mr-1"></i> {{ v$.stageType.$errors[0].$message }}
+          </p>
+        </div>
+
+
         <!-- First Name -->
         <div class="form-group">
           <label for="firstName" class="form-label flex items-center">
@@ -26,7 +50,7 @@
             <i class="fas fa-exclamation-circle mr-1"></i> {{ v$.firstName.$errors[0].$message }}
           </p>
         </div>
-        
+
         <!-- Last Name -->
         <div class="form-group">
           <label for="lastName" class="form-label flex items-center">
@@ -46,7 +70,7 @@
             <i class="fas fa-exclamation-circle mr-1"></i> {{ v$.lastName.$errors[0].$message }}
           </p>
         </div>
-        
+
         <!-- Email -->
         <div class="form-group">
           <label for="email" class="form-label flex items-center">
@@ -66,7 +90,7 @@
             <i class="fas fa-exclamation-circle mr-1"></i> {{ v$.email.$errors[0].$message }}
           </p>
         </div>
-        
+
         <!-- Phone -->
         <div class="form-group">
           <label for="phone" class="form-label flex items-center">
@@ -86,7 +110,7 @@
             <i class="fas fa-exclamation-circle mr-1"></i> {{ v$.phone.$errors[0].$message }}
           </p>
         </div>
-        
+
         <!-- Address -->
         <div class="form-group md:col-span-2">
           <label for="address" class="form-label flex items-center">
@@ -106,7 +130,7 @@
             <i class="fas fa-exclamation-circle mr-1"></i> {{ v$.address.$errors[0].$message }}
           </p>
         </div>
-        
+
         <!-- City -->
         <div class="form-group">
           <label for="city" class="form-label flex items-center">
@@ -126,7 +150,7 @@
             <i class="fas fa-exclamation-circle mr-1"></i> {{ v$.city.$errors[0].$message }}
           </p>
         </div>
-        
+
         <!-- Date of Birth -->
         <div class="form-group">
           <label for="dateOfBirth" class="form-label flex items-center">
@@ -145,7 +169,7 @@
             <i class="fas fa-exclamation-circle mr-1"></i> {{ v$.dateOfBirth.$errors[0].$message }}
           </p>
         </div>
-        
+
         <!-- Nationality -->
         <div class="form-group">
           <label for="nationality" class="form-label flex items-center">
@@ -165,7 +189,7 @@
             <i class="fas fa-exclamation-circle mr-1"></i> {{ v$.nationality.$errors[0].$message }}
           </p>
         </div>
-        
+
         <!-- Gender -->
         <div class="form-group">
           <label class="form-label flex items-center mb-2">
@@ -202,7 +226,7 @@
             <i class="fas fa-exclamation-circle mr-1"></i> {{ v$.gender.$errors[0].$message }}
           </p>
         </div>
-        
+
         <!-- Education Level -->
         <div class="form-group">
           <label for="educationLevel" class="form-label flex items-center">
@@ -229,8 +253,34 @@
             <i class="fas fa-exclamation-circle mr-1"></i> {{ v$.educationLevel.$errors[0].$message }}
           </p>
         </div>
+
+        <div v-if="form.stageType === 'binome' || form.stageType === 'groupe'" class="form-group md:col-span-2">
+          <h3 class="text-lg font-bold text-gray-700 mb-2">Membres du groupe</h3>
+          <div v-for="(member, index) in form.groupMembers" :key="index" class="mb-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="firstName" class="form-label">Prénom</label>
+                <input type="text" v-model="member.firstName" class="input-field">
+              </div>
+              <div>
+                <label for="lastName" class="form-label">Nom</label>
+                <input type="text" v-model="member.lastName" class="input-field">
+              </div>
+              <div>
+                <label for="email" class="form-label">Email</label>
+                <input type="email" v-model="member.email" class="input-field">
+              </div>
+              <div>
+                <label for="phone" class="form-label">Téléphone</label>
+                <input type="tel" v-model="member.phone" class="input-field">
+              </div>
+            </div>
+            <button v-if="canRemoveMember" @click="removeMember(index)" class="btn-danger mt-2">Supprimer</button>
+          </div>
+          <button @click="addMember" class="btn-primary">Ajouter un membre</button>
+        </div>
       </div>
-      
+
       <!-- Form actions -->
       <div class="mt-8 flex flex-col sm:flex-row justify-between items-center">
         <p class="text-sm text-gray-500 mb-4 sm:mb-0 max-w-md">
@@ -246,7 +296,7 @@
 </template>
 
 <script>
-import { reactive, computed } from 'vue'
+import { reactive, computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, helpers } from '@vuelidate/validators'
@@ -255,8 +305,9 @@ export default {
   name: 'PersonalInfo',
   setup(props, { emit }) {
     const store = useStore()
-    
+
     const form = reactive({
+      stageType: '',
       firstName: store.state.applicationForm.personalInfo.firstName,
       lastName: store.state.applicationForm.personalInfo.lastName,
       email: store.state.applicationForm.personalInfo.email,
@@ -266,10 +317,41 @@ export default {
       dateOfBirth: store.state.applicationForm.personalInfo.dateOfBirth,
       nationality: store.state.applicationForm.personalInfo.nationality,
       gender: store.state.applicationForm.personalInfo.gender,
-      educationLevel: store.state.applicationForm.personalInfo.educationLevel
+      educationLevel: store.state.applicationForm.personalInfo.educationLevel,
+      groupMembers: []
     })
-    
+
+    const addMember = () => {
+      form.groupMembers.push({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: ''
+      })
+    }
+
+    const removeMember = (index) => {
+      form.groupMembers.splice(index, 1)
+    }
+
+    const canRemoveMember = computed(() => {
+      return form.stageType === 'groupe' && form.groupMembers.length > 2 || 
+             form.stageType === 'binome' && form.groupMembers.length > 1
+    })
+
+    // Initialiser les membres en fonction du type de stage
+    watch(() => form.stageType, (newType) => {
+      form.groupMembers = []
+      if (newType === 'binome') {
+        addMember()
+      } else if (newType === 'groupe') {
+        addMember()
+        addMember()
+      }
+    })
+
     const rules = computed(() => ({
+      stageType: { required: helpers.withMessage('Veuillez sélectionner le type de stage', required) },
       firstName: { required: helpers.withMessage('Veuillez entrer votre prénom', required) },
       lastName: { required: helpers.withMessage('Veuillez entrer votre nom', required) },
       email: { 
@@ -284,25 +366,28 @@ export default {
       gender: { required: helpers.withMessage('Veuillez sélectionner votre genre', required) },
       educationLevel: { required: helpers.withMessage('Veuillez sélectionner votre niveau d\'études', required) }
     }))
-    
+
     const v$ = useVuelidate(rules, form)
-    
+
     const submitForm = async () => {
       const result = await v$.value.$validate()
-      
+
       if (result) {
         // Update store with form data
         store.commit('updatePersonalInfo', form)
-        
+
         // Move to next step
         store.commit('nextStep')
       }
     }
-    
+
     return {
       form,
       v$,
-      submitForm
+      submitForm,
+      addMember,
+      removeMember,
+      canRemoveMember
     }
   }
 }
