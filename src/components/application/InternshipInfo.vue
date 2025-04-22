@@ -236,7 +236,17 @@ export default {
       
       if (isFormValid && areDatesValid) {
         // Update store with form data
-        store.commit('updateInternshipInfo', form)
+        store.commit('updateInternshipInfo', {
+          internshipType: form.internshipType,
+          department: form.department,
+          startDate: form.startDate,
+          endDate: form.endDate,
+          motivation: form.motivation,
+          skills: form.skills,
+          previousExperience: form.previousExperience,
+          universityName: form.internshipType === 'academic' ? form.universityName : '',
+          studyField: form.studyField
+        })
         
         // Move to next step
         store.commit('nextStep')
