@@ -18,6 +18,15 @@
   .input-field {
     @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary;
   }
+
+  /* Styles pour les tableaux dans le dashboard */
+  .dashboard-table-container {
+    @apply w-full overflow-x-auto;
+  }
+
+  .dashboard-table {
+    @apply min-w-full;
+  }
 }
 
 /* Variables de couleur personnalisées */
@@ -29,4 +38,4 @@
   --color-danger: #e02424;
   --color-warning: #ff5a1f;
   --color-accent-yellow: #fbbf24;
-} 
+}

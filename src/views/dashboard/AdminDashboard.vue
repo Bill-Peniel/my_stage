@@ -1,6 +1,6 @@
 
 <template>
-  <div class="p-6 bg-gray-50">
+  <div class="p-6 bg-gray-50 overflow-x-hidden">
     <!-- En-tête -->
     <div class="mb-8">
       <h1 class="text-3xl font-bold text-gray-800">Bienvenue Admin !</h1>
