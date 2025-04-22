@@ -21,17 +21,17 @@
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-1/6">Nom</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-1/6">Email</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-1/6">Téléphone</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-1/4">Structure</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-2/6">Structure</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-1/12">Statut</th>
               <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase w-1/12">Actions</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <tr v-for="stagiaire in stagiaires" :key="stagiaire.id" class="hover:bg-gray-50">
-              <td class="px-6 py-4 whitespace-nowrap">{{ stagiaire.nom }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ stagiaire.email }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ stagiaire.telephone }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ stagiaire.structure }}</td>
+              <td class="px-6 py-4">{{ stagiaire.nom }}</td>
+              <td class="px-6 py-4">{{ stagiaire.email }}</td>
+              <td class="px-6 py-4">{{ stagiaire.telephone }}</td>
+              <td class="px-6 py-4 break-words">{{ stagiaire.structure }}</td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span :class="getStatusClass(stagiaire.statut)" class="px-2 py-1 text-xs rounded-full">
                   {{ stagiaire.statut }}
