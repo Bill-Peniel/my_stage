@@ -5,7 +5,7 @@ run = "npm run dev && cd backend/api && npm run start:dev"
 channel = "stable-24_05"
 
 [workflows]
-runButton = "Project"
+runButton = "Frontend Dev"
 
 [[workflows.workflow]]
 name = "Project"
@@ -39,6 +39,15 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd backend/api && npm run start:dev"
+
+[[workflows.workflow]]
+name = "Frontend Dev"
+author = 41622404
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx vite --port 5000 --host 0.0.0.0"
 
 [deployment]
 run = ["sh", "-c", "npm run dev && cd backend/api && npm run start:dev"]
