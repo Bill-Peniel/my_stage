@@ -3,7 +3,7 @@
     <button @click="toggleSidebar" class="md:hidden fixed top-20 left-4 z-50 bg-primary text-white p-2 rounded-full">
       <i class="fas" :class="isSidebarOpen ? 'fa-times' : 'fa-bars'"></i>
     </button>
-    <div class="p-4 border-b border-primary-dark sticky top-0 bg-primary z-10">
+    <div class="p-4 border-b border-primary-dark sticky top-0 bg-primary-dark z-10">
       <h2 class="text-xl font-bold text-gray-100">Administration</h2>
     </div>
     <nav class="p-2">
