@@ -1,11 +1,8 @@
-
 <template>
   <div class="flex flex-col min-h-screen">
     <Header v-if="!isDashboardRoute" />
     <main class="flex-grow">
-      <router-view v-slot="{ Component }">
-        <component :is="Component" />
-      </router-view>
+      <router-view />
     </main>
     <Footer v-if="!isDashboardRoute" />
   </div>
@@ -29,7 +26,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="postcss">
 @import './assets/tailwind.css';
 
 body {

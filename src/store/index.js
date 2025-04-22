@@ -254,8 +254,10 @@ export default createStore({
     logout({ commit }) {
       return new Promise((resolve) => {
         commit('clearUser')
-        router.push('/login')
-        resolve()
+        // Simuler la déconnexion d'une API
+        setTimeout(() => {
+          resolve()
+        }, 300)
       })
     },
     
