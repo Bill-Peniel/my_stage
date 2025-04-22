@@ -1,8 +1,7 @@
 
 <template>
-  <div class="min-h-screen bg-gray-100 flex">
-    <Sidebar />
-    <div class="flex-1 ml-64">
+  <div class="min-h-screen bg-gray-100">
+    <div class="flex-1">
       <header class="bg-primary shadow">
         <div class="px-4 py-4 flex justify-between items-center">
           <h1 class="text-2xl font-bold text-white">Gestion des structures</h1>
@@ -59,11 +58,9 @@
 
 <script>
 import { ref } from 'vue'
-import Sidebar from '../../components/Sidebar.vue'
 
 export default {
   name: 'Structures',
-  components: { Sidebar },
   setup() {
     const showAddModal = ref(false)
 
