@@ -116,6 +116,11 @@ const routes = [
   }
 ]
 
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+})
+
 // Navigation guard global
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
@@ -125,11 +130,6 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-]
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
   scrollBehavior() {
     // Always scroll to top
     return { top: 0 }
