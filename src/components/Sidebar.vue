@@ -4,7 +4,7 @@
       <i class="fas" :class="isSidebarOpen ? 'fa-times' : 'fa-bars'"></i>
     </button>
     <div class="p-4 border-b border-primary-dark sticky top-0 bg-primary z-10">
-      <h2 class="text-xl font-bold">Administration</h2>
+      <h2 class="text-xl font-bold text-gray-100">Administration</h2>
     </div>
     <nav class="p-2">
       <!-- Tableau de bord -->
