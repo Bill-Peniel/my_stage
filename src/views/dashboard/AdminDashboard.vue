@@ -136,17 +136,31 @@ export default {
       demandesTraitees: 12
     })
 
+    let charts = {
+      activity: null,
+      structures: null,
+      satisfaction: null,
+      types: null
+    }
+
     const initCharts = () => {
+      // Détruire les graphiques existants s'il y en a
+      Object.values(charts).forEach(chart => {
+        if (chart) chart.destroy()
+      })
+
       // Configuration des graphiques avec des animations fluides
       const commonOptions = {
         animation: {
           duration: 1500,
           easing: 'easeInOutQuart'
-        }
+        },
+        responsive: true,
+        maintainAspectRatio: false
       }
 
       // Graphique d'activité
-      new Chart(activityChart.value, {
+      charts.activity = new Chart(activityChart.value.getContext('2d'), {
         type: 'line',
         data: {
           labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
@@ -182,7 +196,7 @@ export default {
       })
 
       // Graphique des structures
-      new Chart(structuresChart.value, {
+      charts.structures = new Chart(structuresChart.value.getContext('2d'), {
         type: 'bar',
         data: {
           labels: ['DSI', 'DRH', 'DAF', 'DPAF', 'DC'],
@@ -218,7 +232,7 @@ export default {
       })
 
       // Graphique de satisfaction
-      new Chart(satisfactionChart.value, {
+      charts.satisfaction = new Chart(satisfactionChart.value.getContext('2d'), {
         type: 'doughnut',
         data: {
           labels: ['Très satisfait', 'Satisfait', 'Neutre', 'Insatisfait'],
@@ -240,7 +254,7 @@ export default {
       })
 
       // Graphique des types de stages
-      new Chart(typesChart.value, {
+      charts.types = new Chart(typesChart.value.getContext('2d'), {
         type: 'radar',
         data: {
           labels: ['Développement', 'Design', 'Support', 'Administration', 'Réseau', 'Sécurité'],
