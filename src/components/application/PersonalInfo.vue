@@ -33,7 +33,8 @@
         <!-- Accordion pour le candidat principal -->
         <div class="form-group md:col-span-2 border rounded-lg overflow-hidden">
           <button 
-            @click="toggleAccordion('candidat1')" 
+            type="button"
+            @click.prevent="toggleAccordion('candidat1')" 
             class="w-full p-4 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center"
           >
             <span class="text-lg font-semibold flex items-center">
@@ -272,7 +273,8 @@
         <!-- Accordion pour le candidat 2 (si binôme ou groupe) -->
         <div v-if="form.stageType === 'binome' || form.stageType === 'groupe'" class="form-group md:col-span-2 border rounded-lg overflow-hidden mt-4">
           <button 
-            @click="toggleAccordion('candidat2')" 
+            type="button"
+            @click.prevent="toggleAccordion('candidat2')" 
             class="w-full p-4 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center"
           >
             <span class="text-lg font-semibold flex items-center">
