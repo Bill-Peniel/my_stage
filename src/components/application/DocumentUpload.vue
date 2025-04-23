@@ -1,407 +1,279 @@
 <template>
-  <div class="bg-white rounded-lg shadow-md p-6">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Documents Requis</h2>
-    
-    <p class="text-gray-600 mb-6">
-      Veuillez fournir les documents suivants au format PDF. Taille maximale: 5 Mo par fichier.
-    </p>
-    
-    <div class="mb-8">
-      <h3 class="text-lg font-medium text-gray-800 mb-2">
-        Documents pour stage {{ internshipTypeLabel }}
-      </h3>
-      <p class="text-gray-600 mb-4">
-        <span class="text-red-600">*</span> Tous les documents marqués d'une étoile sont obligatoires
-      </p>
+  <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6 border-t-4 border-primary">
+    <h2 class="text-xl sm:text-2xl font-bold text-primary-dark mb-6 relative pb-2">
+      Documents requis
+      <span class="absolute bottom-0 left-0 w-16 h-1 bg-primary-light"></span>
+    </h2>
+
+    <!-- Candidat Principal -->
+    <div class="form-group border rounded-lg overflow-hidden mb-6">
+      <button 
+        type="button"
+        @click="toggleAccordion('candidat1')" 
+        class="w-full p-4 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center"
+      >
+        <span class="text-lg font-semibold flex items-center">
+          <i class="fas fa-user text-primary-light mr-2"></i>
+          Candidat 1 (Principal)
+        </span>
+        <i :class="['fas', accordionStates.candidat1 ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
+      </button>
+
+      <div v-show="accordionStates.candidat1" class="p-4 space-y-4">
+        <div class="grid grid-cols-1 gap-4">
+          <!-- CV -->
+          <div class="form-group">
+            <label for="cv" class="form-label">CV <span class="text-red-600">*</span></label>
+            <input 
+              type="file"
+              id="cv"
+              @change="handleFileUpload($event, 'cv')"
+              class="input-field"
+              accept=".pdf,.doc,.docx"
+              required
+            >
+          </div>
+
+          <!-- Lettre de motivation -->
+          <div class="form-group">
+            <label for="coverLetter" class="form-label">Lettre de motivation <span class="text-red-600">*</span></label>
+            <input 
+              type="file"
+              id="coverLetter"
+              @change="handleFileUpload($event, 'coverLetter')"
+              class="input-field"
+              accept=".pdf,.doc,.docx"
+              required
+            >
+          </div>
+
+          <!-- Carte d'identité -->
+          <div class="form-group">
+            <label for="identityCard" class="form-label">Carte d'identité <span class="text-red-600">*</span></label>
+            <input 
+              type="file"
+              id="identityCard"
+              @change="handleFileUpload($event, 'identityCard')"
+              class="input-field"
+              accept=".pdf,.jpg,.jpeg,.png"
+              required
+            >
+          </div>
+
+          <!-- Attestation de scolarité -->
+          <div class="form-group">
+            <label for="universityEnrollment" class="form-label">Attestation de scolarité <span class="text-red-600">*</span></label>
+            <input 
+              type="file"
+              id="universityEnrollment"
+              @change="handleFileUpload($event, 'universityEnrollment')"
+              class="input-field"
+              accept=".pdf"
+              required
+            >
+          </div>
+
+          <!-- Lettre de recommandation -->
+          <div class="form-group">
+            <label for="recommendation" class="form-label">Lettre de recommandation</label>
+            <input 
+              type="file"
+              id="recommendation"
+              @change="handleFileUpload($event, 'recommendation')"
+              class="input-field"
+              accept=".pdf,.doc,.docx"
+            >
+          </div>
+        </div>
+      </div>
     </div>
-    
-    <form @submit.prevent="submitForm">
-      <div class="space-y-6">
-        <!-- CV -->
-        <div class="form-group">
-          <label for="cv" class="form-label">CV <span class="text-red-600">*</span></label>
-          <div class="mt-1 flex items-center">
-            <span v-if="documents.cv" class="text-green-800 mr-2">
-              <i class="fas fa-check-circle"></i>
-            </span>
-            <label 
-              class="relative cursor-pointer py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 focus-within:ring-2 focus-within:ring-green-600 focus-within:ring-offset-2"
-              :class="{ 'border-red-500': v$.cv.$error }"
-            >
-              <span class="text-gray-700">
-                {{ documents.cv ? documents.cv.name : 'Choisir un fichier' }}
-              </span>
+
+    <!-- Candidats supplémentaires pour binôme/groupe -->
+    <template v-if="stageType === 'binome' || stageType === 'groupe'">
+      <div v-for="(member, index) in groupMembers" :key="index" class="form-group border rounded-lg overflow-hidden mb-6">
+        <button 
+          type="button"
+          @click="toggleAccordion(`candidat${index + 2}`)" 
+          class="w-full p-4 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center"
+        >
+          <span class="text-lg font-semibold flex items-center">
+            <i class="fas fa-user-friends text-primary-light mr-2"></i>
+            Candidat {{ index + 2 }}
+          </span>
+          <i :class="['fas', accordionStates[`candidat${index + 2}`] ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
+        </button>
+
+        <div v-show="accordionStates[`candidat${index + 2}`]" class="p-4 space-y-4">
+          <div class="grid grid-cols-1 gap-4">
+            <!-- CV -->
+            <div class="form-group">
+              <label :for="'cv' + (index + 2)" class="form-label">CV <span class="text-red-600">*</span></label>
               <input 
-                id="cv" 
-                name="cv" 
-                type="file" 
-                accept=".pdf" 
-                class="sr-only"
-                @change="handleFileUpload($event, 'cv')"
-                @blur="v$.cv.$touch()"
-              />
-            </label>
-            <button 
-              v-if="documents.cv"
-              type="button" 
-              @click="removeFile('cv')" 
-              class="ml-2 text-red-600 hover:text-red-800"
-            >
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-          <p v-if="v$.cv.$error" class="error-message">
-            {{ v$.cv.$errors[0].$message }}
-          </p>
-        </div>
-        
-        <!-- Cover Letter -->
-        <div class="form-group">
-          <label for="coverLetter" class="form-label">Lettre de motivation <span class="text-red-600">*</span></label>
-          <div class="mt-1 flex items-center">
-            <span v-if="documents.coverLetter" class="text-green-800 mr-2">
-              <i class="fas fa-check-circle"></i>
-            </span>
-            <label 
-              class="relative cursor-pointer py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 focus-within:ring-2 focus-within:ring-green-600 focus-within:ring-offset-2"
-              :class="{ 'border-red-500': v$.coverLetter.$error }"
-            >
-              <span class="text-gray-700">
-                {{ documents.coverLetter ? documents.coverLetter.name : 'Choisir un fichier' }}
-              </span>
-              <input 
-                id="coverLetter" 
-                name="coverLetter" 
-                type="file" 
-                accept=".pdf" 
-                class="sr-only"
-                @change="handleFileUpload($event, 'coverLetter')"
-                @blur="v$.coverLetter.$touch()"
-              />
-            </label>
-            <button 
-              v-if="documents.coverLetter"
-              type="button" 
-              @click="removeFile('coverLetter')" 
-              class="ml-2 text-red-600 hover:text-red-800"
-            >
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-          <p v-if="v$.coverLetter.$error" class="error-message">
-            {{ v$.coverLetter.$errors[0].$message }}
-          </p>
-        </div>
-        
-        <!-- Identity Card -->
-        <div class="form-group">
-          <label for="identityCard" class="form-label">Pièce d'identité <span class="text-red-600">*</span></label>
-          <div class="mt-1 flex items-center">
-            <span v-if="documents.identityCard" class="text-green-800 mr-2">
-              <i class="fas fa-check-circle"></i>
-            </span>
-            <label 
-              class="relative cursor-pointer py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 focus-within:ring-2 focus-within:ring-green-600 focus-within:ring-offset-2"
-              :class="{ 'border-red-500': v$.identityCard.$error }"
-            >
-              <span class="text-gray-700">
-                {{ documents.identityCard ? documents.identityCard.name : 'Choisir un fichier' }}
-              </span>
-              <input 
-                id="identityCard" 
-                name="identityCard" 
-                type="file" 
-                accept=".pdf" 
-                class="sr-only"
-                @change="handleFileUpload($event, 'identityCard')"
-                @blur="v$.identityCard.$touch()"
-              />
-            </label>
-            <button 
-              v-if="documents.identityCard"
-              type="button" 
-              @click="removeFile('identityCard')" 
-              class="ml-2 text-red-600 hover:text-red-800"
-            >
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-          <p v-if="v$.identityCard.$error" class="error-message">
-            {{ v$.identityCard.$errors[0].$message }}
-          </p>
-        </div>
-        
-        <!-- University Enrollment (conditional based on internship type) -->
-        <div v-if="['academic', 'research'].includes(internshipType)" class="form-group">
-          <label for="universityEnrollment" class="form-label">
-            Attestation d'inscription universitaire <span class="text-red-600">*</span>
-          </label>
-          <div class="mt-1 flex items-center">
-            <span v-if="documents.universityEnrollment" class="text-green-800 mr-2">
-              <i class="fas fa-check-circle"></i>
-            </span>
-            <label 
-              class="relative cursor-pointer py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 focus-within:ring-2 focus-within:ring-green-600 focus-within:ring-offset-2"
-              :class="{ 'border-red-500': v$.universityEnrollment.$error }"
-            >
-              <span class="text-gray-700">
-                {{ documents.universityEnrollment ? documents.universityEnrollment.name : 'Choisir un fichier' }}
-              </span>
-              <input 
-                id="universityEnrollment" 
-                name="universityEnrollment" 
-                type="file" 
-                accept=".pdf" 
-                class="sr-only"
-                @change="handleFileUpload($event, 'universityEnrollment')"
-                @blur="v$.universityEnrollment.$touch()"
-              />
-            </label>
-            <button 
-              v-if="documents.universityEnrollment"
-              type="button" 
-              @click="removeFile('universityEnrollment')" 
-              class="ml-2 text-red-600 hover:text-red-800"
-            >
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-          <p v-if="v$.universityEnrollment.$error" class="error-message">
-            {{ v$.universityEnrollment.$errors[0].$message }}
-          </p>
-        </div>
-        
-        <!-- Recommendation Letter (conditional based on internship type) -->
-        <div v-if="['professional', 'research'].includes(internshipType)" class="form-group">
-          <label for="recommendation" class="form-label">
-            Lettre de recommandation <span class="text-red-600">*</span>
-          </label>
-          <div class="mt-1 flex items-center">
-            <span v-if="documents.recommendation" class="text-green-800 mr-2">
-              <i class="fas fa-check-circle"></i>
-            </span>
-            <label 
-              class="relative cursor-pointer py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 focus-within:ring-2 focus-within:ring-green-600 focus-within:ring-offset-2"
-              :class="{ 'border-red-500': v$.recommendation.$error }"
-            >
-              <span class="text-gray-700">
-                {{ documents.recommendation ? documents.recommendation.name : 'Choisir un fichier' }}
-              </span>
-              <input 
-                id="recommendation" 
-                name="recommendation" 
-                type="file" 
-                accept=".pdf" 
-                class="sr-only"
-                @change="handleFileUpload($event, 'recommendation')"
-                @blur="v$.recommendation.$touch()"
-              />
-            </label>
-            <button 
-              v-if="documents.recommendation"
-              type="button" 
-              @click="removeFile('recommendation')" 
-              class="ml-2 text-red-600 hover:text-red-800"
-            >
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-          <p v-if="v$.recommendation.$error" class="error-message">
-            {{ v$.recommendation.$errors[0].$message }}
-          </p>
-        </div>
-        
-        <!-- Other Documents (optional) -->
-        <div class="form-group">
-          <label class="form-label">Autres documents (facultatif)</label>
-          <div class="mt-1">
-            <div v-for="(doc, index) in documents.otherDocuments" :key="index" class="flex items-center mb-2">
-              <span class="text-green-800 mr-2">
-                <i class="fas fa-check-circle"></i>
-              </span>
-              <span class="text-gray-700">{{ doc.name }}</span>
-              <button 
-                type="button" 
-                @click="removeOtherFile(index)" 
-                class="ml-2 text-red-600 hover:text-red-800"
+                type="file"
+                :id="'cv' + (index + 2)"
+                @change="handleGroupMemberFileUpload($event, index, 'cv')"
+                class="input-field"
+                accept=".pdf,.doc,.docx"
+                required
               >
-                <i class="fas fa-times"></i>
-              </button>
             </div>
-            
-            <label class="relative cursor-pointer py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 focus-within:ring-2 focus-within:ring-green-600 focus-within:ring-offset-2">
-              <span class="text-gray-700">Ajouter un document (max 5 Mo)</span>
+
+            <!-- Lettre de motivation -->
+            <div class="form-group">
+              <label :for="'coverLetter' + (index + 2)" class="form-label">Lettre de motivation <span class="text-red-600">*</span></label>
               <input 
-                id="otherDocument" 
-                name="otherDocument" 
-                type="file" 
-                accept=".pdf" 
-                class="sr-only"
-                @change="handleOtherFileUpload"
-              />
-            </label>
+                type="file"
+                :id="'coverLetter' + (index + 2)"
+                @change="handleGroupMemberFileUpload($event, index, 'coverLetter')"
+                class="input-field"
+                accept=".pdf,.doc,.docx"
+                required
+              >
+            </div>
+
+            <!-- Carte d'identité -->
+            <div class="form-group">
+              <label :for="'identityCard' + (index + 2)" class="form-label">Carte d'identité <span class="text-red-600">*</span></label>
+              <input 
+                type="file"
+                :id="'identityCard' + (index + 2)"
+                @change="handleGroupMemberFileUpload($event, index, 'identityCard')"
+                class="input-field"
+                accept=".pdf,.jpg,.jpeg,.png"
+                required
+              >
+            </div>
+
+            <!-- Attestation de scolarité -->
+            <div class="form-group">
+              <label :for="'universityEnrollment' + (index + 2)" class="form-label">Attestation de scolarité <span class="text-red-600">*</span></label>
+              <input 
+                type="file"
+                :id="'universityEnrollment' + (index + 2)"
+                @change="handleGroupMemberFileUpload($event, index, 'universityEnrollment')"
+                class="input-field"
+                accept=".pdf"
+                required
+              >
+            </div>
+
+            <!-- Lettre de recommandation -->
+            <div class="form-group">
+              <label :for="'recommendation' + (index + 2)" class="form-label">Lettre de recommandation</label>
+              <input 
+                type="file"
+                :id="'recommendation' + (index + 2)"
+                @change="handleGroupMemberFileUpload($event, index, 'recommendation')"
+                class="input-field"
+                accept=".pdf,.doc,.docx"
+              >
+            </div>
           </div>
-          <p class="text-gray-500 text-sm mt-2">
-            Vous pouvez ajouter jusqu'à 3 documents supplémentaires.
-          </p>
         </div>
       </div>
-      
-      <div class="mt-8 flex justify-between">
-        <button type="button" @click="previousStep" class="btn-outline">
-          <i class="fas fa-arrow-left mr-2"></i> Précédent
-        </button>
-        <button type="submit" class="btn-primary">
-          Suivant <i class="fas fa-arrow-right ml-2"></i>
-        </button>
-      </div>
-    </form>
+    </template>
+
+    <!-- Navigation buttons -->
+    <div class="mt-8 flex justify-between items-center">
+      <button 
+        @click="previousStep" 
+        class="btn-secondary px-6 py-2"
+      >
+        <i class="fas fa-arrow-left mr-2"></i> Précédent
+      </button>
+      <button 
+        @click="nextStep"
+        class="btn-primary px-6 py-2"
+      >
+        Suivant <i class="fas fa-arrow-right ml-2"></i>
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import { reactive, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useVuelidate } from '@vuelidate/core'
-import { required, helpers } from '@vuelidate/validators'
 
 export default {
   name: 'DocumentUpload',
   setup() {
     const store = useStore()
-    
-    const documents = reactive({
-      cv: store.state.applicationForm.documents.cv,
-      coverLetter: store.state.applicationForm.documents.coverLetter,
-      identityCard: store.state.applicationForm.documents.identityCard,
-      universityEnrollment: store.state.applicationForm.documents.universityEnrollment,
-      recommendation: store.state.applicationForm.documents.recommendation,
-      otherDocuments: [...(store.state.applicationForm.documents.otherDocuments || [])]
+    const accordionStates = ref({
+      candidat1: true
     })
-    
-    const internshipType = computed(() => 
-      store.state.applicationForm.internshipInfo.internshipType || ''
-    )
-    
-    const internshipTypeLabel = computed(() => {
-      const types = {
-        'academic': 'académique',
-        'professional': 'professionnel',
-        'research': 'de recherche',
-        'observation': 'd\'observation'
-      }
-      return types[internshipType.value] || ''
+
+    const stageType = computed(() => store.state.applicationForm.personalInfo.stageType)
+    const groupMembers = computed(() => store.state.applicationForm.personalInfo.groupMembers)
+
+    const documents = ref({
+      cv: null,
+      coverLetter: null,
+      identityCard: null,
+      universityEnrollment: null,
+      recommendation: null,
+      groupMembersDocuments: []
     })
-    
-    // Dynamic validation rules based on internship type
-    const rules = computed(() => {
-      const baseRules = {
-        cv: { required: helpers.withMessage('Veuillez télécharger votre CV', required) },
-        coverLetter: { required: helpers.withMessage('Veuillez télécharger votre lettre de motivation', required) },
-        identityCard: { required: helpers.withMessage('Veuillez télécharger votre pièce d\'identité', required) }
-      }
-      
-      // Add conditional rules based on internship type
-      if (['academic', 'research'].includes(internshipType.value)) {
-        baseRules.universityEnrollment = { 
-          required: helpers.withMessage('Veuillez télécharger votre attestation d\'inscription universitaire', required) 
-        }
-      }
-      
-      if (['professional', 'research'].includes(internshipType.value)) {
-        baseRules.recommendation = { 
-          required: helpers.withMessage('Veuillez télécharger une lettre de recommandation', required) 
-        }
-      }
-      
-      return baseRules
-    })
-    
-    const v$ = useVuelidate(rules, documents)
-    
-    const handleFileUpload = (event, fieldName) => {
+
+    const toggleAccordion = (accordion) => {
+      accordionStates.value[accordion] = !accordionStates.value[accordion]
+    }
+
+    const handleFileUpload = (event, documentType) => {
       const file = event.target.files[0]
       if (file) {
-        if (file.size > 5 * 1024 * 1024) {
-          alert('Le fichier est trop volumineux. Taille maximale: 5 Mo.')
-          event.target.value = null
-          return
-        }
-        
-        if (file.type !== 'application/pdf') {
-          alert('Seuls les fichiers PDF sont acceptés.')
-          event.target.value = null
-          return
-        }
-        
-        documents[fieldName] = file
-        v$.value[fieldName].$touch()
+        documents.value[documentType] = file
       }
     }
-    
-    const handleOtherFileUpload = (event) => {
+
+    const handleGroupMemberFileUpload = (event, memberIndex, documentType) => {
       const file = event.target.files[0]
       if (file) {
-        if (documents.otherDocuments.length >= 3) {
-          alert('Vous avez atteint le nombre maximum de documents supplémentaires (3).')
-          event.target.value = null
-          return
+        if (!documents.value.groupMembersDocuments[memberIndex]) {
+          documents.value.groupMembersDocuments[memberIndex] = {}
         }
-        
-        if (file.size > 5 * 1024 * 1024) {
-          alert('Le fichier est trop volumineux. Taille maximale: 5 Mo.')
-          event.target.value = null
-          return
-        }
-        
-        if (file.type !== 'application/pdf') {
-          alert('Seuls les fichiers PDF sont acceptés.')
-          event.target.value = null
-          return
-        }
-        
-        documents.otherDocuments.push(file)
-        event.target.value = null
+        documents.value.groupMembersDocuments[memberIndex][documentType] = file
       }
     }
-    
-    const removeFile = (fieldName) => {
-      documents[fieldName] = null
-      v$.value[fieldName].$touch()
-    }
-    
-    const removeOtherFile = (index) => {
-      documents.otherDocuments.splice(index, 1)
-    }
-    
-    const submitForm = async () => {
-      const result = await v$.value.$validate()
-      
-      if (result) {
-        // Update store with form data
-        store.commit('updateDocuments', documents)
-        
-        // Move to next step
-        store.commit('nextStep')
-      }
-    }
-    
+
     const previousStep = () => {
       store.commit('previousStep')
     }
-    
+
+    const nextStep = () => {
+      store.commit('updateDocuments', documents.value)
+      store.commit('nextStep')
+    }
+
     return {
+      stageType,
+      groupMembers,
       documents,
-      internshipType,
-      internshipTypeLabel,
-      v$,
+      accordionStates,
+      toggleAccordion,
       handleFileUpload,
-      handleOtherFileUpload,
-      removeFile,
-      removeOtherFile,
-      submitForm,
-      previousStep
+      handleGroupMemberFileUpload,
+      previousStep,
+      nextStep
     }
   }
 }
 </script>
+
+<style scoped>
+.input-field {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-light focus:border-primary outline-none transition duration-200;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+.btn-primary {
+  @apply bg-primary text-white rounded-md hover:bg-primary-dark transition duration-200;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition duration-200;
+}
+</style>
