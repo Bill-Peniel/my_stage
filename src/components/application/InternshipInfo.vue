@@ -208,9 +208,10 @@ export default {
       endDate: { required: helpers.withMessage('Veuillez sélectionner une date de fin', required) },
       motivation: { required: helpers.withMessage('Veuillez expliquer votre motivation', required) },
       skills: { required: helpers.withMessage('Veuillez lister vos compétences', required) },
-      universityName: { required: helpers.withMessage('Veuillez indiquer votre établissement d\'enseignement', required) },
-      studyField: { required: helpers.withMessage('Veuillez indiquer votre domaine d\'études', required) },
-      studyYear: { required: helpers.withMessage('Veuillez indiquer votre année d\'études', required) }
+      ...(form.internshipType === 'academic' ? {
+        universityName: { required: helpers.withMessage('Veuillez indiquer votre établissement d\'enseignement', required) }
+      } : {}),
+      studyField: { required: helpers.withMessage('Veuillez indiquer votre domaine d\'études', required) }
     }))
     
     const v$ = useVuelidate(rules, form)
