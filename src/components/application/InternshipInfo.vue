@@ -116,7 +116,7 @@
           </div>
 
           <!-- Université -->
-          <div class="form-group">
+          <div class="form-group" v-if="form.internshipType !== 'professionnel'">
             <label for="universityName" class="form-label">Établissement <span class="text-red-600">*</span></label>
             <input 
               type="text"
@@ -129,7 +129,7 @@
           </div>
 
           <!-- Domaine d'études -->
-          <div class="form-group">
+          <div class="form-group" v-if="form.internshipType !== 'professionnel'">
             <label for="studyField" class="form-label">Domaine d'études <span class="text-red-600">*</span></label>
             <input 
               type="text"
