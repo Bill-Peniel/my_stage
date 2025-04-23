@@ -2,14 +2,15 @@
 <template>
   <div class="p-6 bg-gray-50 overflow-x-hidden">
     <!-- En-tête avec stats temps réel -->
-    <div class="mb-8">
+    <div class="mb-8" data-aos="fade-right">
       <h1 class="text-3xl font-bold text-gray-800 mb-2">Tableau de bord</h1>
       <p class="text-gray-600">Vue d'ensemble de l'activité</p>
     </div>
 
     <!-- Cartes statistiques avec animations -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-blue-500 transform hover:scale-105 transition-transform duration-200">
+      <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-blue-500 transform hover:scale-105 transition-transform duration-200" 
+           data-aos="zoom-in" data-aos-delay="100">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-sm text-gray-600 mb-1">Stagiaires Actifs</p>
@@ -22,7 +23,8 @@
         </div>
       </div>
 
-      <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-purple-500 transform hover:scale-105 transition-transform duration-200">
+      <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-purple-500 transform hover:scale-105 transition-transform duration-200"
+           data-aos="zoom-in" data-aos-delay="200">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-sm text-gray-600 mb-1">Tuteurs</p>
@@ -35,7 +37,8 @@
         </div>
       </div>
 
-      <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-green-500 transform hover:scale-105 transition-transform duration-200">
+      <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-green-500 transform hover:scale-105 transition-transform duration-200"
+           data-aos="zoom-in" data-aos-delay="300">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-sm text-gray-600 mb-1">Stages en cours</p>
@@ -48,7 +51,8 @@
         </div>
       </div>
 
-      <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-yellow-500 transform hover:scale-105 transition-transform duration-200">
+      <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-yellow-500 transform hover:scale-105 transition-transform duration-200"
+           data-aos="zoom-in" data-aos-delay="400">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-sm text-gray-600 mb-1">Demandes en attente</p>
@@ -64,17 +68,17 @@
 
     <!-- Graphiques -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <div class="bg-white rounded-lg shadow-sm p-6">
+      <div class="bg-white rounded-lg shadow-sm p-6" data-aos="fade-up">
         <div class="flex justify-between items-center mb-6">
           <h3 class="text-lg font-semibold text-gray-800">Activité des stagiaires</h3>
           <div class="flex gap-2">
             <button @click="periodeActivite = 'semaine'" 
-                    :class="['px-3 py-1 text-sm rounded-full', 
+                    :class="['px-3 py-1 text-sm rounded-full transition-colors', 
                     periodeActivite === 'semaine' ? 'bg-blue-100 text-blue-600' : 'text-gray-600 hover:bg-gray-100']">
               Semaine
             </button>
             <button @click="periodeActivite = 'mois'"
-                    :class="['px-3 py-1 text-sm rounded-full',
+                    :class="['px-3 py-1 text-sm rounded-full transition-colors',
                     periodeActivite === 'mois' ? 'bg-blue-100 text-blue-600' : 'text-gray-600 hover:bg-gray-100']">
               Mois
             </button>
@@ -83,7 +87,7 @@
         <canvas ref="activityChart" class="w-full h-64"></canvas>
       </div>
 
-      <div class="bg-white rounded-lg shadow-sm p-6">
+      <div class="bg-white rounded-lg shadow-sm p-6" data-aos="fade-up" data-aos-delay="100">
         <div class="flex justify-between items-center mb-6">
           <h3 class="text-lg font-semibold text-gray-800">Répartition par structure</h3>
           <div class="flex items-center text-sm text-gray-500">
@@ -94,12 +98,12 @@
         <canvas ref="structuresChart" class="w-full h-64"></canvas>
       </div>
 
-      <div class="bg-white rounded-lg shadow-sm p-6">
+      <div class="bg-white rounded-lg shadow-sm p-6" data-aos="fade-up" data-aos-delay="200">
         <h3 class="text-lg font-semibold text-gray-800 mb-6">Satisfaction des stagiaires</h3>
         <canvas ref="satisfactionChart" class="w-full h-64"></canvas>
       </div>
 
-      <div class="bg-white rounded-lg shadow-sm p-6">
+      <div class="bg-white rounded-lg shadow-sm p-6" data-aos="fade-up" data-aos-delay="300">
         <h3 class="text-lg font-semibold text-gray-800 mb-6">Types de stages</h3>
         <canvas ref="typesChart" class="w-full h-64"></canvas>
       </div>
@@ -110,6 +114,7 @@
 <script>
 import { ref, onMounted, reactive } from 'vue'
 import Chart from 'chart.js/auto'
+import AOS from 'aos'
 
 export default {
   name: 'AdminDashboard',
@@ -132,6 +137,14 @@ export default {
     })
 
     const initCharts = () => {
+      // Configuration des graphiques avec des animations fluides
+      const commonOptions = {
+        animation: {
+          duration: 1500,
+          easing: 'easeInOutQuart'
+        }
+      }
+
       // Graphique d'activité
       new Chart(activityChart.value, {
         type: 'line',
@@ -147,6 +160,7 @@ export default {
           }]
         },
         options: {
+          ...commonOptions,
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
@@ -183,6 +197,7 @@ export default {
           }]
         },
         options: {
+          ...commonOptions,
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
@@ -213,6 +228,7 @@ export default {
           }]
         },
         options: {
+          ...commonOptions,
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
@@ -237,6 +253,7 @@ export default {
           }]
         },
         options: {
+          ...commonOptions,
           responsive: true,
           maintainAspectRatio: false,
           scales: {
@@ -250,6 +267,10 @@ export default {
     }
 
     onMounted(() => {
+      AOS.init({
+        duration: 1000,
+        once: true
+      })
       initCharts()
     })
 
@@ -268,5 +289,10 @@ export default {
 <style scoped>
 .transform {
   transition: all 0.2s ease-in-out;
+}
+
+/* Animation des cartes au survol */
+.hover\:scale-105:hover {
+  transform: scale(1.05);
 }
 </style>
