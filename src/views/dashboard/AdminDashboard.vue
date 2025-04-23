@@ -266,20 +266,28 @@ export default {
       })
     }
 
-    onMounted(() => {
+    onMounted(async () => {
       AOS.init({
         duration: 1000,
         once: true
       })
+      
       // Attendre que le DOM soit complètement chargé
-      nextTick(() => {
+      await nextTick()
+      
+      // S'assurer que tous les éléments canvas sont montés
+      const initInterval = setInterval(() => {
         if (activityChart.value && 
             structuresChart.value && 
             satisfactionChart.value && 
             typesChart.value) {
           initCharts()
+          clearInterval(initInterval)
         }
-      })
+      }, 100)
+
+      // Nettoyer l'intervalle après 5 secondes si les graphiques ne se chargent pas
+      setTimeout(() => clearInterval(initInterval), 5000)
     })
 
     return {
