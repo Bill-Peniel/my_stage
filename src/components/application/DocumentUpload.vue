@@ -47,32 +47,6 @@
             >
           </div>
 
-          <!-- Carte d'identité -->
-          <div class="form-group">
-            <label for="identityCard" class="form-label">Carte d'identité <span class="text-red-600">*</span></label>
-            <input 
-              type="file"
-              id="identityCard"
-              @change="handleFileUpload($event, 'identityCard')"
-              class="input-field"
-              accept=".pdf,.jpg,.jpeg,.png"
-              required
-            >
-          </div>
-
-          <!-- Attestation de scolarité -->
-          <div class="form-group">
-            <label for="universityEnrollment" class="form-label">Attestation de scolarité <span class="text-red-600">*</span></label>
-            <input 
-              type="file"
-              id="universityEnrollment"
-              @change="handleFileUpload($event, 'universityEnrollment')"
-              class="input-field"
-              accept=".pdf"
-              required
-            >
-          </div>
-
           <!-- Lettre de recommandation -->
           <div class="form-group">
             <label for="recommendation" class="form-label">Lettre de recommandation</label>
@@ -131,32 +105,6 @@
               >
             </div>
 
-            <!-- Carte d'identité -->
-            <div class="form-group">
-              <label :for="'identityCard' + (index + 2)" class="form-label">Carte d'identité <span class="text-red-600">*</span></label>
-              <input 
-                type="file"
-                :id="'identityCard' + (index + 2)"
-                @change="handleGroupMemberFileUpload($event, index, 'identityCard')"
-                class="input-field"
-                accept=".pdf,.jpg,.jpeg,.png"
-                required
-              >
-            </div>
-
-            <!-- Attestation de scolarité -->
-            <div class="form-group">
-              <label :for="'universityEnrollment' + (index + 2)" class="form-label">Attestation de scolarité <span class="text-red-600">*</span></label>
-              <input 
-                type="file"
-                :id="'universityEnrollment' + (index + 2)"
-                @change="handleGroupMemberFileUpload($event, index, 'universityEnrollment')"
-                class="input-field"
-                accept=".pdf"
-                required
-              >
-            </div>
-
             <!-- Lettre de recommandation -->
             <div class="form-group">
               <label :for="'recommendation' + (index + 2)" class="form-label">Lettre de recommandation</label>
@@ -209,8 +157,6 @@ export default {
     const documents = ref({
       cv: null,
       coverLetter: null,
-      identityCard: null,
-      universityEnrollment: null,
       recommendation: null,
       groupMembersDocuments: []
     })

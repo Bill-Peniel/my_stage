@@ -34,7 +34,6 @@
               <option value="" disabled>Sélectionnez le type de stage</option>
               <option value="academique">Stage académique</option>
               <option value="professionnel">Stage professionnel</option>
-              <option value="fin_etudes">Stage de fin d'études</option>
             </select>
           </div>
 
@@ -142,24 +141,7 @@
             >
           </div>
 
-          <!-- Année d'études -->
-          <div class="form-group md:col-span-2">
-            <label for="studyYear" class="form-label">Année d'études <span class="text-red-600">*</span></label>
-            <select 
-              id="studyYear"
-              v-model="form.studyYear"
-              class="input-field"
-              required
-            >
-              <option value="" disabled>Sélectionnez votre année d'études</option>
-              <option value="licence1">Licence 1</option>
-              <option value="licence2">Licence 2</option>
-              <option value="licence3">Licence 3</option>
-              <option value="master1">Master 1</option>
-              <option value="master2">Master 2</option>
-              <option value="doctorat">Doctorat</option>
-            </select>
-          </div>
+          
         </div>
       </div>
     </div>
