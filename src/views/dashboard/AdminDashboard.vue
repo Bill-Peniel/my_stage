@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted, reactive, nextTick } from 'vue'
 import Chart from 'chart.js/auto'
 import AOS from 'aos'
 
@@ -271,7 +271,15 @@ export default {
         duration: 1000,
         once: true
       })
-      initCharts()
+      // Attendre que le DOM soit complètement chargé
+      nextTick(() => {
+        if (activityChart.value && 
+            structuresChart.value && 
+            satisfactionChart.value && 
+            typesChart.value) {
+          initCharts()
+        }
+      })
     })
 
     return {
