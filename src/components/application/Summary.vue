@@ -93,6 +93,12 @@
       </div>
     </template>
 
+    <!-- Message de succès -->
+    <div v-if="submissionResult && submissionResult.success" class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+      <p class="text-green-700 font-medium">{{ submissionResult.message }}</p>
+      <p class="text-green-600 mt-2">Code de votre demande: <span class="font-bold">{{ submissionResult.applicationId }}</span></p>
+    </div>
+
     <!-- Navigation buttons -->
     <div class="mt-8 flex justify-between items-center">
       <button 
@@ -153,6 +159,8 @@ export default {
       store.commit('previousStep')
     }
 
+    const submissionResult = computed(() => store.state.applicationForm.submissionResult)
+
     const submitApplication = async () => {
       await store.dispatch('submitApplication')
       // Scroll to top to show success message
@@ -160,6 +168,7 @@ export default {
     }
 
     return {
+      submissionResult,
       personalInfo,
       internshipInfo,
       isSubmitting,
