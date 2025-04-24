@@ -15,7 +15,10 @@ export default defineConfig({
     host: '0.0.0.0',
     fs: {
       strict: false
-    }
+    },
+    allowedHosts: [
+      '8e63dc4a-00d3-4cec-ad50-c24b973a8406-00-3850p6aqi9ols.spock.replit.dev'
+    ]
   },
   build: {
     sourcemap: true,
