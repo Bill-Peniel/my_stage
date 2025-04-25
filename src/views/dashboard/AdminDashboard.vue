@@ -1,220 +1,123 @@
-
 <template>
   <div class="p-6 bg-gray-50 overflow-x-hidden">
-    <!-- En-tête avec stats temps réel -->
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold text-gray-800 mb-2">Tableau de bord</h1>
-      <p class="text-gray-600">Vue d'ensemble de l'activité</p>
-    </div>
-
-    <!-- Cartes statistiques avec animations -->
+    <!-- En-tête avec statistiques -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-blue-500 transform hover:scale-105 transition-transform duration-200">
-        <div class="flex items-center justify-between">
+      <div class="bg-blue-500 text-white rounded-lg p-6 shadow-sm">
+        <div class="flex justify-between items-center">
           <div>
-            <p class="text-sm text-gray-600 mb-1">Stagiaires Actifs</p>
-            <h3 class="text-2xl font-bold text-gray-800">{{ stats.stagiaires }}</h3>
-            <p class="text-xs text-green-500 mt-1">+{{ stats.nouveauxStagiaires }} cette semaine</p>
+            <p class="text-sm opacity-75">Nouvelles commandes</p>
+            <h2 class="text-4xl font-bold">150</h2>
           </div>
-          <div class="w-12 h-12 flex items-center justify-center bg-blue-100 rounded-full">
-            <i class="fas fa-user-graduate text-xl text-blue-500"></i>
+          <div class="text-3xl opacity-75">
+            <i class="fas fa-shopping-cart"></i>
           </div>
         </div>
+        <p class="mt-4 text-sm">
+          <a href="#" class="opacity-75 hover:opacity-100">Plus d'info <i class="fas fa-arrow-right ml-1"></i></a>
+        </p>
       </div>
 
-      <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-purple-500 transform hover:scale-105 transition-transform duration-200">
-        <div class="flex items-center justify-between">
+      <div class="bg-green-500 text-white rounded-lg p-6 shadow-sm">
+        <div class="flex justify-between items-center">
           <div>
-            <p class="text-sm text-gray-600 mb-1">Tuteurs</p>
-            <h3 class="text-2xl font-bold text-gray-800">{{ stats.tuteurs }}</h3>
-            <p class="text-xs text-purple-500 mt-1">{{ stats.tuteursDispo }} disponibles</p>
+            <p class="text-sm opacity-75">Taux de rebond</p>
+            <h2 class="text-4xl font-bold">53%</h2>
           </div>
-          <div class="w-12 h-12 flex items-center justify-center bg-purple-100 rounded-full">
-            <i class="fas fa-chalkboard-teacher text-xl text-purple-500"></i>
+          <div class="text-3xl opacity-75">
+            <i class="fas fa-chart-line"></i>
           </div>
         </div>
+        <p class="mt-4 text-sm">
+          <a href="#" class="opacity-75 hover:opacity-100">Plus d'info <i class="fas fa-arrow-right ml-1"></i></a>
+        </p>
       </div>
 
-      <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-green-500 transform hover:scale-105 transition-transform duration-200">
-        <div class="flex items-center justify-between">
+      <div class="bg-yellow-500 text-white rounded-lg p-6 shadow-sm">
+        <div class="flex justify-between items-center">
           <div>
-            <p class="text-sm text-gray-600 mb-1">Stages en cours</p>
-            <h3 class="text-2xl font-bold text-gray-800">{{ stats.stagesEnCours }}</h3>
-            <p class="text-xs text-green-500 mt-1">{{ stats.stagesTermines }} terminés</p>
+            <p class="text-sm opacity-75">Inscriptions utilisateurs</p>
+            <h2 class="text-4xl font-bold">44</h2>
           </div>
-          <div class="w-12 h-12 flex items-center justify-center bg-green-100 rounded-full">
-            <i class="fas fa-briefcase text-xl text-green-500"></i>
+          <div class="text-3xl opacity-75">
+            <i class="fas fa-user-plus"></i>
           </div>
         </div>
+        <p class="mt-4 text-sm">
+          <a href="#" class="opacity-75 hover:opacity-100">Plus d'info <i class="fas fa-arrow-right ml-1"></i></a>
+        </p>
       </div>
 
-      <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-yellow-500 transform hover:scale-105 transition-transform duration-200">
-        <div class="flex items-center justify-between">
+      <div class="bg-red-500 text-white rounded-lg p-6 shadow-sm">
+        <div class="flex justify-between items-center">
           <div>
-            <p class="text-sm text-gray-600 mb-1">Demandes en attente</p>
-            <h3 class="text-2xl font-bold text-gray-800">{{ stats.demandesEnAttente }}</h3>
-            <p class="text-xs text-yellow-500 mt-1">{{ stats.demandesTraitees }} traitées aujourd'hui</p>
+            <p class="text-sm opacity-75">Visiteurs uniques</p>
+            <h2 class="text-4xl font-bold">65</h2>
           </div>
-          <div class="w-12 h-12 flex items-center justify-center bg-yellow-100 rounded-full">
-            <i class="fas fa-clock text-xl text-yellow-500"></i>
+          <div class="text-3xl opacity-75">
+            <i class="fas fa-users"></i>
           </div>
         </div>
+        <p class="mt-4 text-sm">
+          <a href="#" class="opacity-75 hover:opacity-100">Plus d'info <i class="fas fa-arrow-right ml-1"></i></a>
+        </p>
       </div>
     </div>
 
     <!-- Graphiques -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div class="bg-white rounded-lg shadow-sm p-6">
-        <div class="flex justify-between items-center mb-6">
-          <h3 class="text-lg font-semibold text-gray-800">Activité des stagiaires</h3>
-          <div class="flex gap-2">
-            <button @click="periodeActivite = 'semaine'" 
-                    :class="['px-3 py-1 text-sm rounded-full', 
-                    periodeActivite === 'semaine' ? 'bg-blue-100 text-blue-600' : 'text-gray-600 hover:bg-gray-100']">
-              Semaine
-            </button>
-            <button @click="periodeActivite = 'mois'"
-                    :class="['px-3 py-1 text-sm rounded-full',
-                    periodeActivite === 'mois' ? 'bg-blue-100 text-blue-600' : 'text-gray-600 hover:bg-gray-100']">
-              Mois
-            </button>
-          </div>
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-semibold">Navigateurs utilisés</h3>
+          <button class="text-gray-400 hover:text-gray-600">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
         </div>
-        <canvas ref="activityChart" class="w-full h-64"></canvas>
+        <canvas ref="donutChart" class="max-h-80"></canvas>
       </div>
 
       <div class="bg-white rounded-lg shadow-sm p-6">
-        <div class="flex justify-between items-center mb-6">
-          <h3 class="text-lg font-semibold text-gray-800">Répartition par structure</h3>
-          <div class="flex items-center text-sm text-gray-500">
-            <span class="w-3 h-3 rounded-full bg-blue-500 mr-1"></span> Actifs
-            <span class="w-3 h-3 rounded-full bg-gray-300 mx-2"></span> Places disponibles
-          </div>
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-semibold">Statistiques mensuelles</h3>
+          <button class="text-gray-400 hover:text-gray-600">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
         </div>
-        <canvas ref="structuresChart" class="w-full h-64"></canvas>
-      </div>
-
-      <div class="bg-white rounded-lg shadow-sm p-6">
-        <h3 class="text-lg font-semibold text-gray-800 mb-6">Satisfaction des stagiaires</h3>
-        <canvas ref="satisfactionChart" class="w-full h-64"></canvas>
-      </div>
-
-      <div class="bg-white rounded-lg shadow-sm p-6">
-        <h3 class="text-lg font-semibold text-gray-800 mb-6">Types de stages</h3>
-        <canvas ref="typesChart" class="w-full h-64"></canvas>
+        <canvas ref="barChart" class="max-h-80"></canvas>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted } from 'vue'
 import Chart from 'chart.js/auto'
 
 export default {
   name: 'AdminDashboard',
   setup() {
-    const activityChart = ref(null)
-    const structuresChart = ref(null)
-    const satisfactionChart = ref(null)
-    const typesChart = ref(null)
-    const periodeActivite = ref('semaine')
+    const donutChart = ref(null)
+    const barChart = ref(null)
 
-    const stats = reactive({
-      stagiaires: 487,
-      nouveauxStagiaires: 24,
-      tuteurs: 168,
-      tuteursDispo: 45,
-      stagesEnCours: 312,
-      stagesTermines: 175,
-      demandesEnAttente: 56,
-      demandesTraitees: 12
-    })
-
-    const initCharts = () => {
-      // Graphique d'activité
-      new Chart(activityChart.value, {
-        type: 'line',
-        data: {
-          labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
-          datasets: [{
-            label: 'Connexions',
-            data: [65, 78, 82, 74, 85, 45, 30],
-            borderColor: '#3B82F6',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-            fill: true,
-            tension: 0.4
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false
-            }
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              grid: {
-                display: true,
-                drawBorder: false,
-                color: '#f3f4f6'
-              }
-            }
-          }
-        }
-      })
-
-      // Graphique des structures
-      new Chart(structuresChart.value, {
-        type: 'bar',
-        data: {
-          labels: ['DSI', 'DRH', 'DAF', 'DPAF', 'DC'],
-          datasets: [{
-            label: 'Stagiaires actifs',
-            data: [45, 32, 28, 35, 25],
-            backgroundColor: '#3B82F6'
-          }, {
-            label: 'Places disponibles',
-            data: [15, 8, 12, 5, 10],
-            backgroundColor: '#E5E7EB'
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false
-            }
-          },
-          scales: {
-            x: {
-              stacked: true
-            },
-            y: {
-              stacked: true,
-              beginAtZero: true
-            }
-          }
-        }
-      })
-
-      // Graphique de satisfaction
-      new Chart(satisfactionChart.value, {
+    onMounted(() => {
+      // Graphique donut des navigateurs
+      new Chart(donutChart.value, {
         type: 'doughnut',
         data: {
-          labels: ['Très satisfait', 'Satisfait', 'Neutre', 'Insatisfait'],
+          labels: ['Chrome', 'IE', 'Firefox', 'Safari', 'Opera', 'Navigator'],
           datasets: [{
-            data: [45, 35, 15, 5],
-            backgroundColor: ['#22C55E', '#3B82F6', '#F59E0B', '#EF4444']
+            data: [700, 500, 400, 600, 300, 100],
+            backgroundColor: [
+              '#FF6384',
+              '#36A2EB',
+              '#FFCE56',
+              '#4BC0C0',
+              '#9966FF',
+              '#FF9F40'
+            ]
           }]
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false,
           plugins: {
             legend: {
               position: 'right'
@@ -223,43 +126,43 @@ export default {
         }
       })
 
-      // Graphique des types de stages
-      new Chart(typesChart.value, {
-        type: 'radar',
+      // Graphique en barres des statistiques mensuelles
+      new Chart(barChart.value, {
+        type: 'bar',
         data: {
-          labels: ['Développement', 'Design', 'Support', 'Administration', 'Réseau', 'Sécurité'],
-          datasets: [{
-            label: 'Répartition',
-            data: [85, 65, 45, 55, 60, 70],
-            backgroundColor: 'rgba(59, 130, 246, 0.2)',
-            borderColor: '#3B82F6',
-            pointBackgroundColor: '#3B82F6'
-          }]
+          labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet'],
+          datasets: [
+            {
+              label: 'Electronics',
+              data: [65, 59, 80, 81, 56, 55, 40],
+              backgroundColor: '#FF6384'
+            },
+            {
+              label: 'Fashion',
+              data: [28, 48, 40, 19, 86, 27, 90],
+              backgroundColor: '#36A2EB'
+            },
+            {
+              label: 'Foods',
+              data: [45, 25, 16, 36, 67, 18, 76],
+              backgroundColor: '#4BC0C0'
+            }
+          ]
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false,
           scales: {
-            r: {
-              beginAtZero: true,
-              max: 100
+            y: {
+              beginAtZero: true
             }
           }
         }
       })
-    }
-
-    onMounted(() => {
-      initCharts()
     })
 
     return {
-      activityChart,
-      structuresChart,
-      satisfactionChart,
-      typesChart,
-      periodeActivite,
-      stats
+      donutChart,
+      barChart
     }
   }
 }
