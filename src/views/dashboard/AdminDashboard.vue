@@ -1,3 +1,4 @@
+
 <template>
   <div class="p-6 bg-gray-50 overflow-x-hidden">
     <!-- En-tête avec statistiques -->
@@ -5,60 +6,60 @@
       <div class="bg-blue-500 text-white rounded-lg p-6 shadow-sm">
         <div class="flex justify-between items-center">
           <div>
-            <p class="text-sm opacity-75">Nouvelles commandes</p>
-            <h2 class="text-4xl font-bold">150</h2>
+            <p class="text-sm opacity-75">Demandes en attente</p>
+            <h2 class="text-4xl font-bold">12</h2>
           </div>
           <div class="text-3xl opacity-75">
-            <i class="fas fa-shopping-cart"></i>
+            <i class="fas fa-clock"></i>
           </div>
         </div>
         <p class="mt-4 text-sm">
-          <a href="#" class="opacity-75 hover:opacity-100">Plus d'info <i class="fas fa-arrow-right ml-1"></i></a>
+          <a href="#" class="opacity-75 hover:opacity-100">Voir les demandes <i class="fas fa-arrow-right ml-1"></i></a>
         </p>
       </div>
 
       <div class="bg-green-500 text-white rounded-lg p-6 shadow-sm">
         <div class="flex justify-between items-center">
           <div>
-            <p class="text-sm opacity-75">Taux de rebond</p>
-            <h2 class="text-4xl font-bold">53%</h2>
+            <p class="text-sm opacity-75">Stages en cours</p>
+            <h2 class="text-4xl font-bold">8</h2>
           </div>
           <div class="text-3xl opacity-75">
-            <i class="fas fa-chart-line"></i>
+            <i class="fas fa-user-graduate"></i>
           </div>
         </div>
         <p class="mt-4 text-sm">
-          <a href="#" class="opacity-75 hover:opacity-100">Plus d'info <i class="fas fa-arrow-right ml-1"></i></a>
+          <a href="#" class="opacity-75 hover:opacity-100">Voir les stages <i class="fas fa-arrow-right ml-1"></i></a>
         </p>
       </div>
 
       <div class="bg-yellow-500 text-white rounded-lg p-6 shadow-sm">
         <div class="flex justify-between items-center">
           <div>
-            <p class="text-sm opacity-75">Inscriptions utilisateurs</p>
-            <h2 class="text-4xl font-bold">44</h2>
-          </div>
-          <div class="text-3xl opacity-75">
-            <i class="fas fa-user-plus"></i>
-          </div>
-        </div>
-        <p class="mt-4 text-sm">
-          <a href="#" class="opacity-75 hover:opacity-100">Plus d'info <i class="fas fa-arrow-right ml-1"></i></a>
-        </p>
-      </div>
-
-      <div class="bg-red-500 text-white rounded-lg p-6 shadow-sm">
-        <div class="flex justify-between items-center">
-          <div>
-            <p class="text-sm opacity-75">Visiteurs uniques</p>
-            <h2 class="text-4xl font-bold">65</h2>
+            <p class="text-sm opacity-75">Stagiaires actifs</p>
+            <h2 class="text-4xl font-bold">24</h2>
           </div>
           <div class="text-3xl opacity-75">
             <i class="fas fa-users"></i>
           </div>
         </div>
         <p class="mt-4 text-sm">
-          <a href="#" class="opacity-75 hover:opacity-100">Plus d'info <i class="fas fa-arrow-right ml-1"></i></a>
+          <a href="#" class="opacity-75 hover:opacity-100">Voir les stagiaires <i class="fas fa-arrow-right ml-1"></i></a>
+        </p>
+      </div>
+
+      <div class="bg-red-500 text-white rounded-lg p-6 shadow-sm">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-sm opacity-75">Structures partenaires</p>
+            <h2 class="text-4xl font-bold">15</h2>
+          </div>
+          <div class="text-3xl opacity-75">
+            <i class="fas fa-building"></i>
+          </div>
+        </div>
+        <p class="mt-4 text-sm">
+          <a href="#" class="opacity-75 hover:opacity-100">Voir les structures <i class="fas fa-arrow-right ml-1"></i></a>
         </p>
       </div>
     </div>
@@ -67,7 +68,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div class="bg-white rounded-lg shadow-sm p-6">
         <div class="flex justify-between items-center mb-4">
-          <h3 class="text-lg font-semibold">Navigateurs utilisés</h3>
+          <h3 class="text-lg font-semibold">Répartition par domaine de stage</h3>
           <button class="text-gray-400 hover:text-gray-600">
             <i class="fas fa-ellipsis-v"></i>
           </button>
@@ -77,7 +78,7 @@
 
       <div class="bg-white rounded-lg shadow-sm p-6">
         <div class="flex justify-between items-center mb-4">
-          <h3 class="text-lg font-semibold">Statistiques mensuelles</h3>
+          <h3 class="text-lg font-semibold">Évolution mensuelle des demandes</h3>
           <button class="text-gray-400 hover:text-gray-600">
             <i class="fas fa-ellipsis-v"></i>
           </button>
@@ -99,13 +100,13 @@ export default {
     const barChart = ref(null)
 
     onMounted(() => {
-      // Graphique donut des navigateurs
+      // Graphique donut des domaines de stage
       new Chart(donutChart.value, {
         type: 'doughnut',
         data: {
-          labels: ['Chrome', 'IE', 'Firefox', 'Safari', 'Opera', 'Navigator'],
+          labels: ['Administration', 'Finances', 'Ressources Humaines', 'Communication', 'Juridique', 'Informatique'],
           datasets: [{
-            data: [700, 500, 400, 600, 300, 100],
+            data: [30, 25, 15, 10, 10, 10],
             backgroundColor: [
               '#FF6384',
               '#36A2EB',
@@ -126,25 +127,25 @@ export default {
         }
       })
 
-      // Graphique en barres des statistiques mensuelles
+      // Graphique en barres de l'évolution des demandes
       new Chart(barChart.value, {
         type: 'bar',
         data: {
           labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet'],
           datasets: [
             {
-              label: 'Electronics',
-              data: [65, 59, 80, 81, 56, 55, 40],
+              label: 'Demandes reçues',
+              data: [45, 39, 60, 51, 56, 55, 40],
               backgroundColor: '#FF6384'
             },
             {
-              label: 'Fashion',
-              data: [28, 48, 40, 19, 86, 27, 90],
+              label: 'Demandes acceptées',
+              data: [38, 32, 45, 39, 44, 42, 35],
               backgroundColor: '#36A2EB'
             },
             {
-              label: 'Foods',
-              data: [45, 25, 16, 36, 67, 18, 76],
+              label: 'Stages démarrés',
+              data: [35, 28, 40, 35, 40, 38, 30],
               backgroundColor: '#4BC0C0'
             }
           ]
