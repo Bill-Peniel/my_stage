@@ -56,8 +56,8 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'DashboardOverview',
-        component: () => import('../views/dashboard/Overview.vue')
+        name: 'DashboardOverview', 
+        component: () => import('../views/dashboard/AdminDashboard.vue')
       },
       {
         path: 'demandes/en-attente',
