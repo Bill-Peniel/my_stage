@@ -11,7 +11,6 @@
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Structure</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date de demande</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -23,17 +22,6 @@
                 <span class="px-2 py-1 text-xs rounded-full" :class="getStatusClass(demande.status)">
                   {{ demande.status }}
                 </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <button class="text-primary hover:text-primary-dark mr-2">
-                  <i class="fas fa-eye"></i>
-                </button>
-                <button class="text-success hover:text-green-700 mr-2">
-                  <i class="fas fa-check"></i>
-                </button>
-                <button class="text-danger hover:text-red-700">
-                  <i class="fas fa-times"></i>
-                </button>
               </td>
             </tr>
           </tbody>
