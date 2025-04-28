@@ -8,7 +8,7 @@
             <img src="../assets/finance-logo.png" alt="Logo du Ministère" class="h-12 w-auto" />
           </router-link>
         </div>
-
+        
         <!-- Desktop navigation -->
         <nav class="hidden md:flex items-center space-x-6">
           <router-link to="/" class="text-gray-700 hover:text-green-800 transition duration-150">
@@ -58,14 +58,14 @@
             </div>
           </div>
         </nav>
-
+        
         <!-- Mobile menu button -->
         <button @click="toggleMobileMenu" class="md:hidden flex items-center p-2 rounded-md text-gray-600 hover:text-green-800 hover:bg-gray-100 focus:outline-none">
           <span class="sr-only">Open main menu</span>
           <i :class="[mobileMenuOpen ? 'fa-times' : 'fa-bars', 'fas text-xl']"></i>
         </button>
       </div>
-
+      
       <!-- Mobile menu -->
       <div class="md:hidden" v-show="mobileMenuOpen">
         <div class="pt-2 pb-4 space-y-1">
@@ -125,38 +125,38 @@ export default {
     const mobileMenuOpen = ref(false)
     const showProfileMenu = ref(false)
     const profileMenu = ref(null)
-
+    
     const isAuthenticated = computed(() => store.getters.isAuthenticated)
     const currentUser = computed(() => store.getters.currentUser)
-
+    
     const toggleMobileMenu = () => {
       mobileMenuOpen.value = !mobileMenuOpen.value
     }
-
+    
     const toggleProfileMenu = () => {
       showProfileMenu.value = !showProfileMenu.value
     }
-
+    
     const logout = async () => {
       await store.dispatch('logout')
       showProfileMenu.value = false
       router.push('/login')
     }
-
+    
     const closeProfileMenu = (e) => {
       if (profileMenu.value && !profileMenu.value.contains(e.target)) {
         showProfileMenu.value = false
       }
     }
-
+    
     onMounted(() => {
       document.addEventListener('click', closeProfileMenu)
     })
-
+    
     onBeforeUnmount(() => {
       document.removeEventListener('click', closeProfileMenu)
     })
-
+    
     return {
       mobileMenuOpen,
       toggleMobileMenu,
