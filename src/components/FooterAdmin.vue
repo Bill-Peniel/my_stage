@@ -1,4 +1,3 @@
-
 <template>
   <footer class="bg-primary text-white py-4 px-6">
     <div class="flex justify-between items-center">
