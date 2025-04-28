@@ -1,4 +1,3 @@
-
 <template>
   <header class="bg-white shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,30 +61,29 @@
               </div>
             </div>
             <div class="relative" ref="profileMenu">
+            <button 
+              @click="toggleProfileMenu" 
+              class="flex items-center text-gray-700 hover:text-green-800 focus:outline-none"
+            >
+              <span class="mr-1">{{ currentUser.name }}</span>
+              <i class="fas fa-chevron-down text-xs"></i>
+            </button>
+            <div 
+              v-show="showProfileMenu" 
+              class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10"
+            >
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                Mon profil
+              </a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                Mes demandes
+              </a>
               <button 
-                @click="toggleProfileMenu" 
-                class="flex items-center text-gray-700 hover:text-green-800 focus:outline-none"
+                @click="logout" 
+                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
-                <span class="mr-1">{{ currentUser.name }}</span>
-                <i class="fas fa-chevron-down text-xs"></i>
+                Se déconnecter
               </button>
-              <div 
-                v-show="showProfileMenu" 
-                class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10"
-              >
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Mon profil
-                </a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Mes demandes
-                </a>
-                <button 
-                  @click="logout" 
-                  class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Se déconnecter
-                </button>
-              </div>
             </div>
           </div>
         </nav>
@@ -221,11 +219,7 @@ export default {
       toggleMobileMenu,
       showProfileMenu,
       toggleProfileMenu,
-      showNotificationMenu,
-      toggleNotificationMenu,
-      notifications,
       profileMenu,
-      notificationMenu,
       isAuthenticated,
       currentUser,
       logout

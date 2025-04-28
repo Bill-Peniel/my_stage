@@ -1,32 +1,5 @@
 <template>
   <div class="p-6 bg-gray-50 overflow-x-hidden">
-    <!-- En-tête avec notifications -->
-    <div class="flex justify-end mb-6">
-      <div class="relative" ref="notificationMenu">
-        <button @click="toggleNotificationMenu" class="relative text-gray-700 hover:text-green-800 focus:outline-none">
-          <i class="fas fa-bell text-xl"></i>
-          <span v-if="notifications.length > 0" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-            {{ notifications.length }}
-          </span>
-        </button>
-        <div v-show="showNotificationMenu" class="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg py-1 z-20">
-          <div class="px-4 py-2 border-b border-gray-200">
-            <h3 class="text-lg font-semibold">Notifications</h3>
-          </div>
-          <div class="max-h-64 overflow-y-auto">
-            <div v-for="notification in notifications" :key="notification.id" class="px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-0">
-              <p class="text-sm font-medium text-gray-900">{{ notification.title }}</p>
-              <p class="text-xs text-gray-500 mt-1">{{ notification.message }}</p>
-            </div>
-          </div>
-          <div class="px-4 py-2 border-t border-gray-200">
-            <router-link to="/dashboard/notifications" class="block text-center text-sm text-primary hover:text-primary-dark">
-              Voir toutes les notifications
-            </router-link>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- En-tête avec statistiques -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <div class="bg-blue-500 text-white rounded-lg p-6 shadow-sm">
@@ -178,31 +151,6 @@ export default {
   setup() {
     const donutChart = ref(null)
     const barChart = ref(null)
-    const notificationMenu = ref(null)
-    const showNotificationMenu = ref(false)
-    const notifications = ref([
-      {
-        id: 1,
-        title: 'Nouvelle demande de stage',
-        message: 'Une nouvelle demande a été soumise par Jean Dupont'
-      },
-      {
-        id: 2,
-        title: 'Rappel',
-        message: 'Validation en attente pour 3 demandes de stage'
-      }
-    ])
-
-    const toggleNotificationMenu = () => {
-      showNotificationMenu.value = !showNotificationMenu.value
-    }
-
-    onMounted(() => {
-      document.addEventListener('click', (e) => {
-        if (notificationMenu.value && !notificationMenu.value.contains(e.target)) {
-          showNotificationMenu.value = false
-        }
-      })
 
     onMounted(() => {
       // Graphique donut des domaines de stage
@@ -275,11 +223,7 @@ export default {
 
     return {
       donutChart,
-      barChart,
-      notificationMenu,
-      showNotificationMenu,
-      notifications,
-      toggleNotificationMenu
+      barChart
     }
   }
 }
