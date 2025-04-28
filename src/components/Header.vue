@@ -36,8 +36,8 @@
               @click="toggleProfileMenu" 
               class="flex items-center text-gray-700 hover:text-green-800 focus:outline-none"
             >
-              <span class="mr-1">{{ currentUser.name }}</span>
-              <i class="fas fa-chevron-down text-xs"></i>
+              <i class="fas fa-user-circle text-2xl text-gray-700"></i>
+              <i class="fas fa-chevron-down text-xs ml-1"></i>
             </button>
             <div 
               v-show="showProfileMenu" 
