@@ -3,7 +3,7 @@
     <header class="bg-primary shadow fixed top-0 w-full z-20">
       <div class="px-4 py-4 flex justify-between items-center">
         <div class="flex items-center gap-4">
-          <img src="@/assets/ministry-logo.svg" alt="Logo du ministère" class="h-12 w-auto" />
+          <img src="@/assets/finance-logo1.png" alt="Logo du ministère" class="h-12 w-auto" />
           <h1 class="text-2xl font-bold text-white">Direction du Personnel - Gestion des Stages</h1>
         </div>
         <div class="flex items-center space-x-4">

@@ -5,7 +5,7 @@
         <!-- Ministry Information -->
         <div>
           <div class="flex items-center mb-4">
-            <img src="../assets/ministry-logo.svg" alt="Logo du Ministère" class="h-10 w-auto" />
+            <img src="../assets/finance-logo.png" alt="Logo du Ministère" class="h-10 w-auto" />
             <h3 class="ml-2 text-lg font-semibold text-gray-900">MEF Bénin</h3>
           </div>
           <p class="text-gray-600 text-sm">
