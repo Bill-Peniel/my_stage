@@ -1,4 +1,3 @@
-
 <template>
   <div class="min-h-screen bg-gray-100">
     <div class="flex-1">
@@ -84,6 +83,14 @@
                   <label class="block text-sm font-medium text-gray-700">Téléphone</label>
                   <input v-model="newStructure.telephoneContact" type="tel" class="mt-1 input-field" required>
                 </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">Mot de passe</label>
+                  <input v-model="newStructure.password" type="password" class="mt-1 input-field" required>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">Confirmer le mot de passe</label>
+                  <input v-model="newStructure.confirmPassword" type="password" class="mt-1 input-field" required>
+                </div>
               </div>
               <div class="mt-6 flex justify-end space-x-3">
                 <button type="button" @click="showAddModal = false" class="btn-outline">
@@ -113,7 +120,9 @@ export default {
         type: '',
         adresse: '',
         emailContact: '',
-        telephoneContact: ''
+        telephoneContact: '',
+        password: '',
+        confirmPassword: ''
       }
     }
   },
@@ -139,7 +148,9 @@ export default {
             type: '',
             adresse: '',
             emailContact: '',
-            telephoneContact: ''
+            telephoneContact: '',
+            password: '',
+            confirmPassword: ''
           };
         }
       } catch (error) {
