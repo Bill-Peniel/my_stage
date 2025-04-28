@@ -103,7 +103,6 @@ const routes = [
   },
   {
     path: '/dashboard/dpaf',
-    name: 'DpafDashboard',
     component: () => import('../views/dashboard/DpafDashboard.vue'),
     meta: { requiresAuth: true, requiresDpaf: true },
     beforeEnter: (to, from, next) => {
@@ -112,7 +111,44 @@ const routes = [
       } else {
         next()
       }
-    }
+    },
+    children: [
+      {
+        path: '',
+        name: 'DpafOverview',
+        component: () => import('../views/dashboard/DpafDashboard.vue')
+      },
+      {
+        path: 'nouvelles-demandes',
+        name: 'NouvellesDemandes',
+        component: () => import('../views/dashboard/dpaf/NouvellesDemandes.vue')
+      },
+      {
+        path: 'affectations',
+        name: 'Affectations', 
+        component: () => import('../views/dashboard/dpaf/Affectations.vue')
+      },
+      {
+        path: 'historique',
+        name: 'DpafHistorique',
+        component: () => import('../views/dashboard/dpaf/Historique.vue')
+      },
+      {
+        path: 'statistiques',
+        name: 'DpafStatistiques',
+        component: () => import('../views/dashboard/dpaf/Statistiques.vue')
+      },
+      {
+        path: 'evaluations',
+        name: 'DpafEvaluations',
+        component: () => import('../views/dashboard/dpaf/Evaluations.vue')
+      },
+      {
+        path: 'parametres',
+        name: 'DpafParametres',
+        component: () => import('../views/dashboard/dpaf/Parametres.vue')
+      }
+    ]
   }
 ]
 
