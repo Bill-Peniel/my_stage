@@ -133,22 +133,22 @@ export default {
         {
           label: 'Demandes en attente',
           data: [15, 22, 28, 32, 38, 42, 45, 48, 52, 55, 58, 62],
-          borderColor: '#FF6384',
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          borderColor: '#FF0000',
+          backgroundColor: 'rgba(255, 0, 0, 0.7)',
           tension: 0.4
         },
         {
           label: 'Demandes validées',
           data: [10, 18, 25, 30, 35, 40, 43, 46, 50, 53, 56, 60],
-          borderColor: '#36A2EB',
-          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: '#00FF00',
+          backgroundColor: 'rgba(0, 255, 0, 0.7)',
           tension: 0.4
         },
         {
           label: 'Demandes rejetées',
           data: [5, 8, 10, 12, 15, 18, 20, 22, 25, 28, 30, 32],
-          borderColor: '#4BC0C0',
-          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          borderColor: '#0000FF',
+          backgroundColor: 'rgba(0, 0, 255, 0.7)',
           tension: 0.4
         }
       ]
