@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -19,7 +20,6 @@
     @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary;
   }
 
-  /* Styles pour les tableaux dans le dashboard */
   .dashboard-table-container {
     @apply w-full overflow-x-auto;
   }
@@ -29,7 +29,6 @@
   }
 }
 
-/* Variables de couleur personnalisées */
 :root {
   --color-primary: #1a56db;
   --color-primary-dark: #1e429f;
@@ -47,5 +46,4 @@
 
 .animate-progress {
   animation: progress 2s ease-in-out;
-}
 }
