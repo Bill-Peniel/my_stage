@@ -144,7 +144,7 @@
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import Sidebar from '../../components/Sidebar.vue'
+import Sidebar from '../../components/SidebarDpaf.vue'
 
 export default {
   name: 'DpafDashboard',
