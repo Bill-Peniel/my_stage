@@ -58,38 +58,38 @@
           <div class="p-6">
             <h2 class="text-xl font-bold mb-4">Ajouter une structure</h2>
             <form @submit.prevent="submitStructure">
-              <div class="space-y-4">
-                <div>
-                  <label class="block text-sm font-medium text-gray-700">Nom de la structure</label>
-                  <input v-model="newStructure.nomStructure" type="text" class="mt-1 input-field" required>
+              <div class="grid grid-cols-1 gap-6">
+                <div class="w-full">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Nom de la structure</label>
+                  <input v-model="newStructure.nomStructure" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
                 </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700">Type de structure</label>
-                  <select v-model="newStructure.type" class="mt-1 input-field" required>
+                <div class="w-full">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Type de structure</label>
+                  <select v-model="newStructure.type" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
                     <option value="Entreprise">Entreprise</option>
                     <option value="Administration">Administration</option>
                     <option value="ONG">ONG</option>
                   </select>
                 </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700">Adresse</label>
-                  <input v-model="newStructure.adresse" type="text" class="mt-1 input-field" required>
+                <div class="w-full">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Adresse</label>
+                  <input v-model="newStructure.adresse" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
                 </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700">Email de contact</label>
-                  <input v-model="newStructure.emailContact" type="email" class="mt-1 input-field" required>
+                <div class="w-full">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Email de contact</label>
+                  <input v-model="newStructure.emailContact" type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
                 </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700">Téléphone</label>
-                  <input v-model="newStructure.telephoneContact" type="tel" class="mt-1 input-field" required>
+                <div class="w-full">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Téléphone</label>
+                  <input v-model="newStructure.telephoneContact" type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
                 </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700">Mot de passe</label>
-                  <input v-model="newStructure.password" type="password" class="mt-1 input-field" required>
+                <div class="w-full">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
+                  <input v-model="newStructure.password" type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
                 </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700">Confirmer le mot de passe</label>
-                  <input v-model="newStructure.confirmPassword" type="password" class="mt-1 input-field" required>
+                <div class="w-full">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Confirmer le mot de passe</label>
+                  <input v-model="newStructure.confirmPassword" type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
                 </div>
               </div>
               <div class="mt-6 flex justify-end space-x-3">
