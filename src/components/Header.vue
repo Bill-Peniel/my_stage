@@ -31,36 +31,7 @@
               S'inscrire
             </router-link>
           </template>
-          <div v-else class="flex items-center space-x-4">
-            <div class="relative" ref="notificationMenu">
-              <button @click="toggleNotificationMenu" class="relative text-gray-700 hover:text-green-800 focus:outline-none">
-                <i class="fas fa-bell text-xl"></i>
-                <span v-if="notifications.length > 0" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                  {{ notifications.length }}
-                </span>
-              </button>
-              <div v-show="showNotificationMenu" class="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg py-1 z-20">
-                <div class="px-4 py-2 border-b border-gray-200">
-                  <h3 class="text-lg font-semibold">Notifications</h3>
-                </div>
-                <div class="max-h-64 overflow-y-auto">
-                  <div v-if="notifications.length === 0" class="px-4 py-3 text-gray-500 text-center">
-                    Aucune notification
-                  </div>
-                  <div v-for="notification in notifications.slice(0, 4)" :key="notification.id" 
-                       class="px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-0">
-                    <p class="text-sm font-medium text-gray-900">{{ notification.title }}</p>
-                    <p class="text-xs text-gray-500 mt-1">{{ notification.message }}</p>
-                  </div>
-                </div>
-                <div class="px-4 py-2 border-t border-gray-200">
-                  <router-link to="/dashboard/notifications" class="block text-center text-sm text-primary hover:text-primary-dark">
-                    Voir toutes les notifications
-                  </router-link>
-                </div>
-              </div>
-            </div>
-            <div class="relative" ref="profileMenu">
+          <div v-else class="relative" ref="profileMenu">
             <button 
               @click="toggleProfileMenu" 
               class="flex items-center text-gray-700 hover:text-green-800 focus:outline-none"
@@ -153,35 +124,10 @@ export default {
     const router = useRouter()
     const mobileMenuOpen = ref(false)
     const showProfileMenu = ref(false)
-    const showNotificationMenu = ref(false)
     const profileMenu = ref(null)
-    const notificationMenu = ref(null)
     
     const isAuthenticated = computed(() => store.getters.isAuthenticated)
     const currentUser = computed(() => store.getters.currentUser)
-    
-    // Simulated notifications - Replace with actual data from your store/API
-    const notifications = ref([
-      {
-        id: 1,
-        title: 'Nouvelle demande',
-        message: 'Une nouvelle demande de stage a été soumise',
-        date: new Date()
-      },
-      {
-        id: 2,
-        title: 'Validation en attente',
-        message: 'Votre demande est en cours de validation',
-        date: new Date()
-      }
-    ])
-
-    const toggleNotificationMenu = () => {
-      showNotificationMenu.value = !showNotificationMenu.value
-      if (showNotificationMenu.value) {
-        showProfileMenu.value = false
-      }
-    }
     
     const toggleMobileMenu = () => {
       mobileMenuOpen.value = !mobileMenuOpen.value
@@ -197,21 +143,18 @@ export default {
       router.push('/login')
     }
     
-    const closeMenus = (e) => {
+    const closeProfileMenu = (e) => {
       if (profileMenu.value && !profileMenu.value.contains(e.target)) {
         showProfileMenu.value = false
-      }
-      if (notificationMenu.value && !notificationMenu.value.contains(e.target)) {
-        showNotificationMenu.value = false
       }
     }
     
     onMounted(() => {
-      document.addEventListener('click', closeMenus)
+      document.addEventListener('click', closeProfileMenu)
     })
     
     onBeforeUnmount(() => {
-      document.removeEventListener('click', closeMenus)
+      document.removeEventListener('click', closeProfileMenu)
     })
     
     return {
