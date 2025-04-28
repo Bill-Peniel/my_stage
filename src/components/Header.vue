@@ -11,30 +11,6 @@
         
         <!-- Desktop navigation -->
         <nav class="hidden md:flex items-center space-x-6">
-          <div class="relative" ref="notificationMenu">
-            <button @click="toggleNotificationMenu" class="relative text-gray-700 hover:text-green-800 focus:outline-none">
-              <i class="fas fa-bell text-xl"></i>
-              <span v-if="notifications.length > 0" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                {{ notifications.length }}
-              </span>
-            </button>
-            <div v-show="showNotificationMenu" class="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg py-1 z-20">
-              <div class="px-4 py-2 border-b border-gray-200">
-                <h3 class="text-lg font-semibold">Notifications</h3>
-              </div>
-              <div class="max-h-64 overflow-y-auto">
-                <div v-for="notification in notifications.slice(0, 5)" :key="notification.id" class="px-4 py-3 hover:bg-gray-50 border-b border-gray-100">
-                  <p class="text-sm font-medium text-gray-900">{{ notification.title }}</p>
-                  <p class="text-xs text-gray-500 mt-1">{{ notification.message }}</p>
-                </div>
-              </div>
-              <div class="px-4 py-2 border-t border-gray-200">
-                <router-link to="/dashboard/notifications" class="block text-center text-sm text-primary hover:text-primary-dark">
-                  Voir toutes les notifications
-                </router-link>
-              </div>
-            </div>
-          </div>
           <router-link to="/" class="text-gray-700 hover:text-green-800 transition duration-150">
             Accueil
           </router-link>
@@ -148,23 +124,7 @@ export default {
     const router = useRouter()
     const mobileMenuOpen = ref(false)
     const showProfileMenu = ref(false)
-    const showNotificationMenu = ref(false)
     const profileMenu = ref(null)
-    const notificationMenu = ref(null)
-    
-    // Exemple de notifications (à remplacer par des données réelles)
-    const notifications = ref([
-      {
-        id: 1,
-        title: 'Nouvelle demande de stage',
-        message: 'Une nouvelle demande a été soumise par Jean Dupont'
-      },
-      {
-        id: 2,
-        title: 'Rappel',
-        message: 'Validation en attente pour 3 demandes de stage'
-      }
-    ])
     
     const isAuthenticated = computed(() => store.getters.isAuthenticated)
     const currentUser = computed(() => store.getters.currentUser)
@@ -175,12 +135,6 @@ export default {
     
     const toggleProfileMenu = () => {
       showProfileMenu.value = !showProfileMenu.value
-      showNotificationMenu.value = false
-    }
-    
-    const toggleNotificationMenu = () => {
-      showNotificationMenu.value = !showNotificationMenu.value
-      showProfileMenu.value = false
     }
     
     const logout = async () => {
@@ -189,21 +143,18 @@ export default {
       router.push('/login')
     }
     
-    const closeMenus = (e) => {
+    const closeProfileMenu = (e) => {
       if (profileMenu.value && !profileMenu.value.contains(e.target)) {
         showProfileMenu.value = false
-      }
-      if (notificationMenu.value && !notificationMenu.value.contains(e.target)) {
-        showNotificationMenu.value = false
       }
     }
     
     onMounted(() => {
-      document.addEventListener('click', closeMenus)
+      document.addEventListener('click', closeProfileMenu)
     })
     
     onBeforeUnmount(() => {
-      document.removeEventListener('click', closeMenus)
+      document.removeEventListener('click', closeProfileMenu)
     })
     
     return {
@@ -211,11 +162,7 @@ export default {
       toggleMobileMenu,
       showProfileMenu,
       toggleProfileMenu,
-      showNotificationMenu,
-      toggleNotificationMenu,
-      notifications,
       profileMenu,
-      notificationMenu,
       isAuthenticated,
       currentUser,
       logout
