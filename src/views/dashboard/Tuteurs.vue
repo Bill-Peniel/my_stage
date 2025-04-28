@@ -67,6 +67,10 @@
               <input type="tel" v-model="formData.telephone" required class="mt-1 input-field" />
             </div>
             <div>
+              <label class="block text-sm font-medium text-gray-700">Mot de passe</label>
+              <input type="password" v-model="formData.password" required class="mt-1 input-field" placeholder="Entrez un mot de passe" />
+            </div>
+            <div>
               <label class="block text-sm font-medium text-gray-700">Structure</label>
               <div class="relative mt-1">
                 <input
@@ -122,7 +126,8 @@ export default {
       nom: '',
       email: '',
       telephone: '',
-      structure: ''
+      structure: '',
+      password: ''
     })
 
     const filteredStructures = computed(() => {
