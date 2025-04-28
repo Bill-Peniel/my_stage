@@ -68,12 +68,28 @@
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700">Structure</label>
-              <select v-model="formData.structure" required class="mt-1 input-field">
-                <option value="">Sélectionner une structure</option>
-                <option value="DSI">Direction des Systèmes d'Information</option>
-                <option value="DAF">Direction Administrative et Financière</option>
-                <option value="DRH">Direction des Ressources Humaines</option>
-              </select>
+              <div class="relative mt-1">
+                <input
+                  type="text"
+                  v-model="searchStructure"
+                  placeholder="Rechercher une structure..."
+                  class="input-field w-full"
+                  @focus="showStructuresList = true"
+                />
+                <div v-if="showStructuresList" class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+                  <div v-if="filteredStructures.length === 0" class="px-4 py-2 text-sm text-gray-500">
+                    Aucune structure trouvée
+                  </div>
+                  <div
+                    v-for="structure in filteredStructures"
+                    :key="structure.value"
+                    @click="selectStructure(structure)"
+                    class="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                  >
+                    {{ structure.label }}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="mt-6 flex justify-end space-x-3">
@@ -95,11 +111,41 @@ export default {
     const showAddModal = ref(false)
     const editMode = ref(false)
     const tuteurs = ref([])
+    const searchStructure = ref('')
+    const showStructuresList = ref(false)
+    const structures = ref([
+      { value: 'DSI', label: 'Direction des Systèmes d\'Information' },
+      { value: 'DAF', label: 'Direction Administrative et Financière' },
+      { value: 'DRH', label: 'Direction des Ressources Humaines' }
+    ])
     const formData = ref({
       nom: '',
       email: '',
       telephone: '',
       structure: ''
+    })
+
+    const filteredStructures = computed(() => {
+      const search = searchStructure.value.toLowerCase()
+      return structures.value.filter(structure => 
+        structure.label.toLowerCase().includes(search)
+      )
+    })
+
+    const selectStructure = (structure) => {
+      formData.value.structure = structure.value
+      searchStructure.value = structure.label
+      showStructuresList.value = false
+    }
+
+    // Fermer la liste lorsqu'on clique en dehors
+    onMounted(() => {
+      document.addEventListener('click', (e) => {
+        const target = e.target
+        if (!target.closest('.relative')) {
+          showStructuresList.value = false
+        }
+      })
     })
 
     const saveTuteur = () => {
