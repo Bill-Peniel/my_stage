@@ -85,6 +85,48 @@
         <canvas ref="barChart" class="max-h-80"></canvas>
       </div>
     </div>
+
+    <!-- Tableau des tuteurs récents -->
+    <div class="mt-8 bg-white rounded-lg shadow-sm p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold">Tuteurs récents</h3>
+        <router-link to="/dashboard/tuteurs" class="text-primary hover:text-primary-dark">
+          Voir plus <i class="fas fa-arrow-right ml-1"></i>
+        </router-link>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Structure</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Téléphone</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr>
+              <td class="px-6 py-4">Jean Dupont</td>
+              <td class="px-6 py-4">Direction des Systèmes d'Information</td>
+              <td class="px-6 py-4">jean.dupont@example.com</td>
+              <td class="px-6 py-4">+229 97000001</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4">Marie Martin</td>
+              <td class="px-6 py-4">Direction Administrative et Financière</td>
+              <td class="px-6 py-4">marie.martin@example.com</td>
+              <td class="px-6 py-4">+229 97000002</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4">Paul Bernard</td>
+              <td class="px-6 py-4">Direction des Ressources Humaines</td>
+              <td class="px-6 py-4">paul.bernard@example.com</td>
+              <td class="px-6 py-4">+229 97000003</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </template>
 
