@@ -60,14 +60,6 @@
             <form @submit.prevent="submitStructure">
               <div class="grid grid-cols-2 gap-4">
                 <div class="w-full">
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Type de structure</label>
-                  <select v-model="newStructure.type" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
-                    <option value="Entreprise">Entreprise</option>
-                    <option value="Administration">Administration</option>
-                    <option value="ONG">ONG</option>
-                  </select>
-                </div>
-                <div class="w-full">
                   <label class="block text-sm font-medium text-gray-700 mb-2">Nom de la structure</label>
                   <input v-model="newStructure.nomStructure" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
                 </div>
@@ -117,7 +109,6 @@ export default {
       structures: [],
       newStructure: {
         nomStructure: '',
-        type: '',
         adresse: '',
         emailContact: '',
         telephoneContact: '',
