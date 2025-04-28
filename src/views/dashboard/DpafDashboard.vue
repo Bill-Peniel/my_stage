@@ -1,3 +1,4 @@
+
 <template>
   <div class="min-h-screen bg-gray-100 flex flex-col">
     <header class="bg-primary shadow fixed top-0 w-full z-20">
@@ -18,119 +19,158 @@
     <div class="flex pt-16">
       <Sidebar class="fixed left-0 top-16 h-[calc(100vh-4rem)] z-10" />
 
-      <div class="flex-1 md:ml-64 p-4 md:p-6">
+      <div class="flex-1 md:ml-64 p-6 bg-gray-50">
         <router-view v-if="$route.path !== '/dashboard/dpaf'" />
         <div v-else>
-          <!-- Contenu de la vue d'ensemble -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8" data-aos="fade-up">
-            <!-- Statistiques -->
-            <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-all">
+          <!-- Statistiques -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-blue-500 text-white rounded-lg p-6 shadow-sm">
               <div class="flex justify-between items-center">
-                <h3 class="text-lg font-semibold text-gray-800">Nouvelles demandes</h3>
-                <i class="fas fa-file-alt text-2xl text-primary"></i>
+                <div class="w-full">
+                  <p class="text-sm opacity-75">Nouvelles demandes</p>
+                  <h2 class="text-4xl font-bold mb-2">{{ stats.nouveaux }}</h2>
+                  <div class="w-full bg-white bg-opacity-20 rounded-full h-2.5">
+                    <div class="bg-white h-2.5 rounded-full animate-progress" style="width: 40%"></div>
+                  </div>
+                </div>
+                <div class="text-3xl opacity-75">
+                  <i class="fas fa-file-alt"></i>
+                </div>
               </div>
-              <p class="text-3xl font-bold text-primary mt-2">{{ stats.nouveaux }}</p>
+              <p class="mt-4 text-sm">
+                <router-link to="/dashboard/dpaf/nouvelles-demandes" class="opacity-75 hover:opacity-100">
+                  Voir les demandes <i class="fas fa-arrow-right ml-1"></i>
+                </router-link>
+              </p>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-all">
+            <div class="bg-green-500 text-white rounded-lg p-6 shadow-sm">
               <div class="flex justify-between items-center">
-                <h3 class="text-lg font-semibold text-gray-800">En cours d'analyse</h3>
-                <i class="fas fa-clock text-2xl text-warning"></i>
+                <div class="w-full">
+                  <p class="text-sm opacity-75">Stages en cours</p>
+                  <h2 class="text-4xl font-bold mb-2">{{ stats.enCours }}</h2>
+                  <div class="w-full bg-white bg-opacity-20 rounded-full h-2.5">
+                    <div class="bg-white h-2.5 rounded-full animate-progress" style="width: 65%"></div>
+                  </div>
+                </div>
+                <div class="text-3xl opacity-75">
+                  <i class="fas fa-user-graduate"></i>
+                </div>
               </div>
-              <p class="text-3xl font-bold text-warning mt-2">{{ stats.enCours }}</p>
+              <p class="mt-4 text-sm">
+                <router-link to="/dashboard/dpaf/affectations" class="opacity-75 hover:opacity-100">
+                  Voir les stages <i class="fas fa-arrow-right ml-1"></i>
+                </router-link>
+              </p>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-all">
+            <div class="bg-yellow-500 text-white rounded-lg p-6 shadow-sm">
               <div class="flex justify-between items-center">
-                <h3 class="text-lg font-semibold text-gray-800">Confirmés</h3>
-                <i class="fas fa-check-circle text-2xl text-success"></i>
+                <div class="w-full">
+                  <p class="text-sm opacity-75">Stages terminés</p>
+                  <h2 class="text-4xl font-bold mb-2">{{ stats.confirmes }}</h2>
+                  <div class="w-full bg-white bg-opacity-20 rounded-full h-2.5">
+                    <div class="bg-white h-2.5 rounded-full animate-progress" style="width: 75%"></div>
+                  </div>
+                </div>
+                <div class="text-3xl opacity-75">
+                  <i class="fas fa-check-circle"></i>
+                </div>
               </div>
-              <p class="text-3xl font-bold text-success mt-2">{{ stats.confirmes }}</p>
+              <p class="mt-4 text-sm">
+                <router-link to="/dashboard/dpaf/historique" class="opacity-75 hover:opacity-100">
+                  Voir l'historique <i class="fas fa-arrow-right ml-1"></i>
+                </router-link>
+              </p>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-all">
+            <div class="bg-red-500 text-white rounded-lg p-6 shadow-sm">
               <div class="flex justify-between items-center">
-                <h3 class="text-lg font-semibold text-gray-800">Refusés</h3>
-                <i class="fas fa-times-circle text-2xl text-danger"></i>
+                <div class="w-full">
+                  <p class="text-sm opacity-75">Demandes refusées</p>
+                  <h2 class="text-4xl font-bold mb-2">{{ stats.refuses }}</h2>
+                  <div class="w-full bg-white bg-opacity-20 rounded-full h-2.5">
+                    <div class="bg-white h-2.5 rounded-full animate-progress" style="width: 55%"></div>
+                  </div>
+                </div>
+                <div class="text-3xl opacity-75">
+                  <i class="fas fa-times-circle"></i>
+                </div>
               </div>
-              <p class="text-3xl font-bold text-danger mt-2">{{ stats.refuses }}</p>
+              <p class="mt-4 text-sm">
+                <router-link to="/dashboard/dpaf/historique" class="opacity-75 hover:opacity-100">
+                  Voir les refus <i class="fas fa-arrow-right ml-1"></i>
+                </router-link>
+              </p>
             </div>
           </div>
 
-          <!-- Filtres -->
-          <div class="bg-white p-4 rounded-lg shadow mb-6">
-            <div class="flex flex-wrap gap-4 items-center">
-              <div class="flex-1">
-                <input type="text" v-model="filters.search" placeholder="Rechercher un stagiaire..."
-                       class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+          <!-- Graphiques -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-sm p-6">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Répartition par structure</h3>
+                <button class="text-gray-400 hover:text-gray-600">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
               </div>
-              <div class="flex gap-4">
-                <select v-model="filters.status" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                  <option value="">Tous les statuts</option>
-                  <option value="nouveau">Nouveau</option>
-                  <option value="en_cours">En cours d'analyse</option>
-                  <option value="confirme">Confirmé</option>
-                  <option value="refuse">Refusé</option>
-                </select>
-                <select v-model="filters.structure" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                  <option value="">Toutes les structures</option>
-                  <option value="dsi">Direction des Systèmes d'Information</option>
-                  <option value="dgb">Direction Générale du Budget</option>
-                  <option value="dgid">Direction Générale des Impôts</option>
-                </select>
+              <canvas ref="donutChart" class="max-h-80"></canvas>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm p-6">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Évolution des demandes</h3>
+                <button class="text-gray-400 hover:text-gray-600">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
               </div>
+              <canvas ref="barChart" class="max-h-80"></canvas>
             </div>
           </div>
 
-          <!-- Liste des demandes -->
-          <div class="bg-white shadow rounded-lg" data-aos="fade-up" data-aos-delay="200">
+          <!-- Liste des dernières demandes -->
+          <div class="bg-white shadow rounded-lg">
             <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-              <h2 class="text-lg font-medium text-gray-900">Gestion des demandes de stages</h2>
+              <h2 class="text-lg font-medium text-gray-900">Dernières demandes reçues</h2>
             </div>
-            <div class="overflow-x-auto -mx-4 sm:mx-0">
-              <table class="min-w-full divide-y divide-gray-200 table-auto whitespace-nowrap md:whitespace-normal">
-                <thead>
+            <div class="overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
                   <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase sm:table-cell">Stagiaire</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase sm:table-cell">Structure Demandée</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase sm:table-cell">Type de Stage</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase sm:table-cell">Date Soumission</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase sm:table-cell">Statut</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase sm:table-cell">Actions</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stagiaire</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Structure Demandée</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type de Stage</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date Soumission</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <tr v-for="demande in filteredDemandes" :key="demande.id" class="hover:bg-gray-50">
-                    <td class="px-6 py-4 sm:table-cell">
+                  <tr v-for="demande in recentDemandes" :key="demande.id" class="hover:bg-gray-50">
+                    <td class="px-6 py-4">
                       <div class="text-sm text-gray-900">{{ demande.nom }}</div>
                       <div class="text-sm text-gray-500">{{ demande.email }}</div>
                     </td>
-                    <td class="px-6 py-4 sm:table-cell">
-                      <div class="text-sm text-gray-900">{{ demande.structure }}</div>
-                    </td>
-                    <td class="px-6 py-4 text-sm text-gray-500 sm:table-cell">{{ demande.typeStage }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-500 sm:table-cell">{{ formatDate(demande.dateSoumission) }}</td>
-                    <td class="px-6 py-4 sm:table-cell">
+                    <td class="px-6 py-4 text-sm text-gray-500">{{ demande.structure }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">{{ demande.typeStage }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">{{ formatDate(demande.dateSoumission) }}</td>
+                    <td class="px-6 py-4">
                       <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full"
                             :class="getStatusClass(demande.status)">
                         {{ getStatusLabel(demande.status) }}
                       </span>
                     </td>
-                    <td class="px-6 py-4 text-sm font-medium space-x-2 sm:table-cell">
-                      <button @click="viewDetails(demande)" class="text-primary hover:text-primary-dark" title="Voir les détails">
+                    <td class="px-6 py-4 text-sm font-medium space-x-2">
+                      <button @click="viewDetails(demande)" class="text-primary hover:text-primary-dark">
                         <i class="fas fa-eye"></i>
                       </button>
                       <button v-if="canConfirm(demande)" @click="confirmDemande(demande)"
-                              class="text-success hover:text-green-700" title="Confirmer">
+                              class="text-success hover:text-green-700">
                         <i class="fas fa-check"></i>
                       </button>
                       <button v-if="canReject(demande)" @click="rejectDemande(demande)"
-                              class="text-danger hover:text-red-700" title="Refuser">
+                              class="text-danger hover:text-red-700">
                         <i class="fas fa-times"></i>
-                      </button>
-                      <button v-if="canTransfer(demande)" @click="transferToStructure(demande)"
-                              class="text-blue-500 hover:text-blue-700" title="Transférer à la structure">
-                        <i class="fas fa-share"></i>
                       </button>
                     </td>
                   </tr>
@@ -145,9 +185,10 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import Chart from 'chart.js/auto'
 import Sidebar from '../../components/SidebarDpaf.vue'
 
 export default {
@@ -158,8 +199,9 @@ export default {
   setup() {
     const store = useStore()
     const router = useRouter()
+    const donutChart = ref(null)
+    const barChart = ref(null)
 
-    // Stats simulées
     const stats = ref({
       nouveaux: 12,
       enCours: 8,
@@ -167,15 +209,7 @@ export default {
       refuses: 5
     })
 
-    // Filtres
-    const filters = ref({
-      search: '',
-      status: '',
-      structure: ''
-    })
-
-    // Données simulées -  This part needs to be restored for functionality.  The edited code removed it.
-    const demandes = ref([
+    const recentDemandes = ref([
       {
         id: 1,
         nom: 'Jean Dupont',
@@ -185,19 +219,71 @@ export default {
         dateSoumission: '2024-03-15',
         status: 'nouveau'
       },
-      // Ajoutez d'autres demandes simulées ici
+      {
+        id: 2,
+        nom: 'Marie Martin',
+        email: 'marie.martin@email.com',
+        structure: 'Direction Générale du Budget',
+        typeStage: 'Stage professionnel',
+        dateSoumission: '2024-03-14',
+        status: 'en_cours'
+      }
     ])
 
-    const filteredDemandes = computed(() => {
-      return demandes.value.filter(demande => {
-        const matchSearch = !filters.value.search ||
-          demande.nom.toLowerCase().includes(filters.value.search.toLowerCase()) ||
-          demande.email.toLowerCase().includes(filters.value.search.toLowerCase())
+    onMounted(() => {
+      // Graphique donut des structures
+      new Chart(donutChart.value, {
+        type: 'doughnut',
+        data: {
+          labels: ['DSI', 'DGB', 'DGID', 'DRH', 'DAF', 'Autres'],
+          datasets: [{
+            data: [30, 25, 15, 10, 10, 10],
+            backgroundColor: [
+              '#FF6384',
+              '#36A2EB',
+              '#FFCE56',
+              '#4BC0C0',
+              '#9966FF',
+              '#FF9F40'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'right'
+            }
+          }
+        }
+      })
 
-        const matchStatus = !filters.value.status || demande.status === filters.value.status
-        const matchStructure = !filters.value.structure || demande.structure === filters.value.structure
-
-        return matchSearch && matchStatus && matchStructure
+      // Graphique en barres de l'évolution des demandes
+      new Chart(barChart.value, {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun'],
+          datasets: [
+            {
+              label: 'Demandes reçues',
+              data: [65, 59, 80, 81, 56, 55],
+              backgroundColor: '#36A2EB'
+            },
+            {
+              label: 'Demandes traitées',
+              data: [45, 49, 60, 71, 46, 45],
+              backgroundColor: '#FF6384'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
       })
     })
 
@@ -227,7 +313,6 @@ export default {
 
     const canConfirm = (demande) => ['nouveau', 'en_cours'].includes(demande.status)
     const canReject = (demande) => ['nouveau', 'en_cours'].includes(demande.status)
-    const canTransfer = (demande) => demande.status === 'confirme'
 
     const viewDetails = (demande) => {
       console.log('Voir détails:', demande.id)
@@ -241,10 +326,6 @@ export default {
       console.log('Refuser demande:', demande.id)
     }
 
-    const transferToStructure = (demande) => {
-      console.log('Transférer à la structure:', demande.id)
-    }
-
     const logout = async () => {
       await store.dispatch('logout')
       router.push('/login')
@@ -253,18 +334,17 @@ export default {
     return {
       store,
       stats,
-      filters,
-      filteredDemandes,
+      recentDemandes,
+      donutChart,
+      barChart,
       formatDate,
       getStatusClass,
       getStatusLabel,
       canConfirm,
       canReject,
-      canTransfer,
       viewDetails,
       confirmDemande,
       rejectDemande,
-      transferToStructure,
       logout
     }
   }
