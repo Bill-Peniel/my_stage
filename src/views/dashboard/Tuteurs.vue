@@ -103,7 +103,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 export default {
   name: 'Tuteurs',
@@ -191,6 +191,11 @@ export default {
       editMode,
       tuteurs,
       formData,
+      searchStructure,
+      showStructuresList,
+      structures,
+      filteredStructures,
+      selectStructure,
       saveTuteur,
       editTuteur,
       deleteTuteur
