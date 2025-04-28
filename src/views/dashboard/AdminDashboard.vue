@@ -40,9 +40,12 @@
 
       <div class="bg-yellow-500 text-white rounded-lg p-6 shadow-sm">
         <div class="flex justify-between items-center">
-          <div>
+          <div class="w-full">
             <p class="text-sm opacity-75">Stagiaires actifs</p>
-            <h2 class="text-4xl font-bold">24</h2>
+            <h2 class="text-4xl font-bold mb-2">24</h2>
+            <div class="w-full bg-white bg-opacity-20 rounded-full h-2.5">
+              <div class="bg-white h-2.5 rounded-full animate-progress" style="width: 75%"></div>
+            </div>
           </div>
           <div class="text-3xl opacity-75">
             <i class="fas fa-users"></i>
@@ -55,9 +58,12 @@
 
       <div class="bg-red-500 text-white rounded-lg p-6 shadow-sm">
         <div class="flex justify-between items-center">
-          <div>
+          <div class="w-full">
             <p class="text-sm opacity-75">Structures partenaires</p>
-            <h2 class="text-4xl font-bold">15</h2>
+            <h2 class="text-4xl font-bold mb-2">15</h2>
+            <div class="w-full bg-white bg-opacity-20 rounded-full h-2.5">
+              <div class="bg-white h-2.5 rounded-full animate-progress" style="width: 55%"></div>
+            </div>
           </div>
           <div class="text-3xl opacity-75">
             <i class="fas fa-building"></i>
