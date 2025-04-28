@@ -1,4 +1,3 @@
-
 <template>
   <div class="p-6 bg-gray-50 overflow-x-hidden">
     <!-- En-tête avec statistiques -->
@@ -128,28 +127,35 @@ export default {
       })
 
       // Graphique en barres de l'évolution des demandes
+      const stagesData = ref({
+      labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+      datasets: [
+        {
+          label: 'Demandes en attente',
+          data: [15, 22, 28, 32, 38, 42, 45, 48, 52, 55, 58, 62],
+          borderColor: '#FFA500',
+          backgroundColor: 'rgba(255, 165, 0, 0.1)',
+          tension: 0.4
+        },
+        {
+          label: 'Demandes validées',
+          data: [10, 18, 25, 30, 35, 40, 43, 46, 50, 53, 56, 60],
+          borderColor: '#10B981',
+          backgroundColor: 'rgba(16, 185, 129, 0.1)',
+          tension: 0.4
+        },
+        {
+          label: 'Demandes rejetées',
+          data: [5, 8, 10, 12, 15, 18, 20, 22, 25, 28, 30, 32],
+          borderColor: '#EF4444',
+          backgroundColor: 'rgba(239, 68, 68, 0.1)',
+          tension: 0.4
+        }
+      ]
+    })
       new Chart(barChart.value, {
         type: 'bar',
-        data: {
-          labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet'],
-          datasets: [
-            {
-              label: 'Demandes reçues',
-              data: [45, 39, 60, 51, 56, 55, 40],
-              backgroundColor: '#FF6384'
-            },
-            {
-              label: 'Demandes acceptées',
-              data: [38, 32, 45, 39, 44, 42, 35],
-              backgroundColor: '#36A2EB'
-            },
-            {
-              label: 'Stages démarrés',
-              data: [35, 28, 40, 35, 40, 38, 30],
-              backgroundColor: '#4BC0C0'
-            }
-          ]
-        },
+        data: stagesData.value,
         options: {
           responsive: true,
           scales: {
