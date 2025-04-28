@@ -4,9 +4,12 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <div class="bg-blue-500 text-white rounded-lg p-6 shadow-sm">
         <div class="flex justify-between items-center">
-          <div>
+          <div class="w-full">
             <p class="text-sm opacity-75">Demandes en attente</p>
-            <h2 class="text-4xl font-bold">12</h2>
+            <h2 class="text-4xl font-bold mb-2">12</h2>
+            <div class="w-full bg-white bg-opacity-20 rounded-full h-2.5">
+              <div class="bg-white h-2.5 rounded-full animate-progress" style="width: 40%"></div>
+            </div>
           </div>
           <div class="text-3xl opacity-75">
             <i class="fas fa-clock"></i>
@@ -19,9 +22,12 @@
 
       <div class="bg-green-500 text-white rounded-lg p-6 shadow-sm">
         <div class="flex justify-between items-center">
-          <div>
+          <div class="w-full">
             <p class="text-sm opacity-75">Stages en cours</p>
-            <h2 class="text-4xl font-bold">8</h2>
+            <h2 class="text-4xl font-bold mb-2">8</h2>
+            <div class="w-full bg-white bg-opacity-20 rounded-full h-2.5">
+              <div class="bg-white h-2.5 rounded-full animate-progress" style="width: 65%"></div>
+            </div>
           </div>
           <div class="text-3xl opacity-75">
             <i class="fas fa-user-graduate"></i>
