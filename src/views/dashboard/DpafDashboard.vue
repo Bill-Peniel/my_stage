@@ -85,8 +85,8 @@
 
       <div class="flex-1 p-6 bg-gray-50 transition-all duration-300 ease-in-out"
            :style="{
-             marginLeft: isSidebarOpen || (isHovered && !isSidebarOpen) ? '16rem' : '4rem',
-             width: isSidebarOpen || (isHovered && !isSidebarOpen) ? 'calc(100% - 16rem)' : 'calc(100% - 4rem)'
+             marginLeft: isSidebarOpen ? '16rem' : '4rem',
+             width: isSidebarOpen ? 'calc(100% - 16rem)' : 'calc(100% - 4rem)'
            }">
         <router-view v-if="$route.path !== '/dashboard/dpaf'" />
         <div v-else>
@@ -487,9 +487,9 @@ export default {
       router.push('/login')
     }
 
-    const handleSidebarState = (state) => {
-      isSidebarOpen.value = state;
-    };
+    const handleSidebarState = (isExpanded) => {
+      isSidebarOpen.value = isExpanded
+    }
 
 
     return {
