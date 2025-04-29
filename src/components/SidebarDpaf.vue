@@ -157,20 +157,15 @@ export default {
 
     const toggleSidebar = () => {
       isSidebarOpen.value = !isSidebarOpen.value
-      emit('sidebar-state-changed', { isOpen: isSidebarOpen.value, isHovered: isHovered.value })
     }
 
     const handleMouseEnter = () => {
       isHovered.value = true
-      emit('sidebar-state-changed', { isOpen: isSidebarOpen.value, isHovered: true })
     }
 
     const handleMouseLeave = () => {
       isHovered.value = false
-      emit('sidebar-state-changed', { isOpen: isSidebarOpen.value, isHovered: false })
     }
-
-    const emit = defineEmits(['sidebar-state-changed'])
 
     return {
       isSidebarOpen,

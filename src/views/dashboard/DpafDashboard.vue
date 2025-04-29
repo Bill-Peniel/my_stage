@@ -81,19 +81,9 @@
     </header>
 
     <div class="flex pt-16">
-      <Sidebar 
-        class="fixed left-0 top-16 h-[calc(100vh-4rem)] z-10" 
-        @sidebar-state-changed="handleSidebarState"
-        ref="sidebar"
-      />
+      <Sidebar class="fixed left-0 top-16 h-[calc(100vh-4rem)] z-10" />
 
-      <div 
-        class="flex-1 p-6 bg-gray-50 transition-all duration-300"
-        :class="[
-          isSidebarOpen ? 'ml-64' : 'ml-16',
-          isHovered && !isSidebarOpen ? 'ml-64' : ''
-        ]"
-      >
+      <div class="flex-1 ml-16 p-6 bg-gray-50 transition-all duration-300">
         <router-view v-if="$route.path !== '/dashboard/dpaf'" />
         <div v-else>
           <!-- Statistiques -->
@@ -275,13 +265,6 @@ export default {
     const router = useRouter()
     const showUserMenu = ref(false)
     const showNotifMenu = ref(false)
-    const isSidebarOpen = ref(true)
-    const isHovered = ref(false)
-
-    const handleSidebarState = ({ isOpen, isHovered: hover }) => {
-      isSidebarOpen.value = isOpen
-      isHovered.value = hover
-    }
     const userMenu = ref(null)
     const notifMenu = ref(null)
     const unreadNotifications = ref(2)
@@ -525,10 +508,7 @@ export default {
       getNotificationTypeClass,
       getNotificationIcon,
       formatNotifDate,
-      markAllAsRead,
-      isSidebarOpen,
-      isHovered,
-      handleSidebarState
+      markAllAsRead
     }
   }
 }
