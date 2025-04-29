@@ -4,6 +4,32 @@ export default createStore({
   state: {
     // User information
     user: null,
+    notifications: [
+      {
+        id: 1,
+        type: 'info',
+        title: 'Nouvelle demande de stage',
+        message: 'Une nouvelle demande de stage a été soumise par Jean Dupont.',
+        date: new Date('2024-03-15T10:30:00'),
+        read: false
+      },
+      {
+        id: 2,
+        type: 'success',
+        title: 'Stage terminé',
+        message: 'Le stage de Marie Martin a été marqué comme terminé.',
+        date: new Date('2024-03-14T15:45:00'),
+        read: true
+      },
+      {
+        id: 3,
+        type: 'warning',
+        title: 'Rappel',
+        message: 'Le stage de Paul Dubois se termine dans 7 jours.',
+        date: new Date('2024-03-13T09:15:00'),
+        read: false
+      }
+    ],
     
     // Utilisateurs prédéfinis pour le test (simulation de base de données)
     predefinedUsers: [
