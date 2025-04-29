@@ -8,7 +8,7 @@
             <img src="../assets/finance-logo.png" alt="Logo du Ministère" class="h-12 w-auto" />
           </router-link>
         </div>
-        
+
         <!-- Desktop navigation -->
         <nav class="hidden md:flex items-center space-x-6">
           <router-link to="/" class="text-gray-700 hover:text-green-800 transition duration-150">
@@ -58,14 +58,30 @@
             </div>
           </div>
         </nav>
-        
+
         <!-- Mobile menu button -->
         <button @click="toggleMobileMenu" class="md:hidden flex items-center p-2 rounded-md text-gray-600 hover:text-green-800 hover:bg-gray-100 focus:outline-none">
           <span class="sr-only">Open main menu</span>
           <i :class="[mobileMenuOpen ? 'fa-times' : 'fa-bars', 'fas text-xl']"></i>
         </button>
+        <!--Added Notification Section (Assumption)-->
+        <div class="relative">
+          <button class="p-2 rounded-md text-gray-600 hover:text-green-800">
+            <i class="fas fa-bell text-xl"></i>
+            <span class="absolute top-0 right-0 -mt-1 -mr-1 bg-red-500 text-white rounded-full text-xs px-1">3</span>
+          </button>
+          <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10" v-show="showNotificationMenu">
+            <div class="p-2">
+              <p class="text-sm">Notification 1</p>
+              <p class="text-sm">Notification 2</p>
+              <p class="text-sm">Notification 3</p>
+              <button @click="$router.push('/dashboard/dpaf/notifications')" class="text-sm text-primary-600 hover:underline mt-2">Voir tout</button>
+            </div>
+          </div>
+        </div>
+
       </div>
-      
+
       <!-- Mobile menu -->
       <div class="md:hidden" v-show="mobileMenuOpen">
         <div class="pt-2 pb-4 space-y-1">
@@ -125,38 +141,43 @@ export default {
     const mobileMenuOpen = ref(false)
     const showProfileMenu = ref(false)
     const profileMenu = ref(null)
-    
+    const showNotificationMenu = ref(false); // Added for notification menu
+
     const isAuthenticated = computed(() => store.getters.isAuthenticated)
     const currentUser = computed(() => store.getters.currentUser)
-    
+
     const toggleMobileMenu = () => {
       mobileMenuOpen.value = !mobileMenuOpen.value
     }
-    
+
     const toggleProfileMenu = () => {
       showProfileMenu.value = !showProfileMenu.value
     }
-    
+
+    const toggleNotificationMenu = () => {
+      showNotificationMenu.value = !showNotificationMenu.value;
+    }
+
     const logout = async () => {
       await store.dispatch('logout')
       showProfileMenu.value = false
       router.push('/login')
     }
-    
+
     const closeProfileMenu = (e) => {
       if (profileMenu.value && !profileMenu.value.contains(e.target)) {
         showProfileMenu.value = false
       }
     }
-    
+
     onMounted(() => {
       document.addEventListener('click', closeProfileMenu)
     })
-    
+
     onBeforeUnmount(() => {
       document.removeEventListener('click', closeProfileMenu)
     })
-    
+
     return {
       mobileMenuOpen,
       toggleMobileMenu,
@@ -165,7 +186,9 @@ export default {
       profileMenu,
       isAuthenticated,
       currentUser,
-      logout
+      logout,
+      showNotificationMenu, // Added for notification menu
+      toggleNotificationMenu // Added for notification menu
     }
   }
 }
