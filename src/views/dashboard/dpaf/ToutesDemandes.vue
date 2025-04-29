@@ -1,6 +1,7 @@
+
 <template>
   <div class="p-4">
-    <h1 class="text-2xl font-bold mb-6">Nouvelles Demandes</h1>
+    <h1 class="text-2xl font-bold mb-6">Toutes les Demandes</h1>
 
     <div class="bg-white rounded-lg shadow">
       <div class="p-4 border-b">
@@ -72,7 +73,14 @@
         </table>
       </div>
     </div>
-    <DemandeDetails v-if="selectedDemande" :demande="selectedDemande" @close="closeDetails"/>
+
+    <DemandeDetails 
+      v-if="selectedDemande" 
+      :demande="selectedDemande" 
+      @close="closeDetails"
+      @approve="approveRequest"
+      @reject="rejectRequest"
+    />
   </div>
 </template>
 
@@ -98,7 +106,28 @@ export default {
         structure: 'Direction des Systèmes d\'Information',
         typeStage: 'Stage académique',
         dateSoumission: '2024-03-15',
-        status: 'nouveau'
+        status: 'nouveau',
+        telephone: '+229 97000000',
+        formation: 'Licence Informatique',
+        dateDebut: '2024-06-01',
+        dateFin: '2024-08-31',
+        documents: [
+          { 
+            nom: 'CV',
+            type: 'PDF',
+            url: '/documents/cv.pdf'
+          },
+          {
+            nom: 'Lettre de motivation',
+            type: 'PDF',
+            url: '/documents/lettre.pdf'
+          },
+          {
+            nom: 'Attestation de scolarité',
+            type: 'PDF',
+            url: '/documents/attestation.pdf'
+          }
+        ]
       },
       {
         id: 2,
@@ -148,30 +177,7 @@ export default {
     }
 
     const viewDetails = (demande) => {
-      selectedDemande.value = {
-        ...demande,
-        telephone: '+229 97000000',
-        formation: 'Licence Informatique',
-        dateDebut: '2024-06-01',
-        dateFin: '2024-08-31',
-        documents: [
-          { 
-            nom: 'CV',
-            type: 'PDF',
-            url: '/documents/cv.pdf'
-          },
-          {
-            nom: 'Lettre de motivation',
-            type: 'PDF',
-            url: '/documents/lettre.pdf'
-          },
-          {
-            nom: 'Attestation de scolarité',
-            type: 'PDF',
-            url: '/documents/attestation.pdf'
-          }
-        ]
-      }
+      selectedDemande.value = demande
     }
 
     const closeDetails = () => {
@@ -180,10 +186,12 @@ export default {
 
     const approveRequest = (demande) => {
       console.log('Approuver demande:', demande.id)
+      // Implémenter la logique d'approbation
     }
 
     const rejectRequest = (demande) => {
       console.log('Rejeter demande:', demande.id)
+      // Implémenter la logique de rejet
     }
 
     return {
@@ -201,36 +209,4 @@ export default {
     }
   }
 }
-</script>
-
-```
-
-You will also need to create a file at `src/components/demandes/DemandeDetails.vue` with the following content:
-
-```vue
-<template>
-  <div class="modal" v-if="demande">
-    <div class="modal-content">
-      <button @click="$emit('close')">Fermer</button>
-      <h1>{{ demande.nom }}</h1>
-      <p>Téléphone: {{ demande.telephone }}</p>
-      <p>Formation: {{ demande.formation }}</p>
-      <p>Date de début: {{ demande.dateDebut }}</p>
-      <p>Date de fin: {{ demande.dateFin }}</p>
-      <h2>Documents</h2>
-      <ul>
-        <li v-for="doc in demande.documents" :key="doc.nom">
-          <a :href="doc.url" target="_blank">{{ doc.nom }} ({{ doc.type }})</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</template>
-
-<script>
-export default {
-  name: 'DemandeDetails',
-  props: ['demande'],
-  emits: ['close']
-};
 </script>
