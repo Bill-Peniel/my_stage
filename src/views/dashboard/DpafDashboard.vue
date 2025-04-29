@@ -341,18 +341,6 @@ export default {
 
     // Close menu when clicking outside
     onMounted(() => {
-      initCharts();
-    })
-
-    // Réinitialiser les graphiques lors du retour sur la page
-    const route = useRoute();
-    watch(() => route.path, (newPath) => {
-      if (newPath === '/dashboard/dpaf') {
-        nextTick(() => {
-          initCharts();
-        });
-      }
-    });
       document.addEventListener('click', (e) => {
         if (userMenu.value && !userMenu.value.contains(e.target)) {
           showUserMenu.value = false
@@ -393,13 +381,9 @@ export default {
       }
     ])
 
-    const initCharts = () => {
-  if (donutChart.value) {
-    const donutCtx = donutChart.value.getContext('2d');
-    if (donutChart.value.chart) {
-      donutChart.value.chart.destroy();
-    }
-    donutChart.value.chart = new Chart(donutCtx, {
+    onMounted(() => {
+      // Graphique donut des structures
+      new Chart(donutChart.value, {
         type: 'doughnut',
         data: {
           labels: ['DSI', 'DGB', 'DGID', 'DRH', 'DAF', 'Autres'],
@@ -425,12 +409,8 @@ export default {
         }
       })
 
-      if (barChart.value) {
-        const barCtx = barChart.value.getContext('2d');
-        if (barChart.value.chart) {
-          barChart.value.chart.destroy();
-        }
-        barChart.value.chart = new Chart(barCtx, {
+      // Graphique en barres de l'évolution des demandes
+      new Chart(barChart.value, {
         type: 'bar',
         data: {
           labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun'],
