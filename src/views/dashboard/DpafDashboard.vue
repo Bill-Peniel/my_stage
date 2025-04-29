@@ -1,4 +1,3 @@
-
 <template>
   <div class="min-h-screen bg-gray-100 flex flex-col">
     <header class="bg-primary shadow fixed top-0 w-full z-20">
@@ -9,7 +8,7 @@
         </div>
         <div class="flex items-center space-x-4">
           <span class="text-white">{{ store.getters.roleDisplay }}</span>
-          
+
           <!-- Notification Icon and Dropdown -->
           <div class="relative" ref="notifMenu">
             <button @click="toggleNotifMenu" class="text-white hover:text-accent-yellow relative">
@@ -250,7 +249,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import Chart from 'chart.js/auto'
@@ -327,10 +326,10 @@ export default {
       })
       unreadNotifications.value = 0
     }
-    
+
     const userInitials = computed(() => {
       const user = store.state.user
-      if (!user || !user.name)
+      if (!user || !user.name) return '' // Handle potential undefined user.name
       return user.name.charAt(0).toUpperCase()
     })
 
@@ -352,6 +351,87 @@ export default {
     })
     const donutChart = ref(null)
     const barChart = ref(null)
+    const charts = ref({ donut: null, bar: null })
+
+    const initDonutChart = () => {
+      if (!donutChart.value) return
+
+      if (charts.value.donut) {
+        charts.value.donut.destroy()
+      }
+
+      charts.value.donut = new Chart(donutChart.value, {
+        type: 'doughnut',
+        data: {
+          labels: ['DSI', 'DGB', 'DGID', 'DRH', 'DAF', 'Autres'],
+          datasets: [{
+            data: [30, 25, 15, 10, 10, 10],
+            backgroundColor: [
+              '#FF6384',
+              '#36A2EB',
+              '#FFCE56',
+              '#4BC0C0',
+              '#9966FF',
+              '#FF9F40'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'right'
+            }
+          }
+        }
+      })
+    }
+
+    const initBarChart = () => {
+      if (!barChart.value) return
+
+      if (charts.value.bar) {
+        charts.value.bar.destroy()
+      }
+
+      charts.value.bar = new Chart(barChart.value, {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun'],
+          datasets: [
+            {
+              label: 'Demandes reçues',
+              data: [65, 59, 80, 81, 56, 55],
+              backgroundColor: '#36A2EB'
+            },
+            {
+              label: 'Demandes traitées',
+              data: [45, 49, 60, 71, 46, 45],
+              backgroundColor: '#FF6384'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      })
+    }
+
+
+    onMounted(() => {
+      initDonutChart()
+      initBarChart()
+    })
+
+    onBeforeUnmount(() => {
+      if (charts.value.donut) charts.value.donut.destroy()
+      if (charts.value.bar) charts.value.bar.destroy()
+    })
 
     const stats = ref({
       nouveaux: 12,
@@ -381,62 +461,6 @@ export default {
       }
     ])
 
-    onMounted(() => {
-      // Graphique donut des structures
-      new Chart(donutChart.value, {
-        type: 'doughnut',
-        data: {
-          labels: ['DSI', 'DGB', 'DGID', 'DRH', 'DAF', 'Autres'],
-          datasets: [{
-            data: [30, 25, 15, 10, 10, 10],
-            backgroundColor: [
-              '#FF6384',
-              '#36A2EB',
-              '#FFCE56',
-              '#4BC0C0',
-              '#9966FF',
-              '#FF9F40'
-            ]
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'right'
-            }
-          }
-        }
-      })
-
-      // Graphique en barres de l'évolution des demandes
-      new Chart(barChart.value, {
-        type: 'bar',
-        data: {
-          labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun'],
-          datasets: [
-            {
-              label: 'Demandes reçues',
-              data: [65, 59, 80, 81, 56, 55],
-              backgroundColor: '#36A2EB'
-            },
-            {
-              label: 'Demandes traitées',
-              data: [45, 49, 60, 71, 46, 45],
-              backgroundColor: '#FF6384'
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      })
-    })
 
     const formatDate = (date) => {
       return new Date(date).toLocaleDateString('fr-FR')
@@ -509,7 +533,9 @@ export default {
       getNotificationTypeClass,
       getNotificationIcon,
       formatNotifDate,
-      markAllAsRead
+      markAllAsRead,
+      initDonutChart,
+      initBarChart
     }
   }
 }
