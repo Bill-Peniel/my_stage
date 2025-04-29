@@ -1,4 +1,3 @@
-
 <template>
   <div class="p-4">
     <h1 class="text-2xl font-bold mb-6">Demandes Classées</h1>
@@ -29,40 +28,41 @@
       </div>
 
       <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stagiaire</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Structure</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type de Stage</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="demande in filteredDemandes" :key="demande.id" class="hover:bg-gray-50">
-              <td class="px-6 py-4">
-                <div class="text-sm font-medium text-gray-900">{{ demande.nom }}</div>
-                <div class="text-sm text-gray-500">{{ demande.email }}</div>
-              </td>
-              <td class="px-6 py-4 text-sm text-gray-500">{{ demande.structure }}</td>
-              <td class="px-6 py-4 text-sm text-gray-500">{{ demande.typeStage }}</td>
-              <td class="px-6 py-4 text-sm text-gray-500">{{ formatDate(demande.dateSoumission) }}</td>
-              <td class="px-6 py-4">
-                <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full"
-                      :class="getStatusClass(demande.status)">
-                  {{ getStatusLabel(demande.status) }}
-                </span>
-              </td>
-              <td class="px-6 py-4 text-sm font-medium">
-                <button @click="viewDetails(demande)" class="text-primary hover:text-primary-dark">
-                  <i class="fas fa-eye"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div v-for="(demandes, structure) in demandesParStructure" :key="structure" class="mb-8">
+          <h2 class="text-xl font-semibold mb-4 px-6 text-primary">{{ structure }}</h2>
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stagiaire</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type de Stage</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr v-for="demande in demandes" :key="demande.id" class="hover:bg-gray-50">
+                <td class="px-6 py-4">
+                  <div class="text-sm font-medium text-gray-900">{{ demande.nom }}</div>
+                  <div class="text-sm text-gray-500">{{ demande.email }}</div>
+                </td>
+                <td class="px-6 py-4 text-sm text-gray-500">{{ demande.typeStage }}</td>
+                <td class="px-6 py-4 text-sm text-gray-500">{{ formatDate(demande.dateSoumission) }}</td>
+                <td class="px-6 py-4">
+                  <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full"
+                        :class="getStatusClass(demande.status)">
+                    {{ getStatusLabel(demande.status) }}
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-sm font-medium">
+                  <button @click="viewDetails(demande)" class="text-primary hover:text-primary-dark">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -130,16 +130,32 @@ export default {
       }
     ])
 
+    const demandesParStructure = computed(() => {
+      const demandesGrouped = {};
+      demandes.value.forEach(demande => {
+        if (!demandesGrouped[demande.structure]) {
+          demandesGrouped[demande.structure] = [];
+        }
+        demandesGrouped[demande.structure].push(demande);
+      });
+      return demandesGrouped;
+    });
+
+
     const filteredDemandes = computed(() => {
-      return demandes.value.filter(demande => {
-        const matchQuery = demande.nom.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-                         demande.email.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-                         demande.structure.toLowerCase().includes(searchQuery.value.toLowerCase())
-
-        const matchStatus = !filterStatus.value || demande.status === filterStatus.value
-
-        return matchQuery && matchStatus
-      })
+      let filtered = demandes.value;
+      if (searchQuery.value) {
+        filtered = filtered.filter(demande => {
+          return demande.nom.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+                 demande.email.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+                 demande.structure.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+                 demande.typeStage.toLowerCase().includes(searchQuery.value.toLowerCase());
+        })
+      }
+      if (filterStatus.value) {
+        filtered = filtered.filter(demande => demande.status === filterStatus.value);
+      }
+      return filtered;
     })
 
     const formatDate = (date) => {
@@ -178,6 +194,7 @@ export default {
       searchQuery,
       filterStatus,
       filteredDemandes,
+      demandesParStructure,
       formatDate,
       getStatusClass,
       getStatusLabel,
