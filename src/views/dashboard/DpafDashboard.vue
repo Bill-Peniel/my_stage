@@ -9,9 +9,24 @@
         </div>
         <div class="flex items-center space-x-4">
           <span class="text-white">{{ store.getters.roleDisplay }}</span>
-          <button @click="logout" class="text-white hover:text-accent-yellow">
-            <i class="fas fa-sign-out-alt"></i> Déconnexion
-          </button>
+          <div class="relative" ref="userMenu">
+            <button @click="toggleUserMenu" class="flex items-center space-x-3 focus:outline-none">
+              <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition">
+                <span class="text-sm font-medium">{{ userInitials }}</span>
+              </div>
+            </button>
+            <div v-show="showUserMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-user mr-2"></i> Mon profil
+              </a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-cog mr-2"></i> Paramètres
+              </a>
+              <button @click="logout" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                <i class="fas fa-sign-out-alt mr-2"></i> Déconnexion
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </header>
@@ -199,6 +214,27 @@ export default {
   setup() {
     const store = useStore()
     const router = useRouter()
+    const showUserMenu = ref(false)
+    const userMenu = ref(null)
+    
+    const userInitials = computed(() => {
+      const user = store.state.user
+      if (!user || !user.name) return 'DP'
+      return user.name.split(' ').map(n => n[0]).join('').toUpperCase()
+    })
+
+    const toggleUserMenu = () => {
+      showUserMenu.value = !showUserMenu.value
+    }
+
+    // Close menu when clicking outside
+    onMounted(() => {
+      document.addEventListener('click', (e) => {
+        if (userMenu.value && !userMenu.value.contains(e.target)) {
+          showUserMenu.value = false
+        }
+      })
+    })
     const donutChart = ref(null)
     const barChart = ref(null)
 
@@ -345,7 +381,11 @@ export default {
       viewDetails,
       confirmDemande,
       rejectDemande,
-      logout
+      logout,
+      showUserMenu,
+      toggleUserMenu,
+      userMenu,
+      userInitials
     }
   }
 }
