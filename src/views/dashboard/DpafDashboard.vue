@@ -249,7 +249,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import Chart from 'chart.js/auto'
@@ -424,8 +424,21 @@ export default {
 
 
     onMounted(() => {
-      initDonutChart()
-      initBarChart()
+      nextTick(() => {
+        initDonutChart()
+        initBarChart()
+      })
+    })
+
+    // Réinitialiser les graphiques lors du retour sur la page
+    const route = useRouter()
+    watch(() => route.currentRoute.value.path, (newPath) => {
+      if (newPath === '/dashboard/dpaf') {
+        nextTick(() => {
+          initDonutChart()
+          initBarChart()
+        })
+      }
     })
 
     onBeforeUnmount(() => {
