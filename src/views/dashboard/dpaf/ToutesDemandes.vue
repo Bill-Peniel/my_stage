@@ -1,8 +1,7 @@
-
 <template>
   <div class="p-4">
     <h1 class="text-2xl font-bold mb-6">Nouvelles Demandes</h1>
-    
+
     <div class="bg-white rounded-lg shadow">
       <div class="p-4 border-b">
         <div class="flex justify-between items-center">
@@ -29,7 +28,7 @@
           </button>
         </div>
       </div>
-      
+
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
@@ -73,18 +72,24 @@
         </table>
       </div>
     </div>
+    <DemandeDetails v-if="selectedDemande" :demande="selectedDemande" @close="closeDetails"/>
   </div>
 </template>
 
 <script>
 import { ref, computed } from 'vue'
+import DemandeDetails from './DemandeDetails.vue'; // Import the new component
 
 export default {
   name: 'ToutesDemandes',
+  components: {
+    DemandeDetails
+  },
   setup() {
     const searchQuery = ref('')
     const filterStatus = ref('')
-    
+    const selectedDemande = ref(null)
+
     const demandes = ref([
       {
         id: 1,
@@ -111,9 +116,9 @@ export default {
         const matchQuery = demande.nom.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
                          demande.email.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
                          demande.structure.toLowerCase().includes(searchQuery.value.toLowerCase())
-        
+
         const matchStatus = !filterStatus.value || demande.status === filterStatus.value
-        
+
         return matchQuery && matchStatus
       })
     })
@@ -143,7 +148,34 @@ export default {
     }
 
     const viewDetails = (demande) => {
-      console.log('Voir détails:', demande.id)
+      selectedDemande.value = {
+        ...demande,
+        telephone: '+229 97000000',
+        formation: 'Licence Informatique',
+        dateDebut: '2024-06-01',
+        dateFin: '2024-08-31',
+        documents: [
+          { 
+            nom: 'CV',
+            type: 'PDF',
+            url: '/documents/cv.pdf'
+          },
+          {
+            nom: 'Lettre de motivation',
+            type: 'PDF',
+            url: '/documents/lettre.pdf'
+          },
+          {
+            nom: 'Attestation de scolarité',
+            type: 'PDF',
+            url: '/documents/attestation.pdf'
+          }
+        ]
+      }
+    }
+
+    const closeDetails = () => {
+      selectedDemande.value = null
     }
 
     const approveRequest = (demande) => {
@@ -163,8 +195,36 @@ export default {
       getStatusLabel,
       viewDetails,
       approveRequest,
-      rejectRequest
+      rejectRequest,
+      selectedDemande,
+      closeDetails
     }
   }
 }
+</script>
+
+<template>
+  <div class="modal" v-if="demande">
+    <div class="modal-content">
+      <button @click="$emit('close')">Fermer</button>
+      <h1>{{ demande.nom }}</h1>
+      <p>Téléphone: {{ demande.telephone }}</p>
+      <p>Formation: {{ demande.formation }}</p>
+      <p>Date de début: {{ demande.dateDebut }}</p>
+      <p>Date de fin: {{ demande.dateFin }}</p>
+      <h2>Documents</h2>
+      <ul>
+        <li v-for="doc in demande.documents" :key="doc.nom">
+          <a :href="doc.url" target="_blank">{{ doc.nom }} ({{ doc.type }})</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  name: 'DemandeDetails',
+  props: ['demande'],
+  emits: ['close']
+};
 </script>
