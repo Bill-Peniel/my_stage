@@ -38,16 +38,6 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700">Tuteur</label>
-            <select v-model="affectation.tuteur" required class="input-field mt-1">
-              <option value="">Sélectionner un tuteur</option>
-              <option v-for="tuteur in tuteurs" :key="tuteur.id" :value="tuteur.id">
-                {{ tuteur.nom }}
-              </option>
-            </select>
-          </div>
-
-          <div>
             <label class="block text-sm font-medium text-gray-700">Date de début</label>
             <input type="date" v-model="affectation.dateDebut" required class="input-field mt-1" />
           </div>
@@ -79,7 +69,6 @@ export default {
     const selectedStagiaire = ref(null)
     const affectation = reactive({
       structure: '',
-      tuteur: '',
       dateDebut: '',
       dateFin: ''
     })
@@ -94,10 +83,6 @@ export default {
     ])
 
     const structures = ['Direction des Systèmes d\'Information', 'Direction Générale du Budget']
-    const tuteurs = [
-      { id: 1, nom: 'John Doe' },
-      { id: 2, nom: 'Jane Smith' }
-    ]
 
     const selectStagiaire = (stagiaire) => {
       selectedStagiaire.value = stagiaire
