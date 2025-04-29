@@ -1,87 +1,145 @@
 
 <template>
-  <aside class="bg-primary w-64 text-white shadow-lg overflow-y-auto transform transition-all duration-300 ease-in-out fixed md:translate-x-0 z-50 sidebar-custom-scroll" :class="{ '-translate-x-full': !isSidebarOpen }" data-aos="fade-right">
-    <button @click="toggleSidebar" class="md:hidden fixed top-20 left-4 z-50 bg-primary text-white p-2 rounded-full">
+  <aside 
+    class="bg-primary text-white shadow-lg overflow-y-auto fixed h-[calc(100vh-4rem)] z-50 sidebar-custom-scroll transition-all duration-300 ease-in-out"
+    :class="[
+      isSidebarOpen ? 'w-64' : 'w-16',
+      isHovered && !isSidebarOpen ? 'w-64' : '',
+      'top-16'
+    ]"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
+  >
+    <button 
+      @click="toggleSidebar" 
+      class="absolute right-4 top-4 text-white p-2 rounded-full hover:bg-primary-dark transition-all duration-300"
+    >
       <i class="fas" :class="isSidebarOpen ? 'fa-times' : 'fa-bars'"></i>
     </button>
-    <nav class="p-2 mt-4">
+
+    <nav class="p-2 mt-12">
       <!-- Vue d'ensemble -->
       <div class="mb-4">
         <router-link 
           to="/dashboard/dpaf" 
-          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          class="flex items-center px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200 whitespace-nowrap"
           :class="{ 'bg-primary-dark': $route.path === '/dashboard/dpaf' }"
         >
-          <i class="fas fa-chart-line mr-2"></i> Vue d'ensemble
+          <i class="fas fa-chart-line min-w-[20px]"></i>
+          <span :class="[isSidebarOpen || isHovered ? 'ml-2 opacity-100' : 'opacity-0 w-0']" class="transition-all duration-300">
+            Vue d'ensemble
+          </span>
         </router-link>
       </div>
 
       <!-- Gestion des demandes -->
       <div class="mb-4">
-        <h3 class="px-4 py-2 text-sm font-semibold text-gray-300 uppercase">Gestion des demandes</h3>
+        <h3 :class="[isSidebarOpen || isHovered ? 'px-4 opacity-100' : 'px-2 opacity-0', 'py-2 text-sm font-semibold text-gray-300 uppercase transition-all duration-300']">
+          Gestion
+        </h3>
+        
         <router-link 
           to="/dashboard/dpaf/toutes-demandes" 
-          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          class="flex items-center px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200 whitespace-nowrap"
         >
-          <i class="fas fa-inbox mr-2"></i> Nouvelles demandes
+          <i class="fas fa-inbox min-w-[20px]"></i>
+          <span :class="[isSidebarOpen || isHovered ? 'ml-2 opacity-100' : 'opacity-0 w-0']" class="transition-all duration-300">
+            Nouvelles demandes
+          </span>
         </router-link>
+
         <router-link 
           to="/dashboard/dpaf/nouvelles-demandes" 
-          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          class="flex items-center px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200 whitespace-nowrap"
         >
-          <i class="fas fa-file-alt mr-2"></i> Demandes classées
+          <i class="fas fa-file-alt min-w-[20px]"></i>
+          <span :class="[isSidebarOpen || isHovered ? 'ml-2 opacity-100' : 'opacity-0 w-0']" class="transition-all duration-300">
+            Demandes classées
+          </span>
         </router-link>
+
         <router-link 
           to="/dashboard/dpaf/affectations" 
-          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          class="flex items-center px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200 whitespace-nowrap"
         >
-          <i class="fas fa-user-plus mr-2"></i> Affectations
+          <i class="fas fa-user-plus min-w-[20px]"></i>
+          <span :class="[isSidebarOpen || isHovered ? 'ml-2 opacity-100' : 'opacity-0 w-0']" class="transition-all duration-300">
+            Affectations
+          </span>
         </router-link>
+
         <router-link 
           to="/dashboard/dpaf/historique" 
-          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          class="flex items-center px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200 whitespace-nowrap"
         >
-          <i class="fas fa-history mr-2"></i> Historique
+          <i class="fas fa-history min-w-[20px]"></i>
+          <span :class="[isSidebarOpen || isHovered ? 'ml-2 opacity-100' : 'opacity-0 w-0']" class="transition-all duration-300">
+            Historique
+          </span>
         </router-link>
       </div>
 
       <!-- Rapports -->
       <div class="mb-4">
-        <h3 class="px-4 py-2 text-sm font-semibold text-gray-300 uppercase">Rapports</h3>
+        <h3 :class="[isSidebarOpen || isHovered ? 'px-4 opacity-100' : 'px-2 opacity-0', 'py-2 text-sm font-semibold text-gray-300 uppercase transition-all duration-300']">
+          Rapports
+        </h3>
+        
         <router-link 
           to="/dashboard/dpaf/statistiques" 
-          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          class="flex items-center px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200 whitespace-nowrap"
         >
-          <i class="fas fa-chart-bar mr-2"></i> Statistiques
+          <i class="fas fa-chart-bar min-w-[20px]"></i>
+          <span :class="[isSidebarOpen || isHovered ? 'ml-2 opacity-100' : 'opacity-0 w-0']" class="transition-all duration-300">
+            Statistiques
+          </span>
         </router-link>
+
         <router-link 
           to="/dashboard/dpaf/evaluations" 
-          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          class="flex items-center px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200 whitespace-nowrap"
         >
-          <i class="fas fa-star mr-2"></i> Évaluations
+          <i class="fas fa-star min-w-[20px]"></i>
+          <span :class="[isSidebarOpen || isHovered ? 'ml-2 opacity-100' : 'opacity-0 w-0']" class="transition-all duration-300">
+            Évaluations
+          </span>
         </router-link>
       </div>
 
       <!-- Configuration -->
       <div class="mb-4">
-        <h3 class="px-4 py-2 text-sm font-semibold text-gray-300 uppercase">Configuration</h3>
+        <h3 :class="[isSidebarOpen || isHovered ? 'px-4 opacity-100' : 'px-2 opacity-0', 'py-2 text-sm font-semibold text-gray-300 uppercase transition-all duration-300']">
+          Configuration
+        </h3>
+        
         <router-link 
           to="/dashboard/dpaf/parametres" 
-          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          class="flex items-center px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200 whitespace-nowrap"
         >
-          <i class="fas fa-cog mr-2"></i> Paramètres
+          <i class="fas fa-cog min-w-[20px]"></i>
+          <span :class="[isSidebarOpen || isHovered ? 'ml-2 opacity-100' : 'opacity-0 w-0']" class="transition-all duration-300">
+            Paramètres
+          </span>
         </router-link>
+
         <router-link 
           to="/dashboard/dpaf/notifications" 
-          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          class="flex items-center px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200 whitespace-nowrap"
         >
-          <i class="fas fa-bell mr-2"></i> Notifications
+          <i class="fas fa-bell min-w-[20px]"></i>
+          <span :class="[isSidebarOpen || isHovered ? 'ml-2 opacity-100' : 'opacity-0 w-0']" class="transition-all duration-300">
+            Notifications
+          </span>
         </router-link>
+
         <router-link 
           to="/dashboard/dpaf/profil" 
-          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+          class="flex items-center px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200 whitespace-nowrap"
         >
-          <i class="fas fa-user mr-2"></i> Profil
+          <i class="fas fa-user min-w-[20px]"></i>
+          <span :class="[isSidebarOpen || isHovered ? 'ml-2 opacity-100' : 'opacity-0 w-0']" class="transition-all duration-300">
+            Profil
+          </span>
         </router-link>
       </div>
     </nav>
@@ -89,16 +147,32 @@
 </template>
 
 <script>
+import { ref } from 'vue'
+
 export default {
   name: 'SidebarDpaf',
-  data() {
-    return {
-      isSidebarOpen: true
+  setup() {
+    const isSidebarOpen = ref(true)
+    const isHovered = ref(false)
+
+    const toggleSidebar = () => {
+      isSidebarOpen.value = !isSidebarOpen.value
     }
-  },
-  methods: {
-    toggleSidebar() {
-      this.isSidebarOpen = !this.isSidebarOpen
+
+    const handleMouseEnter = () => {
+      isHovered.value = true
+    }
+
+    const handleMouseLeave = () => {
+      isHovered.value = false
+    }
+
+    return {
+      isSidebarOpen,
+      isHovered,
+      toggleSidebar,
+      handleMouseEnter,
+      handleMouseLeave
     }
   }
 }
