@@ -78,7 +78,7 @@
 
 <script>
 import { ref, computed } from 'vue'
-import DemandeDetails from './DemandeDetails.vue'; // Import the new component
+import DemandeDetails from '@/components/demandes/DemandeDetails.vue'
 
 export default {
   name: 'ToutesDemandes',
@@ -203,6 +203,11 @@ export default {
 }
 </script>
 
+```
+
+You will also need to create a file at `src/components/demandes/DemandeDetails.vue` with the following content:
+
+```vue
 <template>
   <div class="modal" v-if="demande">
     <div class="modal-content">
@@ -221,6 +226,7 @@ export default {
     </div>
   </div>
 </template>
+
 <script>
 export default {
   name: 'DemandeDetails',
