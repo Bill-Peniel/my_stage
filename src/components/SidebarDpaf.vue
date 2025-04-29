@@ -20,6 +20,12 @@
       <div class="mb-4">
         <h3 class="px-4 py-2 text-sm font-semibold text-gray-300 uppercase">Gestion des demandes</h3>
         <router-link 
+          to="/dashboard/dpaf/toutes-demandes" 
+          class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
+        >
+          <i class="fas fa-inbox mr-2"></i> Nouvelles demandes
+        </router-link>
+        <router-link 
           to="/dashboard/dpaf/nouvelles-demandes" 
           class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
         >

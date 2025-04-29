@@ -119,6 +119,11 @@ const routes = [
         component: () => import('../views/dashboard/DpafDashboard.vue')
       },
       {
+        path: 'toutes-demandes',
+        name: 'ToutesDemandes',
+        component: () => import('../views/dashboard/dpaf/ToutesDemandes.vue')
+      },
+      {
         path: 'nouvelles-demandes',
         name: 'NouvellesDemandes',
         component: () => import('../views/dashboard/dpaf/NouvellesDemandes.vue')
