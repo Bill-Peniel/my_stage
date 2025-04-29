@@ -5,7 +5,7 @@
       <div class="px-4 py-4 flex justify-between items-center">
         <div class="flex items-center gap-4">
           <img src="@/assets/finance-logo1.png" alt="Logo du ministère" class="h-12 w-auto" />
-          <h1 class="text-2xl font-bold text-white">Direction du Personnel - Gestion des Stages</h1>
+          <h1 class="text-2xl font-bold text-white">DPAF - Gestion des Stages</h1>
         </div>
         <div class="flex items-center space-x-4">
           <span class="text-white">{{ store.getters.roleDisplay }}</span>
@@ -219,9 +219,10 @@ export default {
     
     const userInitials = computed(() => {
       const user = store.state.user
-      if (!user || !user.name) return 'DP'
-      return user.name.split(' ').map(n => n[0]).join('').toUpperCase()
+      if (!user || !user.name)
+      return user.name.charAt(0).toUpperCase()
     })
+
 
     const toggleUserMenu = () => {
       showUserMenu.value = !showUserMenu.value
