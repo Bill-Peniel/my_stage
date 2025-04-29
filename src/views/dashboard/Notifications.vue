@@ -1,18 +1,34 @@
+
 <template>
   <div class="bg-white shadow rounded-lg">
     <div class="px-6 py-4 border-b border-gray-200">
-      <div class="flex justify-between items-center">
+      <div class="flex flex-wrap gap-4 justify-between items-center">
         <h2 class="text-xl font-semibold text-gray-800">Notifications</h2>
-        <div class="flex space-x-3">
-          <button @click="markAllAsRead" class="btn-outline flex items-center">
-            <i class="fas fa-check-double mr-2"></i> Tout marquer comme lu
-          </button>
+        <div class="flex flex-wrap gap-3">
+          <div class="flex items-center space-x-2">
+            <label class="text-sm text-gray-600">Filtrer par:</label>
+            <select v-model="filterType" class="input-field py-1 px-2">
+              <option value="all">Tous</option>
+              <option value="info">Information</option>
+              <option value="success">Succès</option>
+              <option value="warning">Avertissement</option>
+              <option value="error">Erreur</option>
+            </select>
+          </div>
+          <div class="flex space-x-2">
+            <button @click="markAllAsRead" class="btn-outline flex items-center">
+              <i class="fas fa-check-double mr-2"></i> Tout marquer comme lu
+            </button>
+            <button @click="deleteAllRead" class="btn-outline flex items-center text-red-600 hover:text-red-800">
+              <i class="fas fa-trash mr-2"></i> Supprimer lues
+            </button>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="divide-y divide-gray-200">
-      <div v-for="notification in notifications" :key="notification.id" 
+      <div v-for="notification in filteredNotifications" :key="notification.id" 
            class="p-6 hover:bg-gray-50 transition-colors duration-200"
            :class="{ 'bg-blue-50': !notification.read }">
         <div class="flex items-start justify-between">
@@ -34,11 +50,13 @@
           <div class="flex items-center space-x-2">
             <button v-if="!notification.read" 
                     @click="markAsRead(notification.id)" 
-                    class="text-primary hover:text-primary-dark">
+                    class="text-primary hover:text-primary-dark"
+                    title="Marquer comme lu">
               <i class="fas fa-check"></i>
             </button>
             <button @click="deleteNotification(notification.id)" 
-                    class="text-gray-400 hover:text-red-600">
+                    class="text-gray-400 hover:text-red-600"
+                    title="Supprimer">
               <i class="fas fa-trash"></i>
             </button>
           </div>
@@ -46,20 +64,22 @@
       </div>
 
       <!-- État vide -->
-      <div v-if="notifications.length === 0" class="p-6 text-center">
+      <div v-if="filteredNotifications.length === 0" class="p-6 text-center">
         <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 mb-4">
           <i class="fas fa-bell text-gray-400 text-xl"></i>
         </span>
         <h3 class="text-sm font-medium text-gray-900">Aucune notification</h3>
-        <p class="mt-1 text-sm text-gray-500">Vous n'avez pas de nouvelles notifications.</p>
+        <p class="mt-1 text-sm text-gray-500">
+          {{ filterType === 'all' ? "Vous n'avez pas de nouvelles notifications." : "Aucune notification de ce type." }}
+        </p>
       </div>
     </div>
 
     <!-- Pagination -->
-    <div v-if="notifications.length > 0" class="px-6 py-4 border-t border-gray-200">
+    <div v-if="filteredNotifications.length > 0" class="px-6 py-4 border-t border-gray-200">
       <div class="flex items-center justify-between">
         <div class="text-sm text-gray-700">
-          Affichage de {{ startIndex + 1 }} à {{ endIndex }} sur {{ totalNotifications }} notifications
+          Affichage de {{ startIndex + 1 }} à {{ endIndex }} sur {{ totalFilteredNotifications }} notifications
         </div>
         <div class="flex space-x-2">
           <button 
@@ -92,8 +112,8 @@ export default {
     const store = useStore()
     const currentPage = ref(1)
     const itemsPerPage = 10
+    const filterType = ref('all')
 
-    // Données simulées - À remplacer par des appels API
     const notifications = ref([
       {
         id: 1,
@@ -121,10 +141,17 @@ export default {
       }
     ])
 
-    const totalNotifications = computed(() => notifications.value.length)
-    const totalPages = computed(() => Math.ceil(totalNotifications.value / itemsPerPage))
+    const filteredNotifications = computed(() => {
+      if (filterType.value === 'all') {
+        return notifications.value
+      }
+      return notifications.value.filter(n => n.type === filterType.value)
+    })
+
+    const totalFilteredNotifications = computed(() => filteredNotifications.value.length)
+    const totalPages = computed(() => Math.ceil(totalFilteredNotifications.value / itemsPerPage))
     const startIndex = computed(() => (currentPage.value - 1) * itemsPerPage)
-    const endIndex = computed(() => Math.min(startIndex.value + itemsPerPage, totalNotifications.value))
+    const endIndex = computed(() => Math.min(startIndex.value + itemsPerPage, totalFilteredNotifications.value))
 
     const getNotificationTypeClass = (type) => {
       const classes = {
@@ -157,7 +184,6 @@ export default {
     }
 
     const markAsRead = async (id) => {
-      // Implémenter la logique de marquage comme lu
       const notification = notifications.value.find(n => n.id === id)
       if (notification) {
         notification.read = true
@@ -165,18 +191,20 @@ export default {
     }
 
     const markAllAsRead = async () => {
-      // Implémenter la logique de marquage de tout comme lu
       notifications.value.forEach(notification => {
         notification.read = true
       })
     }
 
     const deleteNotification = async (id) => {
-      // Implémenter la logique de suppression
       const index = notifications.value.findIndex(n => n.id === id)
       if (index !== -1) {
         notifications.value.splice(index, 1)
       }
+    }
+
+    const deleteAllRead = () => {
+      notifications.value = notifications.value.filter(n => !n.read)
     }
 
     const previousPage = () => {
@@ -193,8 +221,10 @@ export default {
 
     return {
       notifications,
+      filteredNotifications,
+      filterType,
       currentPage,
-      totalNotifications,
+      totalFilteredNotifications,
       totalPages,
       startIndex,
       endIndex,
@@ -204,9 +234,10 @@ export default {
       markAsRead,
       markAllAsRead,
       deleteNotification,
+      deleteAllRead,
       previousPage,
       nextPage
     }
   }
 }
-</script> 
+</script>
