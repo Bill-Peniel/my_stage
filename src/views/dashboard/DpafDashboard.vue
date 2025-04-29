@@ -1,4 +1,3 @@
-
 <template>
   <div class="min-h-screen bg-gray-100 flex flex-col">
     <header class="bg-primary shadow fixed top-0 w-full z-20">
@@ -9,7 +8,7 @@
         </div>
         <div class="flex items-center space-x-4">
           <span class="text-white">{{ store.getters.roleDisplay }}</span>
-          
+
           <!-- Notification Icon and Dropdown -->
           <div class="relative" ref="notifMenu">
             <button @click="toggleNotifMenu" class="text-white hover:text-accent-yellow relative">
@@ -98,7 +97,7 @@
                     <div class="bg-white h-2.5 rounded-full animate-progress" style="width: 40%"></div>
                   </div>
                 </div>
-                <div class="text-3xl opacity-75">
+                <div class="text-3xl opacity-75 rotate-on-hover">
                   <i class="fas fa-file-alt"></i>
                 </div>
               </div>
@@ -118,7 +117,7 @@
                     <div class="bg-white h-2.5 rounded-full animate-progress" style="width: 65%"></div>
                   </div>
                 </div>
-                <div class="text-3xl opacity-75">
+                <div class="text-3xl opacity-75 rotate-on-hover">
                   <i class="fas fa-user-graduate"></i>
                 </div>
               </div>
@@ -138,7 +137,7 @@
                     <div class="bg-white h-2.5 rounded-full animate-progress" style="width: 75%"></div>
                   </div>
                 </div>
-                <div class="text-3xl opacity-75">
+                <div class="text-3xl opacity-75 rotate-on-hover">
                   <i class="fas fa-check-circle"></i>
                 </div>
               </div>
@@ -158,7 +157,7 @@
                     <div class="bg-white h-2.5 rounded-full animate-progress" style="width: 55%"></div>
                   </div>
                 </div>
-                <div class="text-3xl opacity-75">
+                <div class="text-3xl opacity-75 rotate-on-hover">
                   <i class="fas fa-times-circle"></i>
                 </div>
               </div>
@@ -172,7 +171,7 @@
 
           <!-- Graphiques -->
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            <div class="bg-white rounded-lg shadow-sm p-6">
+            <div class="bg-white rounded-lg shadow-sm p-6 chart-container">
               <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-semibold">Répartition par structure</h3>
                 <button class="text-gray-400 hover:text-gray-600">
@@ -182,7 +181,7 @@
               <canvas ref="donutChart" class="max-h-80"></canvas>
             </div>
 
-            <div class="bg-white rounded-lg shadow-sm p-6">
+            <div class="bg-white rounded-lg shadow-sm p-6 chart-container">
               <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-semibold">Évolution des demandes</h3>
                 <button class="text-gray-400 hover:text-gray-600">
@@ -327,7 +326,7 @@ export default {
       })
       unreadNotifications.value = 0
     }
-    
+
     const userInitials = computed(() => {
       const user = store.state.user
       if (!user || !user.name)
