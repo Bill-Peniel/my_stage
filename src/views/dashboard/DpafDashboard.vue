@@ -1,3 +1,4 @@
+
 <template>
   <div class="min-h-screen bg-gray-100 flex flex-col">
     <header class="bg-primary shadow fixed top-0 w-full z-20">
@@ -8,7 +9,7 @@
         </div>
         <div class="flex items-center space-x-4">
           <span class="text-white">{{ store.getters.roleDisplay }}</span>
-
+          
           <!-- Notification Icon and Dropdown -->
           <div class="relative" ref="notifMenu">
             <button @click="toggleNotifMenu" class="text-white hover:text-accent-yellow relative">
@@ -51,7 +52,7 @@
                 </div>
               </div>
               <div class="px-4 py-2 border-t border-gray-200">
-                <router-link to="/dashboard/dpaf/notifications" class="text-xs text-primary hover:text-primary-dark block text-center">
+                <router-link to="/dashboard/notifications" class="text-xs text-primary hover:text-primary-dark block text-center">
                   Voir toutes les notifications
                 </router-link>
               </div>
@@ -326,7 +327,7 @@ export default {
       })
       unreadNotifications.value = 0
     }
-
+    
     const userInitials = computed(() => {
       const user = store.state.user
       if (!user || !user.name)

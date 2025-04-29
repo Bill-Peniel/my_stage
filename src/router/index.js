@@ -152,11 +152,6 @@ const routes = [
         path: 'parametres',
         name: 'DpafParametres',
         component: () => import('../views/dashboard/dpaf/Parametres.vue')
-      },
-      {
-        path: 'notifications',
-        name: 'DpafNotifications',
-        component: () => import('../views/dashboard/Notifications.vue')
       }
     ]
   }

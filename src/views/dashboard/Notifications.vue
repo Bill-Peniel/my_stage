@@ -94,9 +94,32 @@ export default {
     const itemsPerPage = 10
 
     // Données simulées - À remplacer par des appels API
-    // Récupérer les notifications depuis le store
-    const store = useStore()
-    const notifications = computed(() => store.state.notifications || [])
+    const notifications = ref([
+      {
+        id: 1,
+        type: 'info',
+        title: 'Nouvelle demande de stage',
+        message: 'Une nouvelle demande de stage a été soumise par Jean Dupont.',
+        date: new Date('2024-03-15T10:30:00'),
+        read: false
+      },
+      {
+        id: 2,
+        type: 'success',
+        title: 'Stage terminé',
+        message: 'Le stage de Marie Martin a été marqué comme terminé.',
+        date: new Date('2024-03-14T15:45:00'),
+        read: true
+      },
+      {
+        id: 3,
+        type: 'warning',
+        title: 'Rappel',
+        message: 'Le stage de Paul Dubois se termine dans 7 jours.',
+        date: new Date('2024-03-13T09:15:00'),
+        read: false
+      }
+    ])
 
     const totalNotifications = computed(() => notifications.value.length)
     const totalPages = computed(() => Math.ceil(totalNotifications.value / itemsPerPage))
