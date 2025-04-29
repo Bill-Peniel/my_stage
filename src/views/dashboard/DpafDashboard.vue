@@ -52,7 +52,7 @@
                 </div>
               </div>
               <div class="px-4 py-2 border-t border-gray-200">
-                <router-link to="/dashboard/notifications" class="text-xs text-primary hover:text-primary-dark block text-center">
+                <router-link to="/dashboard/dpaf/notifications" class="text-xs text-primary hover:text-primary-dark block text-center">
                   Voir toutes les notifications
                 </router-link>
               </div>
