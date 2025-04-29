@@ -81,13 +81,9 @@
     </header>
 
     <div class="flex pt-16">
-      <Sidebar class="fixed left-0 top-16 h-[calc(100vh-4rem)] z-10" @sidebar-state-changed="handleSidebarState" ref="sidebar" />
+      <Sidebar class="fixed left-0 top-16 h-[calc(100vh-4rem)] z-10" />
 
-      <div class="flex-1 p-6 bg-gray-50 transition-all duration-300 ease-in-out"
-           :style="{
-             marginLeft: isSidebarOpen ? '16rem' : '4rem',
-             width: isSidebarOpen ? 'calc(100% - 16rem)' : 'calc(100% - 4rem)'
-           }">
+      <div class="flex-1 ml-16 p-6 bg-gray-50 transition-all duration-300">
         <router-view v-if="$route.path !== '/dashboard/dpaf'" />
         <div v-else>
           <!-- Statistiques -->
@@ -272,8 +268,6 @@ export default {
     const userMenu = ref(null)
     const notifMenu = ref(null)
     const unreadNotifications = ref(2)
-    const isSidebarOpen = ref(false);
-    const isHovered = ref(false);
 
     const notifications = ref([
       {
@@ -335,7 +329,7 @@ export default {
 
     const userInitials = computed(() => {
       const user = store.state.user
-      if (!user || !user.name) return ''; // Handle null or undefined user.name
+      if (!user || !user.name)
       return user.name.charAt(0).toUpperCase()
     })
 
@@ -487,11 +481,6 @@ export default {
       router.push('/login')
     }
 
-    const handleSidebarState = (isExpanded) => {
-      isSidebarOpen.value = isExpanded
-    }
-
-
     return {
       store,
       stats,
@@ -519,10 +508,7 @@ export default {
       getNotificationTypeClass,
       getNotificationIcon,
       formatNotifDate,
-      markAllAsRead,
-      isSidebarOpen,
-      handleSidebarState,
-      isHovered
+      markAllAsRead
     }
   }
 }

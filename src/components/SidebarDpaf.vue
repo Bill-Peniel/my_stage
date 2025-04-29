@@ -1,3 +1,4 @@
+
 <template>
   <aside 
     class="bg-primary text-white shadow-lg overflow-y-auto fixed h-[calc(100vh-4rem)] z-50 sidebar-custom-scroll transition-all duration-300 ease-in-out"
@@ -36,7 +37,7 @@
         <h3 :class="[isSidebarOpen || isHovered ? 'px-4 opacity-100' : 'px-2 opacity-0', 'py-2 text-sm font-semibold text-gray-300 uppercase transition-all duration-300']">
           Gestion
         </h3>
-
+        
         <router-link 
           to="/dashboard/dpaf/toutes-demandes" 
           class="flex items-center px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200 whitespace-nowrap"
@@ -83,7 +84,7 @@
         <h3 :class="[isSidebarOpen || isHovered ? 'px-4 opacity-100' : 'px-2 opacity-0', 'py-2 text-sm font-semibold text-gray-300 uppercase transition-all duration-300']">
           Rapports
         </h3>
-
+        
         <router-link 
           to="/dashboard/dpaf/statistiques" 
           class="flex items-center px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200 whitespace-nowrap"
@@ -110,7 +111,7 @@
         <h3 :class="[isSidebarOpen || isHovered ? 'px-4 opacity-100' : 'px-2 opacity-0', 'py-2 text-sm font-semibold text-gray-300 uppercase transition-all duration-300']">
           Configuration
         </h3>
-
+        
         <router-link 
           to="/dashboard/dpaf/parametres" 
           class="flex items-center px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200 whitespace-nowrap"
@@ -146,32 +147,24 @@
 </template>
 
 <script>
-import { ref, defineEmits } from 'vue'
+import { ref } from 'vue'
 
 export default {
   name: 'SidebarDpaf',
   setup() {
     const isSidebarOpen = ref(true)
     const isHovered = ref(false)
-    const emit = defineEmits(['sidebar-state-changed'])
 
     const toggleSidebar = () => {
       isSidebarOpen.value = !isSidebarOpen.value
-      emit('sidebar-state-changed', isSidebarOpen.value)
     }
 
     const handleMouseEnter = () => {
       isHovered.value = true
-      if (!isSidebarOpen.value) {
-        emit('sidebar-state-changed', true)
-      }
     }
 
     const handleMouseLeave = () => {
       isHovered.value = false
-      if (!isSidebarOpen.value) {
-        emit('sidebar-state-changed', false)
-      }
     }
 
     return {
