@@ -23,7 +23,7 @@
           to="/dashboard/dpaf/nouvelles-demandes" 
           class="block px-4 py-2 my-1 rounded hover:bg-primary-dark transition-colors duration-200"
         >
-          <i class="fas fa-file-alt mr-2"></i> Nouvelles demandes
+          <i class="fas fa-file-alt mr-2"></i> Demandes classées
         </router-link>
         <router-link 
           to="/dashboard/dpaf/affectations" 
