@@ -1,8 +1,7 @@
-
 <template>
   <div class="p-4">
     <h1 class="text-2xl font-bold mb-6">Gestion des Affectations</h1>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Liste des stagiaires à affecter -->
       <div class="bg-white p-4 rounded-lg shadow">
@@ -26,23 +25,13 @@
             <label class="block text-sm font-medium text-gray-700">Stagiaire</label>
             <input type="text" :value="selectedStagiaire.nom" disabled class="input-field mt-1" />
           </div>
-          
+
           <div>
             <label class="block text-sm font-medium text-gray-700">Structure d'accueil</label>
             <select v-model="affectation.structure" required class="input-field mt-1">
               <option value="">Sélectionner une structure</option>
               <option v-for="structure in structures" :key="structure" :value="structure">
                 {{ structure }}
-              </option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Tuteur</label>
-            <select v-model="affectation.tuteur" required class="input-field mt-1">
-              <option value="">Sélectionner un tuteur</option>
-              <option v-for="tuteur in tuteurs" :key="tuteur.id" :value="tuteur.id">
-                {{ tuteur.nom }}
               </option>
             </select>
           </div>
@@ -79,7 +68,6 @@ export default {
     const selectedStagiaire = ref(null)
     const affectation = reactive({
       structure: '',
-      tuteur: '',
       dateDebut: '',
       dateFin: ''
     })
@@ -94,10 +82,6 @@ export default {
     ])
 
     const structures = ['Direction des Systèmes d\'Information', 'Direction Générale du Budget']
-    const tuteurs = [
-      { id: 1, nom: 'John Doe' },
-      { id: 2, nom: 'Jane Smith' }
-    ]
 
     const selectStagiaire = (stagiaire) => {
       selectedStagiaire.value = stagiaire
@@ -120,7 +104,6 @@ export default {
       affectation,
       stagiaires,
       structures,
-      tuteurs,
       selectStagiaire,
       submitAffectation,
       resetForm
