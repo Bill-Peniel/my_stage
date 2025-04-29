@@ -156,7 +156,7 @@ const routes = [
       {
         path: 'notifications',
         name: 'DpafNotifications',
-        component: () => import('../views/dashboard/dpaf/Notifications.vue')
+        component: () => import('../views/dashboard/Notifications.vue')
       },
       {
         path: 'profil',
