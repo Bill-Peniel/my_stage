@@ -83,7 +83,7 @@
     <div class="flex pt-16">
       <Sidebar class="fixed left-0 top-16 h-[calc(100vh-4rem)] z-10" />
 
-      <div class="flex-1 ml-16 p-6 bg-gray-50 transition-all duration-300">
+      <div class="flex-1 md:ml-64 p-6 bg-gray-50">
         <router-view v-if="$route.path !== '/dashboard/dpaf'" />
         <div v-else>
           <!-- Statistiques -->
