@@ -19,9 +19,6 @@
             >
               <option value="">Tous les statuts</option>
               <option value="nouveau">Nouveau</option>
-              <option value="en_cours">En cours</option>
-              <option value="accepte">Accepté</option>
-              <option value="refuse">Refusé</option>
             </select>
           </div>
           <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark">
