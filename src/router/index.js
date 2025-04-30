@@ -115,8 +115,8 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'StructureDashboard',
-        component: () => import('../views/dashboard/structure/StructureDashboard.vue')
+        name: 'StructureOverview',
+        component: () => import('../views/dashboard/structure/Overview.vue')
       },
       {
         path: 'stagiaires',
