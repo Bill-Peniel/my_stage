@@ -60,6 +60,12 @@
         >
           <i class="fas fa-cog mr-2"></i> Paramètres
         </router-link>
+        <router-link 
+          to="/dashboard/structure/notifications"
+          class="block px-4 py-2 rounded hover:bg-primary-dark transition-colors duration-200"
+        >
+          <i class="fas fa-bell mr-2"></i> Notifications
+        </router-link>
       </div>
     </nav>
   </aside>

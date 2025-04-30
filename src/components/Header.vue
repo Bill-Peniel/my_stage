@@ -31,7 +31,16 @@
               S'inscrire
             </router-link>
           </template>
-          <div v-else class="relative" ref="profileMenu">
+          <div v-else class="flex items-center space-x-4">
+            <router-link 
+              v-if="isStructure"
+              to="/dashboard/structure/notifications" 
+              class="text-gray-700 hover:text-green-800 relative"
+            >
+              <i class="fas fa-bell text-xl"></i>
+              <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+            </router-link>
+            <div class="relative" ref="profileMenu">
             <button 
               @click="toggleProfileMenu" 
               class="flex items-center text-gray-700 hover:text-green-800 focus:outline-none"
@@ -56,6 +65,7 @@
                 Se déconnecter
               </button>
             </div>
+          </div>
           </div>
         </nav>
         
