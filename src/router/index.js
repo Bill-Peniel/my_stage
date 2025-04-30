@@ -107,7 +107,6 @@ const routes = [
   },
   {
     path: '/dashboard/tuteur',
-    name: 'TuteurDashboard',
     component: () => import('../views/dashboard/tuteur/TuteurDashboard.vue'),
     meta: { requiresAuth: true },
     beforeEnter: (to, from, next) => {
@@ -118,7 +117,19 @@ const routes = [
       } else {
         next('/login')
       }
-    }
+    },
+    children: [
+      {
+        path: '',
+        name: 'TuteurDashboard',
+        component: () => import('../views/dashboard/tuteur/TuteurDashboard.vue')
+      },
+      {
+        path: 'stagiaires',
+        name: 'TuteurStagiaires',
+        component: () => import('../views/dashboard/tuteur/Stagiaires.vue')
+      }
+    ]
   },
   {
     path: '/dashboard/structure',
