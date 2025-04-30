@@ -151,6 +151,11 @@ const routes = [
         path: 'parametres',
         name: 'StructureParametres',
         component: () => import('../views/dashboard/structure/Parametres.vue')
+      },
+      {
+        path: 'notifications',
+        name: 'StructureNotifications',
+        component: () => import('../views/dashboard/structure/Notifications.vue')
       }
     ]
   },
