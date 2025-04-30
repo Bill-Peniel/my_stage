@@ -106,6 +106,18 @@ const routes = [
     ]
   },
   {
+    path: '/dashboard/tuteur',
+    component: () => import('../views/dashboard/tuteur/TuteurDashboard.vue'),
+    meta: { requiresAuth: true, requiresTuteur: true },
+    beforeEnter: (to, from, next) => {
+      if (!store.getters.isTuteur) {
+        next('/login')
+      } else {
+        next()
+      }
+    }
+  },
+  {
     path: '/dashboard/structure',
     component: () => import('../views/dashboard/structure/StructureDashboard.vue'),
     meta: { requiresAuth: true, requiresStructure: true },
