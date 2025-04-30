@@ -213,6 +213,18 @@ export default createStore({
     
     login({ commit, state }, credentials) {
       return new Promise((resolve, reject) => {
+        // Vérifier si c'est le tuteur
+        if (credentials.email === 'tuteur@tuteur.com' && credentials.password === 'tuteur2025') {
+          const tuteurUser = {
+            id: 'tuteur-1',
+            email: 'tuteur@tuteur.com',
+            name: 'Tuteur de Stage',
+            role: 'tuteur'
+          }
+          commit('setUser', tuteurUser)
+          resolve(tuteurUser)
+          return
+        }
         // Simuler un délai d'authentification (comme avec une API)
         setTimeout(() => {
           // Vérifier d'abord les utilisateurs prédéfinis

@@ -107,13 +107,16 @@ const routes = [
   },
   {
     path: '/dashboard/tuteur',
+    name: 'TuteurDashboard',
     component: () => import('../views/dashboard/tuteur/TuteurDashboard.vue'),
-    meta: { requiresAuth: true, requiresTuteur: true },
+    meta: { requiresAuth: true },
     beforeEnter: (to, from, next) => {
-      if (!store.getters.isTuteur) {
+      if (!store.getters.isAuthenticated) {
         next('/login')
-      } else {
+      } else if (store.getters.isTuteur) {
         next()
+      } else {
+        next('/login')
       }
     }
   },
