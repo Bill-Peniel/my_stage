@@ -43,14 +43,18 @@ const routes = [
   {
     path: '/dashboard',
     component: Dashboard,
-    meta: { requiresAuth: true, requiresAdmin: true },
+    meta: { requiresAuth: true },
     beforeEnter: (to, from, next) => {
-      if (!store.getters.hasAdminAccess) {
+      if (!store.getters.isAuthenticated) {
         next('/login')
       } else if (store.getters.isDpaf) {
         next('/dashboard/dpaf')
-      } else {
+      } else if (store.getters.isStructure) {
+        next('/dashboard/structure')
+      } else if (store.getters.isAdmin) {
         next()
+      } else {
+        next('/login')
       }
     },
     children: [
