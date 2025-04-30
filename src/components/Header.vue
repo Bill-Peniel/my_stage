@@ -8,7 +8,7 @@
             <img src="../assets/finance-logo.png" alt="Logo du Ministère" class="h-12 w-auto" />
           </router-link>
         </div>
-
+        
         <!-- Desktop navigation -->
         <nav class="hidden md:flex items-center space-x-6">
           <router-link to="/" class="text-gray-700 hover:text-green-800 transition duration-150">
@@ -41,41 +41,41 @@
               <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
             </router-link>
             <div class="relative" ref="profileMenu">
+            <button 
+              @click="toggleProfileMenu" 
+              class="flex items-center text-gray-700 hover:text-green-800 focus:outline-none"
+            >
+              <span class="mr-1">{{ currentUser.name }}</span>
+              <i class="fas fa-chevron-down text-xs"></i>
+            </button>
+            <div 
+              v-show="showProfileMenu" 
+              class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10"
+            >
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                Mon profil
+              </a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                Mes demandes
+              </a>
               <button 
-                @click="toggleProfileMenu" 
-                class="flex items-center text-gray-700 hover:text-green-800 focus:outline-none"
+                @click="logout" 
+                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
-                <span class="mr-1">{{ currentUser.name }}</span>
-                <i class="fas fa-chevron-down text-xs"></i>
+                Se déconnecter
               </button>
-              <div 
-                v-show="showProfileMenu" 
-                class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10"
-              >
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Mon profil
-                </a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Mes demandes
-                </a>
-                <button 
-                  @click="logout" 
-                  class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Se déconnecter
-                </button>
-              </div>
             </div>
           </div>
+          </div>
         </nav>
-
+        
         <!-- Mobile menu button -->
         <button @click="toggleMobileMenu" class="md:hidden flex items-center p-2 rounded-md text-gray-600 hover:text-green-800 hover:bg-gray-100 focus:outline-none">
           <span class="sr-only">Open main menu</span>
           <i :class="[mobileMenuOpen ? 'fa-times' : 'fa-bars', 'fas text-xl']"></i>
         </button>
       </div>
-
+      
       <!-- Mobile menu -->
       <div class="md:hidden" v-show="mobileMenuOpen">
         <div class="pt-2 pb-4 space-y-1">
@@ -135,39 +135,38 @@ export default {
     const mobileMenuOpen = ref(false)
     const showProfileMenu = ref(false)
     const profileMenu = ref(null)
-
+    
     const isAuthenticated = computed(() => store.getters.isAuthenticated)
     const currentUser = computed(() => store.getters.currentUser)
-    const isStructure = computed(() => store.getters.isStructure) // Added computed property
-
+    
     const toggleMobileMenu = () => {
       mobileMenuOpen.value = !mobileMenuOpen.value
     }
-
+    
     const toggleProfileMenu = () => {
       showProfileMenu.value = !showProfileMenu.value
     }
-
+    
     const logout = async () => {
       await store.dispatch('logout')
       showProfileMenu.value = false
       router.push('/login')
     }
-
+    
     const closeProfileMenu = (e) => {
       if (profileMenu.value && !profileMenu.value.contains(e.target)) {
         showProfileMenu.value = false
       }
     }
-
+    
     onMounted(() => {
       document.addEventListener('click', closeProfileMenu)
     })
-
+    
     onBeforeUnmount(() => {
       document.removeEventListener('click', closeProfileMenu)
     })
-
+    
     return {
       mobileMenuOpen,
       toggleMobileMenu,
@@ -176,8 +175,7 @@ export default {
       profileMenu,
       isAuthenticated,
       currentUser,
-      logout,
-      isStructure // Added to return statement
+      logout
     }
   }
 }
