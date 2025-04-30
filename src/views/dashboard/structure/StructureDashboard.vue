@@ -8,57 +8,58 @@
           <h1 class="text-2xl font-bold text-white">Structure - Gestion des Stages</h1>
         </div>
 
-        <!-- Notification Icon and Dropdown -->
-        <div class="relative" ref="notifMenu">
-          <button @click="toggleNotifMenu" class="text-white hover:text-accent-yellow relative">
-            <i class="fas fa-bell text-xl"></i>
-            <span v-if="unreadNotifications > 0" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-              {{ unreadNotifications }}
-            </span>
-          </button>
-          <div v-show="showNotifMenu" class="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg py-1 z-50 max-h-96 overflow-y-auto">
-            <div class="px-4 py-2 border-b border-gray-200">
-              <div class="flex justify-between items-center">
-                <h3 class="text-sm font-semibold text-gray-700">Notifications</h3>
-                <button @click="markAllAsRead" class="text-xs text-primary hover:text-primary-dark">
-                  Tout marquer comme lu
-                </button>
+        <div class="flex items-center space-x-4">
+          <span class="text-white">{{ store.getters.roleDisplay }}</span>
+
+          <!-- Notification Icon and Dropdown -->
+          <div class="relative" ref="notifMenu">
+            <button @click="toggleNotifMenu" class="text-white hover:text-accent-yellow relative">
+              <i class="fas fa-bell text-xl"></i>
+              <span v-if="unreadNotifications > 0" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                {{ unreadNotifications }}
+              </span>
+            </button>
+            <div v-show="showNotifMenu" class="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg py-1 z-50 max-h-96 overflow-y-auto">
+              <div class="px-4 py-2 border-b border-gray-200">
+                <div class="flex justify-between items-center">
+                  <h3 class="text-sm font-semibold text-gray-700">Notifications</h3>
+                  <button @click="markAllAsRead" class="text-xs text-primary hover:text-primary-dark">
+                    Tout marquer comme lu
+                  </button>
+                </div>
               </div>
-            </div>
-            <div v-if="notifications.length === 0" class="px-4 py-3 text-sm text-gray-500">
-              Aucune notification
-            </div>
-            <div v-else>
-              <div v-for="notif in notifications" :key="notif.id" 
-                   class="px-4 py-3 hover:bg-gray-50 border-b border-gray-100 cursor-pointer"
-                   :class="{ 'bg-blue-50': !notif.read }">
-                <div class="flex items-start">
-                  <div class="flex-shrink-0">
-                    <span class="inline-flex items-center justify-center h-8 w-8 rounded-full" 
-                          :class="getNotificationTypeClass(notif.type)">
-                      <i class="fas" :class="getNotificationIcon(notif.type)"></i>
-                    </span>
-                  </div>
-                  <div class="ml-3 w-0 flex-1">
-                    <p class="text-sm font-medium text-gray-900" :class="{ 'font-bold': !notif.read }">
-                      {{ notif.title }}
-                    </p>
-                    <p class="mt-1 text-xs text-gray-500">{{ notif.message }}</p>
-                    <p class="mt-1 text-xs text-gray-400">{{ formatNotifDate(notif.date) }}</p>
+              <div v-if="notifications.length === 0" class="px-4 py-3 text-sm text-gray-500">
+                Aucune notification
+              </div>
+              <div v-else>
+                <div v-for="notif in notifications" :key="notif.id" 
+                     class="px-4 py-3 hover:bg-gray-50 border-b border-gray-100 cursor-pointer"
+                     :class="{ 'bg-blue-50': !notif.read }">
+                  <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                      <span class="inline-flex items-center justify-center h-8 w-8 rounded-full" 
+                            :class="getNotificationTypeClass(notif.type)">
+                        <i class="fas" :class="getNotificationIcon(notif.type)"></i>
+                      </span>
+                    </div>
+                    <div class="ml-3 w-0 flex-1">
+                      <p class="text-sm font-medium text-gray-900" :class="{ 'font-bold': !notif.read }">
+                        {{ notif.title }}
+                      </p>
+                      <p class="mt-1 text-xs text-gray-500">{{ notif.message }}</p>
+                      <p class="mt-1 text-xs text-gray-400">{{ formatNotifDate(notif.date) }}</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="px-4 py-2 border-t border-gray-200">
-              <router-link to="/dashboard/dpaf/notifications" class="text-xs text-primary hover:text-primary-dark block text-center">
-                Voir toutes les notifications
-              </router-link>
+              <div class="px-4 py-2 border-t border-gray-200">
+                <router-link to="/dashboard/structure/notifications" class="text-xs text-primary hover:text-primary-dark block text-center">
+                  Voir toutes les notifications
+                </router-link>
+              </div>
             </div>
           </div>
-        </div>
-        
-        <div class="flex items-center space-x-4">
-          <span class="text-white">{{ store.getters.roleDisplay }}</span>
+
           <div class="relative" ref="userMenu">
             <button @click="toggleUserMenu" class="flex items-center space-x-3 focus:outline-none">
               <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition">
@@ -173,7 +174,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import SidebarStructure from '@/components/SidebarStructure.vue'
@@ -187,13 +188,35 @@ export default {
     const store = useStore()
     const router = useRouter()
     const showUserMenu = ref(false)
+    const showNotifMenu = ref(false)
     const userMenu = ref(null)
+    const notifMenu = ref(null)
+    const unreadNotifications = ref(2)
 
     const stats = ref({
       stagiairesActifs: 5,
       evaluationsEnAttente: 2,
       stagesTermines: 8
     })
+
+    const notifications = ref([
+      {
+        id: 1,
+        type: 'info',
+        title: 'Nouveau stagiaire',
+        message: 'Un nouveau stagiaire a été affecté à votre structure',
+        date: new Date(),
+        read: false
+      },
+      {
+        id: 2,
+        type: 'warning',
+        title: 'Évaluation en attente',
+        message: 'Une évaluation de stage est en attente',
+        date: new Date(Date.now() - 3600000),
+        read: true
+      }
+    ])
 
     const stagiaires = ref([
       {
@@ -221,8 +244,48 @@ export default {
       return user?.name?.charAt(0).toUpperCase() || 'U'
     })
 
+    const getNotificationTypeClass = (type) => {
+      const classes = {
+        info: 'bg-blue-100 text-blue-600',
+        success: 'bg-green-100 text-green-600',
+        warning: 'bg-yellow-100 text-yellow-600',
+        error: 'bg-red-100 text-red-600'
+      }
+      return classes[type] || classes.info
+    }
+
+    const getNotificationIcon = (type) => {
+      const icons = {
+        info: 'fa-info',
+        success: 'fa-check',
+        warning: 'fa-exclamation',
+        error: 'fa-times'
+      }
+      return icons[type] || icons.info
+    }
+
+    const formatNotifDate = (date) => {
+      return new Date(date).toLocaleDateString('fr-FR', {
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    }
+
+    const toggleNotifMenu = () => {
+      showNotifMenu.value = !showNotifMenu.value
+      if (showUserMenu.value) showUserMenu.value = false
+    }
+
     const toggleUserMenu = () => {
       showUserMenu.value = !showUserMenu.value
+      if (showNotifMenu.value) showNotifMenu.value = false
+    }
+
+    const markAllAsRead = () => {
+      notifications.value.forEach(notif => {
+        notif.read = true
+      })
+      unreadNotifications.value = 0
     }
 
     const formatDate = (date) => {
@@ -234,15 +297,42 @@ export default {
       router.push('/login')
     }
 
+    // Close menus when clicking outside
+    const closeMenus = (e) => {
+      if (userMenu.value && !userMenu.value.contains(e.target)) {
+        showUserMenu.value = false
+      }
+      if (notifMenu.value && !notifMenu.value.contains(e.target)) {
+        showNotifMenu.value = false
+      }
+    }
+
+    onMounted(() => {
+      document.addEventListener('click', closeMenus)
+    })
+
+    onBeforeUnmount(() => {
+      document.removeEventListener('click', closeMenus)
+    })
+
     return {
       store,
       stats,
       stagiaires,
       showUserMenu,
+      showNotifMenu,
       userMenu,
+      notifMenu,
       userInitials,
+      notifications,
+      unreadNotifications,
       toggleUserMenu,
+      toggleNotifMenu,
       formatDate,
+      formatNotifDate,
+      getNotificationTypeClass,
+      getNotificationIcon,
+      markAllAsRead,
       logout
     }
   }
