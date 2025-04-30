@@ -130,7 +130,7 @@ const routes = [
       {
         path: 'tuteurs',
         name: 'StructureTuteurs',
-        component: () => import('../views/dashboard/Tuteurs.vue')
+        component: () => import('../views/dashboard/structure/Tuteurs.vue')
       },
       {
         path: 'evaluations',
