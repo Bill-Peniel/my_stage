@@ -1,67 +1,19 @@
-
 <template>
   <div class="p-6">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-      <div class="bg-blue-500 text-white rounded-lg p-6 shadow-sm">
+      <div v-for="stat in generalStats" :key="stat.title" 
+           class="bg-white p-6 rounded-lg shadow-sm">
         <div class="flex justify-between items-center">
           <div>
-            <p class="text-sm opacity-75">Stagiaires actifs</p>
-            <h2 class="text-4xl font-bold">{{ stats.stagiairesActifs }}</h2>
-            <p class="text-sm mt-2" :class="stats.stagiairesTrend >= 0 ? 'text-white' : 'text-red-200'">
-              <i :class="stats.stagiairesTrend >= 0 ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i>
-              {{ Math.abs(stats.stagiairesTrend) }}% ce mois
+            <p class="text-sm text-gray-600">{{ stat.title }}</p>
+            <h2 class="text-3xl font-bold mt-2">{{ stat.value }}</h2>
+            <p class="text-sm mt-2" :class="stat.trend >= 0 ? 'text-green-600' : 'text-red-600'">
+              <i :class="stat.trend >= 0 ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i>
+              {{ Math.abs(stat.trend) }}% depuis le mois dernier
             </p>
           </div>
-          <div class="text-3xl opacity-75">
-            <i class="fas fa-user-graduate"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-green-500 text-white rounded-lg p-6 shadow-sm">
-        <div class="flex justify-between items-center">
-          <div>
-            <p class="text-sm opacity-75">Tuteurs actifs</p>
-            <h2 class="text-4xl font-bold">{{ stats.tuteursActifs }}</h2>
-            <p class="text-sm mt-2" :class="stats.tuteursTrend >= 0 ? 'text-white' : 'text-red-200'">
-              <i :class="stats.tuteursTrend >= 0 ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i>
-              {{ Math.abs(stats.tuteursTrend) }}% ce mois
-            </p>
-          </div>
-          <div class="text-3xl opacity-75">
-            <i class="fas fa-chalkboard-teacher"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-yellow-500 text-white rounded-lg p-6 shadow-sm">
-        <div class="flex justify-between items-center">
-          <div>
-            <p class="text-sm opacity-75">Taux de complétion</p>
-            <h2 class="text-4xl font-bold">{{ stats.tauxCompletion }}%</h2>
-            <p class="text-sm mt-2" :class="stats.completionTrend >= 0 ? 'text-white' : 'text-red-200'">
-              <i :class="stats.completionTrend >= 0 ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i>
-              {{ Math.abs(stats.completionTrend) }}% ce mois
-            </p>
-          </div>
-          <div class="text-3xl opacity-75">
-            <i class="fas fa-chart-line"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-purple-500 text-white rounded-lg p-6 shadow-sm">
-        <div class="flex justify-between items-center">
-          <div>
-            <p class="text-sm opacity-75">Satisfaction</p>
-            <h2 class="text-4xl font-bold">{{ stats.satisfaction }}/5</h2>
-            <p class="text-sm mt-2" :class="stats.satisfactionTrend >= 0 ? 'text-white' : 'text-red-200'">
-              <i :class="stats.satisfactionTrend >= 0 ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i>
-              {{ Math.abs(stats.satisfactionTrend) }}% ce mois
-            </p>
-          </div>
-          <div class="text-3xl opacity-75">
-            <i class="fas fa-star"></i>
+          <div :class="stat.iconColor" class="p-4 rounded-full">
+            <i :class="stat.icon" class="text-2xl"></i>
           </div>
         </div>
       </div>
@@ -69,51 +21,37 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
       <div class="bg-white p-6 rounded-lg shadow-sm">
-        <h3 class="text-lg font-semibold mb-4">Répartition des stages par type</h3>
-        <canvas ref="typeStageChart" height="300"></canvas>
+        <h3 class="text-lg font-semibold mb-4">Évolution mensuelle des stagiaires</h3>
+        <canvas ref="monthlyChart" height="300"></canvas>
       </div>
 
       <div class="bg-white p-6 rounded-lg shadow-sm">
-        <h3 class="text-lg font-semibold mb-4">Évolution mensuelle des stagiaires</h3>
-        <canvas ref="evolutionChart" height="300"></canvas>
+        <h3 class="text-lg font-semibold mb-4">Répartition par type de stage</h3>
+        <canvas ref="typeChart" height="300"></canvas>
       </div>
     </div>
 
-    <div class="bg-white shadow rounded-lg">
-      <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-        <h2 class="text-lg font-medium text-gray-900">Stagiaires actuels</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-lg font-semibold mb-4">Répartition par tuteur</h3>
+        <div class="space-y-4">
+          <div v-for="tuteur in tuteurStats" :key="tuteur.name" class="flex items-center">
+            <div class="flex-1">
+              <div class="flex justify-between mb-1">
+                <span class="text-sm font-medium">{{ tuteur.name }}</span>
+                <span class="text-sm text-gray-600">{{ tuteur.count }} stagiaires</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-blue-600 h-2 rounded-full" :style="{ width: tuteur.percentage + '%' }"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type de Stage</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date Début</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date Fin</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tuteur</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Progression</th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="stagiaire in stagiaires" :key="stagiaire.id" class="hover:bg-gray-50">
-              <td class="px-6 py-4">
-                <div class="text-sm text-gray-900">{{ stagiaire.nom }}</div>
-                <div class="text-sm text-gray-500">{{ stagiaire.email }}</div>
-              </td>
-              <td class="px-6 py-4 text-sm text-gray-500">{{ stagiaire.typeStage }}</td>
-              <td class="px-6 py-4 text-sm text-gray-500">{{ formatDate(stagiaire.dateDebut) }}</td>
-              <td class="px-6 py-4 text-sm text-gray-500">{{ formatDate(stagiaire.dateFin) }}</td>
-              <td class="px-6 py-4 text-sm text-gray-500">{{ stagiaire.tuteur }}</td>
-              <td class="px-6 py-4">
-                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                  <div class="bg-blue-600 h-2.5 rounded-full" :style="{ width: stagiaire.progression + '%' }"></div>
-                </div>
-                <span class="text-xs text-gray-500">{{ stagiaire.progression }}%</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-lg font-semibold mb-4">Répartition par niveau d'études</h3>
+        <canvas ref="educationChart" height="300"></canvas>
       </div>
     </div>
   </div>
@@ -126,76 +64,58 @@ import Chart from 'chart.js/auto'
 export default {
   name: 'StructureOverview',
   setup() {
-    const typeStageChart = ref(null)
-    const evolutionChart = ref(null)
+    const monthlyChart = ref(null)
+    const typeChart = ref(null)
+    const educationChart = ref(null)
 
-    const stats = ref({
-      stagiairesActifs: 5,
-      stagiairesTrend: 12,
-      tuteursActifs: 3,
-      tuteursTrend: 8,
-      tauxCompletion: 85,
-      completionTrend: 5,
-      satisfaction: 4.8,
-      satisfactionTrend: -2
-    })
-
-    const stagiaires = ref([
+    const generalStats = ref([
       {
-        id: 1,
-        nom: 'Jean Dupont',
-        email: 'jean.dupont@email.com',
-        typeStage: 'Stage académique',
-        dateDebut: '2024-02-01',
-        dateFin: '2024-04-30',
-        tuteur: 'Marie Martin',
-        progression: 75
+        title: 'Total des stagiaires',
+        value: '24',
+        trend: 15,
+        icon: 'fas fa-users',
+        iconColor: 'bg-blue-100 text-blue-600'
       },
       {
-        id: 2,
-        nom: 'Alice Bernard',
-        email: 'alice.bernard@email.com',
-        typeStage: 'Stage professionnel',
-        dateDebut: '2024-03-01',
-        dateFin: '2024-05-31',
-        tuteur: 'Paul Dubois',
-        progression: 45
+        title: 'Tuteurs actifs',
+        value: '8',
+        trend: 5,
+        icon: 'fas fa-chalkboard-teacher',
+        iconColor: 'bg-green-100 text-green-600'
+      },
+      {
+        title: 'Taux de completion',
+        value: '85%',
+        trend: 3,
+        icon: 'fas fa-check-circle',
+        iconColor: 'bg-yellow-100 text-yellow-600'
+      },
+      {
+        title: 'Taux de satisfaction',
+        value: '4.5/5',
+        trend: -1,
+        icon: 'fas fa-star',
+        iconColor: 'bg-purple-100 text-purple-600'
       }
     ])
 
-    const formatDate = (date) => {
-      return new Date(date).toLocaleDateString('fr-FR')
-    }
+    const tuteurStats = ref([
+      { name: 'Marie Martin', count: 6, percentage: 75 },
+      { name: 'Paul Dubois', count: 5, percentage: 62 },
+      { name: 'Sophie Laurent', count: 4, percentage: 50 },
+      { name: 'Thomas Bernard', count: 3, percentage: 37 },
+      { name: 'Autres tuteurs', count: 2, percentage: 25 }
+    ])
 
     onMounted(() => {
-      // Graphique de répartition des types de stage
-      new Chart(typeStageChart.value, {
-        type: 'doughnut',
-        data: {
-          labels: ['Stage académique', 'Stage professionnel', 'Stage de recherche'],
-          datasets: [{
-            data: [45, 35, 20],
-            backgroundColor: ['#3B82F6', '#10B981', '#8B5CF6']
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'right'
-            }
-          }
-        }
-      })
-
       // Graphique d'évolution mensuelle
-      new Chart(evolutionChart.value, {
+      new Chart(monthlyChart.value, {
         type: 'line',
         data: {
           labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
           datasets: [{
             label: 'Nombre de stagiaires',
-            data: [4, 6, 8, 5, 7, 5],
+            data: [15, 18, 20, 22, 24, 24],
             borderColor: '#3B82F6',
             tension: 0.4
           }]
@@ -209,14 +129,55 @@ export default {
           }
         }
       })
+
+      // Graphique par type de stage
+      new Chart(typeChart.value, {
+        type: 'doughnut',
+        data: {
+          labels: ['Stage académique', 'Stage professionnel', 'Stage de fin d\'études'],
+          datasets: [{
+            data: [40, 35, 25],
+            backgroundColor: ['#3B82F6', '#10B981', '#8B5CF6']
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'right'
+            }
+          }
+        }
+      })
+
+      // Graphique par niveau d'études
+      new Chart(educationChart.value, {
+        type: 'bar',
+        data: {
+          labels: ['Licence 1', 'Licence 2', 'Licence 3', 'Master 1', 'Master 2'],
+          datasets: [{
+            label: 'Nombre de stagiaires',
+            data: [4, 5, 6, 5, 4],
+            backgroundColor: '#60A5FA'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
+        }
+      })
     })
 
     return {
-      stats,
-      stagiaires,
-      formatDate,
-      typeStageChart,
-      evolutionChart
+      generalStats,
+      tuteurStats,
+      monthlyChart,
+      typeChart,
+      educationChart
     }
   }
 }
