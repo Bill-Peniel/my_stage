@@ -141,6 +141,11 @@ const routes = [
         path: 'profil',
         name: 'StructureProfil',
         component: () => import('../views/dashboard/structure/Profil.vue')
+      },
+      {
+        path: 'affectations',
+        name: 'StructureAffectations',
+        component: () => import('../views/dashboard/structure/Affectations.vue')
       }
     ]
   },

@@ -37,6 +37,12 @@
         >
           <i class="fas fa-chalkboard-teacher mr-2"></i> Gestion des tuteurs
         </router-link>
+        <router-link 
+          to="/dashboard/structure/affectations"
+          class="block px-4 py-2 rounded hover:bg-primary-dark transition-colors duration-200"
+        >
+          <i class="fas fa-user-plus mr-2"></i> Affectations
+        </router-link>
       </div>
 
       <!-- Paramètres -->
