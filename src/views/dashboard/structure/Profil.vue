@@ -8,16 +8,16 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">
-              Nom de la structure
+              Nom
             </label>
-            <input type="text" v-model="profile.nomStructure" class="input-field" required />
+            <input type="text" v-model="profile.nom" class="input-field" required />
           </div>
 
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">
-              Type de structure
+              Prénom
             </label>
-            <input type="text" v-model="profile.type" class="input-field" required />
+            <input type="text" v-model="profile.prenom" class="input-field" required />
           </div>
 
           <div>
@@ -89,8 +89,8 @@ export default {
   setup() {
     const store = useStore()
     const profile = ref({
-      nomStructure: '',
-      type: '',
+      nom: '',
+      prenom: '',
       emailContact: '',
       telephoneContact: '',
       adresse: ''
