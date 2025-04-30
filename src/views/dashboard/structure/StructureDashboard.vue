@@ -1,7 +1,6 @@
-
 <template>
-  <div class="min-h-screen bg-gray-100 flex flex-col" data-aos="fade-up" data-aos-duration="1000">
-    <header class="bg-primary shadow fixed top-0 w-full z-20 transform hover:scale-[1.02] transition-transform duration-300">
+  <div class="min-h-screen bg-gray-100 transform-gpu">
+    <header class="bg-primary shadow fixed top-0 w-full z-20">
       <div class="px-4 py-4 flex justify-between items-center">
         <div class="flex items-center gap-4">
           <img src="@/assets/finance-logo1.png" alt="Logo du ministère" class="h-12 w-auto" />
@@ -33,89 +32,17 @@
 
     <div class="flex pt-20">
       <SidebarStructure class="fixed left-0 top-16 h-[calc(100vh-4rem)] z-10" />
-      
-      <div class="flex-1 md:ml-64 p-6 bg-gray-50">
-        <router-view v-if="$route.path !== '/dashboard/structure'" />
-        <div v-else>
-          <!-- Statistiques -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            <div class="bg-blue-500 text-white rounded-lg p-6 shadow-lg transform hover:scale-105 hover:rotate-1 transition-all duration-300 ease-in-out" style="transform-style: preserve-3d;">
-              <div class="flex justify-between items-center">
-                <div>
-                  <p class="text-sm opacity-75">Stagiaires actifs</p>
-                  <h2 class="text-4xl font-bold">{{ stats.stagiairesActifs }}</h2>
-                </div>
-                <div class="text-3xl opacity-75">
-                  <i class="fas fa-user-graduate"></i>
-                </div>
-              </div>
-            </div>
 
-            <div class="bg-green-500 text-white rounded-lg p-6 shadow-sm">
-              <div class="flex justify-between items-center">
-                <div>
-                  <p class="text-sm opacity-75">Évaluations en attente</p>
-                  <h2 class="text-4xl font-bold">{{ stats.evaluationsEnAttente }}</h2>
-                </div>
-                <div class="text-3xl opacity-75">
-                  <i class="fas fa-clipboard-check"></i>
-                </div>
-              </div>
-            </div>
-
-            <div class="bg-yellow-500 text-white rounded-lg p-6 shadow-sm">
-              <div class="flex justify-between items-center">
-                <div>
-                  <p class="text-sm opacity-75">Stages terminés</p>
-                  <h2 class="text-4xl font-bold">{{ stats.stagesTermines }}</h2>
-                </div>
-                <div class="text-3xl opacity-75">
-                  <i class="fas fa-flag-checkered"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Liste des stagiaires -->
-          <div class="bg-white shadow rounded-lg">
-            <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-              <h2 class="text-lg font-medium text-gray-900">Stagiaires actuels</h2>
-            </div>
-            <div class="overflow-x-auto">
-              <table class="min-w-full divide-y divide-gray-200 transform hover:scale-[1.01] transition-all duration-300" style="transform-style: preserve-3d;">
-                <thead class="bg-gray-50">
-                  <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type de Stage</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date Début</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date Fin</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tuteur</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                  </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  <tr v-for="stagiaire in stagiaires" :key="stagiaire.id" class="hover:bg-gray-50">
-                    <td class="px-6 py-4">
-                      <div class="text-sm text-gray-900">{{ stagiaire.nom }}</div>
-                      <div class="text-sm text-gray-500">{{ stagiaire.email }}</div>
-                    </td>
-                    <td class="px-6 py-4 text-sm text-gray-500">{{ stagiaire.typeStage }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-500">{{ formatDate(stagiaire.dateDebut) }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-500">{{ formatDate(stagiaire.dateFin) }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-500">{{ stagiaire.tuteur }}</td>
-                    <td class="px-6 py-4 text-sm font-medium space-x-2">
-                      <button class="text-primary hover:text-primary-dark">
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button class="text-success hover:text-green-700">
-                        <i class="fas fa-clipboard-check"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+      <div class="flex-1 md:ml-64 transition-all duration-500 ease-out max-w-7xl mx-auto" :class="{'translate-x-64': isSidebarOpen}">
+        <div class="px-4 sm:px-6 lg:px-8 py-8 w-full">
+          <router-view v-slot="{ Component }">
+            <transition
+              enter-active-class="animate-enter"
+              leave-active-class="animate-leave"
+              mode="out-in">
+              <component :is="Component" />
+            </transition>
+          </router-view>
         </div>
       </div>
     </div>
@@ -123,10 +50,11 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import SidebarStructure from '@/components/SidebarStructure.vue'
+import gsap from 'gsap'
 
 export default {
   name: 'StructureDashboard',
@@ -138,6 +66,7 @@ export default {
     const router = useRouter()
     const showUserMenu = ref(false)
     const userMenu = ref(null)
+    const isSidebarOpen = ref(true)
 
     const stats = ref({
       stagiairesActifs: 5,
@@ -184,6 +113,15 @@ export default {
       router.push('/login')
     }
 
+    onMounted(() => {
+      gsap.from('.flex-1', {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: 'power3.out'
+      })
+    })
+
     return {
       store,
       stats,
@@ -193,8 +131,47 @@ export default {
       userInitials,
       toggleUserMenu,
       formatDate,
-      logout
+      logout,
+      isSidebarOpen
     }
   }
 }
 </script>
+
+<style scoped>
+.transform-gpu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.animate-enter {
+  animation: page-enter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-leave {
+  animation: page-leave 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes page-enter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes page-leave {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0) scale(0.95);
+  }
+}
+</style>
