@@ -220,8 +220,9 @@ export default {
           })
           
           // Redirection en fonction du rôle de l'utilisateur
-          if (['admin', 'dpaf', 'structure', 'tuteur'].includes(user.role)) {
-            // Rediriger vers le tableau de bord administratif
+          if (user.role === 'tuteur') {
+            router.push('/dashboard/tuteur')
+          } else if (['admin', 'dpaf', 'structure'].includes(user.role)) {
             router.push('/dashboard')
           } else {
             // Rediriger les stagiaires vers leur espace personnel
