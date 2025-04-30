@@ -33,15 +33,17 @@
     <div class="flex pt-20">
       <SidebarStructure class="fixed left-0 top-16 h-[calc(100vh-4rem)] z-10" />
 
-      <div class="flex-1 md:ml-64 p-6 bg-gray-50 transition-all duration-500 ease-out" :class="{'translate-x-64': isSidebarOpen}">
-        <router-view v-slot="{ Component }">
-          <transition
-            enter-active-class="animate-enter"
-            leave-active-class="animate-leave"
-            mode="out-in">
-            <component :is="Component" />
-          </transition>
-        </router-view>
+      <div class="flex-1 md:ml-64 transition-all duration-500 ease-out max-w-7xl mx-auto" :class="{'translate-x-64': isSidebarOpen}">
+        <div class="px-4 sm:px-6 lg:px-8 py-8 w-full">
+          <router-view v-slot="{ Component }">
+            <transition
+              enter-active-class="animate-enter"
+              leave-active-class="animate-leave"
+              mode="out-in">
+              <component :is="Component" />
+            </transition>
+          </router-view>
+        </div>
       </div>
     </div>
   </div>
