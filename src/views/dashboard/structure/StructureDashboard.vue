@@ -1,7 +1,7 @@
 
 <template>
-  <div class="min-h-screen bg-gray-100 flex flex-col">
-    <header class="bg-primary shadow fixed top-0 w-full z-20">
+  <div class="min-h-screen bg-gray-100 flex flex-col" data-aos="fade-up" data-aos-duration="1000">
+    <header class="bg-primary shadow fixed top-0 w-full z-20 transform hover:scale-[1.02] transition-transform duration-300">
       <div class="px-4 py-4 flex justify-between items-center">
         <div class="flex items-center gap-4">
           <img src="@/assets/finance-logo1.png" alt="Logo du ministère" class="h-12 w-auto" />
@@ -39,7 +39,7 @@
         <div v-else>
           <!-- Statistiques -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            <div class="bg-blue-500 text-white rounded-lg p-6 shadow-sm">
+            <div class="bg-blue-500 text-white rounded-lg p-6 shadow-lg transform hover:scale-105 hover:rotate-1 transition-all duration-300 ease-in-out" style="transform-style: preserve-3d;">
               <div class="flex justify-between items-center">
                 <div>
                   <p class="text-sm opacity-75">Stagiaires actifs</p>
@@ -82,7 +82,7 @@
               <h2 class="text-lg font-medium text-gray-900">Stagiaires actuels</h2>
             </div>
             <div class="overflow-x-auto">
-              <table class="min-w-full divide-y divide-gray-200">
+              <table class="min-w-full divide-y divide-gray-200 transform hover:scale-[1.01] transition-all duration-300" style="transform-style: preserve-3d;">
                 <thead class="bg-gray-50">
                   <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom</th>
