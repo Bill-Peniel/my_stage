@@ -146,6 +146,11 @@ const routes = [
         path: 'affectations',
         name: 'StructureAffectations',
         component: () => import('../views/dashboard/structure/Affectations.vue')
+      },
+      {
+        path: 'parametres',
+        name: 'StructureParametres',
+        component: () => import('../views/dashboard/structure/Parametres.vue')
       }
     ]
   },
