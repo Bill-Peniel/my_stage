@@ -2,7 +2,16 @@
   <div class="flex flex-col min-h-screen">
     <Header v-if="!isDashboardRoute" />
     <main class="flex-grow">
-      <router-view />
+      <router-view v-slot="{ Component }">
+    <transition 
+      name="page"
+      mode="out-in"
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @leave="leave">
+      <component :is="Component" />
+    </transition>
+  </router-view>
     </main>
     <Footer v-if="!isDashboardRoute" />
   </div>
@@ -26,8 +35,45 @@ export default {
 }
 </script>
 
+<script>
+import { gsap } from 'gsap'
+
+export default {
+  methods: {
+    beforeEnter(el) {
+      el.style.opacity = 0
+      el.style.transform = 'translateY(20px)'
+    },
+    enter(el, done) {
+      gsap.to(el, {
+        duration: 0.6,
+        opacity: 1,
+        y: 0,
+        ease: 'power2.out',
+        onComplete: done
+      })
+    },
+    leave(el, done) {
+      gsap.to(el, {
+        duration: 0.4,
+        opacity: 0,
+        y: -20,
+        ease: 'power2.in',
+        onComplete: done
+      })
+    }
+  }
+}
+</script>
+
 <style lang="postcss">
 @import './assets/tailwind.css';
+
+.page-enter-active,
+.page-leave-active {
+  position: absolute;
+  width: 100%;
+}
 
 body {
   font-family: 'Poppins', sans-serif;
