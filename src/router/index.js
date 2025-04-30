@@ -102,6 +102,45 @@ const routes = [
     ]
   },
   {
+    path: '/dashboard/structure',
+    component: () => import('../views/dashboard/structure/StructureDashboard.vue'),
+    meta: { requiresAuth: true, requiresStructure: true },
+    beforeEnter: (to, from, next) => {
+      if (!store.getters.isStructure) {
+        next('/login')
+      } else {
+        next()
+      }
+    },
+    children: [
+      {
+        path: '',
+        name: 'StructureDashboard',
+        component: () => import('../views/dashboard/structure/StructureDashboard.vue')
+      },
+      {
+        path: 'stagiaires',
+        name: 'StructureStagiaires',
+        component: () => import('../views/dashboard/Stagiaires.vue')
+      },
+      {
+        path: 'tuteurs',
+        name: 'StructureTuteurs',
+        component: () => import('../views/dashboard/Tuteurs.vue')
+      },
+      {
+        path: 'evaluations',
+        name: 'StructureEvaluations',
+        component: () => import('../views/dashboard/structure/Evaluations.vue')
+      },
+      {
+        path: 'profil',
+        name: 'StructureProfil',
+        component: () => import('../views/dashboard/structure/Profil.vue')
+      }
+    ]
+  },
+  {
     path: '/dashboard/dpaf',
     component: () => import('../views/dashboard/DpafDashboard.vue'),
     meta: { requiresAuth: true, requiresDpaf: true },
