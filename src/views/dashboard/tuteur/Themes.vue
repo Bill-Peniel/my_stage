@@ -89,10 +89,74 @@
       </div>
     </div>
   </div>
+<!-- Section d'affectation des thèmes -->
+  <div class="mt-8 bg-white rounded-lg shadow-sm p-6">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Affecter un thème</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Filtres -->
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Filtrer par statut</label>
+          <select v-model="filtreStatut" class="mt-1 input-field">
+            <option value="">Tous les thèmes</option>
+            <option value="disponible">Disponibles</option>
+            <option value="non_disponible">Non disponibles</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Rechercher un thème</label>
+          <input 
+            type="text"
+            v-model="searchTheme"
+            placeholder="Titre du thème..."
+            class="mt-1 input-field"
+          />
+        </div>
+      </div>
+      
+      <!-- Affectation -->
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Sélectionner un stagiaire</label>
+          <select v-model="selectedStagiaire" class="mt-1 input-field">
+            <option value="">Choisir un stagiaire</option>
+            <option v-for="stagiaire in stagiaires" :key="stagiaire.id" :value="stagiaire.id">
+              {{ stagiaire.nom }}
+            </option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Sélectionner un thème</label>
+          <select v-model="selectedTheme" class="mt-1 input-field">
+            <option value="">Choisir un thème</option>
+            <option 
+              v-for="theme in filteredThemes" 
+              :key="theme.id" 
+              :value="theme.id"
+              :disabled="!theme.disponible"
+            >
+              {{ theme.titre }}
+            </option>
+          </select>
+        </div>
+        
+        <button 
+          @click="affecterTheme"
+          class="btn-primary w-full"
+          :disabled="!selectedStagiaire || !selectedTheme"
+        >
+          Affecter le thème
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 export default {
   name: 'Themes',
@@ -100,11 +164,45 @@ export default {
     const showAddModal = ref(false)
     const editMode = ref(false)
     const themes = ref([])
+    const stagiaires = ref([
+      { id: 1, nom: 'Jean Dupont' },
+      { id: 2, nom: 'Marie Martin' },
+      { id: 3, nom: 'Paul Bernard' }
+    ])
     const formData = ref({
       titre: '',
       description: '',
       disponible: true
     })
+    
+    const filtreStatut = ref('')
+    const searchTheme = ref('')
+    const selectedStagiaire = ref('')
+    const selectedTheme = ref('')
+
+    const filteredThemes = computed(() => {
+      return themes.value.filter(theme => {
+        const matchStatus = !filtreStatut.value || 
+          (filtreStatut.value === 'disponible' ? theme.disponible : !theme.disponible)
+        const matchSearch = !searchTheme.value || 
+          theme.titre.toLowerCase().includes(searchTheme.value.toLowerCase())
+        return matchStatus && matchSearch
+      })
+    })
+
+    const affecterTheme = () => {
+      if (!selectedStagiaire.value || !selectedTheme.value) return
+
+      const theme = themes.value.find(t => t.id === selectedTheme.value)
+      const stagiaire = stagiaires.value.find(s => s.id === selectedStagiaire.value)
+
+      if (theme && stagiaire) {
+        theme.disponible = false
+        alert(`Le thème "${theme.titre}" a été affecté à ${stagiaire.nom}`)
+        selectedStagiaire.value = ''
+        selectedTheme.value = ''
+      }
+    }
 
     const saveTheme = () => {
       if (editMode.value) {
