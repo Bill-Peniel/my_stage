@@ -123,13 +123,21 @@ const routes = [
         path: '',
         name: 'TuteurDashboard',
         component: () => import('../views/dashboard/tuteur/TuteurDashboard.vue')
-      },
-      {
-        path: 'stagiaires',
-        name: 'TuteurStagiaires',
-        component: () => import('../views/dashboard/tuteur/Stagiaires.vue')
       }
     ]
+  },
+  {
+    path: '/dashboard/tuteur/stagiaires',
+    name: 'TuteurStagiaires',
+    component: () => import('../views/dashboard/tuteur/Stagiaires.vue'),
+    meta: { requiresAuth: true },
+    beforeEnter: (to, from, next) => {
+      if (!store.getters.isTuteur) {
+        next('/login')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: '/dashboard/structure',
