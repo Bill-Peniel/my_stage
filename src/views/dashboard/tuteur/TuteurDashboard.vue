@@ -9,10 +9,39 @@
         </div>
         <div class="flex items-center space-x-4">
           <div class="relative">
-            <router-link to="/dashboard/tuteur/notifications" class="p-2 text-gray-600 hover:text-gray-800 inline-block">
+            <button @click="toggleNotifications" class="p-2 text-gray-600 hover:text-gray-800 inline-block">
               <i class="fas fa-bell"></i>
               <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
-            </router-link>
+            </button>
+
+            <!-- Menu déroulant des notifications -->
+            <div v-if="showNotifications" class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg py-1 z-50">
+              <div class="px-4 py-2 border-b border-gray-200">
+                <div class="flex justify-between items-center">
+                  <h3 class="font-semibold text-gray-800">Notifications</h3>
+                  <router-link to="/dashboard/tuteur/notifications" class="text-sm text-primary hover:text-primary-dark">
+                    Voir tout
+                  </router-link>
+                </div>
+              </div>
+
+              <div class="max-h-96 overflow-y-auto">
+                <div v-for="(notification, index) in recentNotifications" :key="index" class="px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0">
+                  <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                      <span :class="['w-8 h-8 rounded-full flex items-center justify-center', notification.iconBg, notification.iconColor]">
+                        <i :class="notification.icon"></i>
+                      </span>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-sm font-medium text-gray-900">{{ notification.title }}</p>
+                      <p class="text-sm text-gray-500">{{ notification.message }}</p>
+                      <span class="text-xs text-gray-400">{{ notification.time }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <button @click="logout" class="flex items-center text-gray-600 hover:text-gray-800">
             <i class="fas fa-sign-out-alt mr-2"></i>
@@ -67,7 +96,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
@@ -76,6 +105,48 @@ export default {
   setup() {
     const store = useStore()
     const router = useRouter()
+    const showNotifications = ref(false)
+    
+    const recentNotifications = ref([
+      {
+        title: 'Nouveau stagiaire assigné',
+        message: 'Un nouveau stagiaire a été assigné à votre supervision',
+        time: 'Il y a 2 heures',
+        icon: 'fas fa-user-graduate',
+        iconBg: 'bg-blue-100',
+        iconColor: 'text-blue-500'
+      },
+      {
+        title: 'Thème approuvé',
+        message: 'Votre thème proposé a été approuvé par la structure',
+        time: 'Il y a 1 jour',
+        icon: 'fas fa-check-circle',
+        iconBg: 'bg-green-100',
+        iconColor: 'text-green-500'
+      },
+      {
+        title: "Rappel d'évaluation",
+        message: "N'oubliez pas d'évaluer vos stagiaires avant la fin de la semaine",
+        time: 'Il y a 2 jours',
+        icon: 'fas fa-bell',
+        iconBg: 'bg-yellow-100',
+        iconColor: 'text-yellow-500'
+      }
+    ])
+
+    const toggleNotifications = () => {
+      showNotifications.value = !showNotifications.value
+    }
+
+    // Fermer le menu au clic en dehors
+    onMounted(() => {
+      document.addEventListener('click', (e) => {
+        const target = e.target
+        if (!target.closest('.relative')) {
+          showNotifications.value = false
+        }
+      })
+    })
 
     const patients = ref([
       {
@@ -125,7 +196,10 @@ export default {
       store,
       patients,
       getStatusClass,
-      logout
+      logout,
+      showNotifications,
+      recentNotifications,
+      toggleNotifications
     }
   }
 }
