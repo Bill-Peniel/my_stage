@@ -128,6 +128,11 @@ const routes = [
         path: 'stagiaires',
         name: 'TuteurStagiaires',
         component: () => import('../views/dashboard/tuteur/Stagiaires.vue')
+      },
+      {
+        path: 'messages',
+        name: 'TuteurMessages',
+        component: () => import('../views/dashboard/tuteur/Messages.vue')
       }
     ]
   },
