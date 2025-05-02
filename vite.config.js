@@ -16,6 +16,7 @@ export default defineConfig({
     strictPort: true,
     hmr: {
       clientPort: 443
-    }
+    },
+    allowedHosts: ['1173fe4b-20a9-48f4-8216-2647ac473296-00-ucbanc10340w.spock.replit.dev']
   }
 })
