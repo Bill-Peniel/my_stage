@@ -122,7 +122,7 @@ const routes = [
       {
         path: '',
         name: 'TuteurDashboard',
-        component: () => import('../views/dashboard/tuteur/Stagiaires.vue')
+        component: () => import('../views/dashboard/tuteur/Overview.vue')
       },
       {
         path: 'stagiaires',
