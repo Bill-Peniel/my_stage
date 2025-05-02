@@ -1,68 +1,44 @@
-
 <template>
   <div class="min-h-screen bg-gray-100">
-    <header class="bg-white border-b fixed top-0 left-0 right-0 z-50">
-      <div class="px-4 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-4">
-          <img src="@/assets/finance-logo.png" alt="Logo" class="h-12 w-auto" />
-        </div>
-        <div class="flex items-center space-x-4">
-          <div class="relative">
-            <button @click="toggleNotifications" class="p-2 text-gray-600 hover:text-gray-800 inline-block">
-              <i class="fas fa-bell"></i>
-              <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
-            </button>
-
-            <div v-if="showNotifications" class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg py-1 z-50">
-              <div class="px-4 py-2 border-b border-gray-200">
-                <div class="flex justify-between items-center">
-                  <h3 class="font-semibold text-gray-800">Notifications</h3>
-                  <router-link to="/dashboard/stagiaire/notifications" class="text-sm text-primary hover:text-primary-dark">
-                    Voir tout
-                  </router-link>
-                </div>
-              </div>
-
-              <div class="max-h-96 overflow-y-auto">
-                <div v-for="(notification, index) in recentNotifications" :key="index" class="px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0">
-                  <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                      <span :class="['w-8 h-8 rounded-full flex items-center justify-center', notification.iconBg, notification.iconColor]">
-                        <i :class="notification.icon"></i>
-                      </span>
-                    </div>
-                    <div class="ml-3">
-                      <p class="text-sm font-medium text-gray-900">{{ notification.title }}</p>
-                      <p class="text-sm text-gray-500">{{ notification.message }}</p>
-                      <span class="text-xs text-gray-400">{{ notification.time }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+    <nav class="bg-white shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex">
+            <div class="flex-shrink-0 flex items-center">
+              <img class="h-12 w-auto" src="@/assets/finance-logo.png" alt="Logo MEF" />
             </div>
           </div>
-          <button @click="logout" class="flex items-center text-gray-600 hover:text-gray-800">
-            <i class="fas fa-sign-out-alt mr-2"></i>
-            <span>Déconnexion</span>
-          </button>
+          <div class="flex items-center">
+            <button @click="toggleNotifications" class="p-2 text-gray-600 hover:text-gray-800 relative">
+              <i class="fas fa-bell"></i>
+              <span v-if="hasNotifications" class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+            </button>
+            <div class="ml-4">
+              <button @click="logout" class="flex items-center text-gray-600 hover:text-gray-800">
+                <i class="fas fa-sign-out-alt mr-2"></i>
+                <span>Déconnexion</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </header>
+    </nav>
 
-    <div class="flex pt-20">
-      <aside class="w-64 bg-white shadow-lg min-h-screen fixed left-0 top-20">
+    <div class="flex">
+      <!-- Sidebar -->
+      <aside class="w-64 bg-white shadow-lg min-h-screen">
         <div class="p-4">
           <div class="flex items-center mb-8">
             <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
-              <img src="@/assets/finance-logo1.png" alt="Profile" class="h-8 w-8 rounded-full" />
+              <i class="fas fa-user text-gray-600"></i>
             </div>
             <div class="ml-3">
-              <p class="font-medium">{{ store.state.user?.name }}</p>
+              <p class="font-medium text-gray-900">{{ userName }}</p>
               <p class="text-sm text-gray-500">Stagiaire</p>
             </div>
           </div>
           <nav class="space-y-2">
-            <router-link to="/dashboard/stagiaire" class="flex items-center px-4 py-2 text-primary bg-blue-50 rounded-lg">
+            <router-link to="/dashboard/stagiaire" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
               <i class="fas fa-home mr-3"></i> Tableau de bord
             </router-link>
             <router-link to="/dashboard/stagiaire/suivi" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
@@ -87,7 +63,8 @@
         </div>
       </aside>
 
-      <div class="flex-1 ml-64">
+      <!-- Main content -->
+      <div class="flex-1 p-8">
         <router-view></router-view>
       </div>
     </div>
@@ -95,7 +72,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
@@ -104,47 +81,13 @@ export default {
   setup() {
     const store = useStore()
     const router = useRouter()
-    const showNotifications = ref(false)
-    
-    const recentNotifications = ref([
-      {
-        title: 'Nouveau message',
-        message: 'Votre tuteur vous a envoyé un message',
-        time: 'Il y a 30 minutes',
-        icon: 'fas fa-envelope',
-        iconBg: 'bg-blue-100',
-        iconColor: 'text-blue-500'
-      },
-      {
-        title: 'Rappel',
-        message: 'N\'oubliez pas de soumettre votre rapport hebdomadaire',
-        time: 'Il y a 2 heures',
-        icon: 'fas fa-clock',
-        iconBg: 'bg-yellow-100',
-        iconColor: 'text-yellow-500'
-      },
-      {
-        title: 'Document validé',
-        message: 'Votre convention de stage a été validée',
-        time: 'Il y a 1 jour',
-        icon: 'fas fa-check-circle',
-        iconBg: 'bg-green-100',
-        iconColor: 'text-green-500'
-      }
-    ])
+    const hasNotifications = ref(true)
+
+    const userName = computed(() => store.state.user?.name || 'Stagiaire')
 
     const toggleNotifications = () => {
-      showNotifications.value = !showNotifications.value
+      hasNotifications.value = !hasNotifications.value
     }
-
-    onMounted(() => {
-      document.addEventListener('click', (e) => {
-        const target = e.target
-        if (!target.closest('.relative')) {
-          showNotifications.value = false
-        }
-      })
-    })
 
     const logout = async () => {
       await store.dispatch('logout')
@@ -152,9 +95,8 @@ export default {
     }
 
     return {
-      store,
-      showNotifications,
-      recentNotifications,
+      userName,
+      hasNotifications,
       toggleNotifications,
       logout
     }
