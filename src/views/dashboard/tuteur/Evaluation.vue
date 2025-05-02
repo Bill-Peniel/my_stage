@@ -17,10 +17,20 @@
       </div>
 
       <div v-if="selectedStagiaire" class="space-y-6">
+        <div class="mb-4 p-4 bg-blue-50 rounded-lg">
+          <p class="text-blue-800">
+            <i class="fas fa-info-circle mr-2"></i>
+            Note totale: {{ totalPoints }}/20
+          </p>
+        </div>
+
         <div v-for="(critere, index) in criteres" :key="index" class="border-b pb-4">
-          <h3 class="font-medium text-gray-900 mb-3">{{ critere.label }}</h3>
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="font-medium text-gray-900">{{ critere.label }}</h3>
+            <span class="text-sm text-gray-600">Note: {{ evaluations[critere.id] || 0 }}/4</span>
+          </div>
           <div class="flex items-center space-x-4">
-            <template v-for="note in 5" :key="note">
+            <template v-for="note in 4" :key="note">
               <button 
                 @click="evaluer(critere.id, note)"
                 :class="[
@@ -50,6 +60,7 @@
           <button 
             @click="soumettreEvaluation" 
             class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary-dark"
+            :disabled="totalPoints > 20"
           >
             Soumettre l'évaluation
           </button>
@@ -60,7 +71,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 export default {
   name: 'Evaluation',
@@ -83,15 +94,24 @@ export default {
       { id: 3, nom: 'Paul Bernard' }
     ])
 
+    const totalPoints = computed(() => {
+      return Object.values(evaluations.value).reduce((sum, note) => sum + note, 0)
+    })
+
     const evaluer = (critereId, note) => {
       evaluations.value[critereId] = note
     }
 
     const soumettreEvaluation = () => {
-      // TODO: Envoyer l'évaluation à l'API
+      if (totalPoints.value !== 20) {
+        alert('Le total des notes doit être égal à 20')
+        return
+      }
+      
       console.log({
         stagiaireId: selectedStagiaire.value,
         evaluations: evaluations.value,
+        totalPoints: totalPoints.value,
         commentaire: commentaire.value
       })
     }
@@ -103,7 +123,8 @@ export default {
       criteres,
       stagiaires,
       evaluer,
-      soumettreEvaluation
+      soumettreEvaluation,
+      totalPoints
     }
   }
 }
