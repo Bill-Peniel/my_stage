@@ -140,6 +140,11 @@ const routes = [
         component: () => import('../views/dashboard/tuteur/Themes.vue')
       },
       {
+        path: 'evaluation',
+        name: 'TuteurEvaluation',
+        component: () => import('../views/dashboard/tuteur/Evaluation.vue')
+      },
+      {
         path: 'notifications',
         name: 'TuteurNotifications',
         component: () => import('../views/dashboard/tuteur/Notifications.vue')

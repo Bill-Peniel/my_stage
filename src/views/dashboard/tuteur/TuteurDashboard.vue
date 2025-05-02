@@ -77,6 +77,9 @@
             <router-link to="/dashboard/tuteur/themes" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
               <i class="fas fa-bookmark mr-3"></i> Thèmes
             </router-link>
+            <router-link to="/dashboard/tuteur/evaluation" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+              <i class="fas fa-star mr-3"></i> Évaluation
+            </router-link>
             <router-link to="/dashboard/tuteur/notifications" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
               <i class="fas fa-bell mr-3"></i> Notifications
             </router-link>
