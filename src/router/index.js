@@ -106,6 +106,57 @@ const routes = [
     ]
   },
   {
+    path: '/dashboard/stagiaire',
+    component: () => import('../views/dashboard/stagiaire/StagiaireDashboard.vue'),
+    meta: { requiresAuth: true },
+    beforeEnter: (to, from, next) => {
+      if (!store.getters.isAuthenticated) {
+        next('/login')
+      } else if (store.getters.isStagiaire) {
+        next()
+      } else {
+        next('/login')
+      }
+    },
+    children: [
+      {
+        path: '',
+        name: 'StagiaireDashboard',
+        component: () => import('../views/dashboard/stagiaire/Overview.vue')
+      },
+      {
+        path: 'suivi',
+        name: 'StagiaireSuivi',
+        component: () => import('../views/dashboard/stagiaire/Suivi.vue')
+      },
+      {
+        path: 'documents',
+        name: 'StagiaireDocuments',
+        component: () => import('../views/dashboard/stagiaire/Documents.vue')
+      },
+      {
+        path: 'rapports',
+        name: 'StagiaireRapports',
+        component: () => import('../views/dashboard/stagiaire/Rapports.vue')
+      },
+      {
+        path: 'messages',
+        name: 'StagiaireMessages',
+        component: () => import('../views/dashboard/stagiaire/Messages.vue')
+      },
+      {
+        path: 'notifications',
+        name: 'StagiaireNotifications',
+        component: () => import('../views/dashboard/stagiaire/Notifications.vue')
+      },
+      {
+        path: 'parametres',
+        name: 'StagiaireParametres',
+        component: () => import('../views/dashboard/stagiaire/Parametres.vue')
+      }
+    ]
+  },
+  {
     path: '/dashboard/tuteur',
     component: () => import('../views/dashboard/tuteur/TuteurDashboard.vue'),
     meta: { requiresAuth: true },
