@@ -134,11 +134,7 @@ const routes = [
         name: 'StagiaireDocuments',
         component: () => import('../views/dashboard/stagiaire/Documents.vue')
       },
-      {
-        path: 'rapports',
-        name: 'StagiaireRapports',
-        component: () => import('../views/dashboard/stagiaire/Rapports.vue')
-      },
+      
       {
         path: 'messages',
         name: 'StagiaireMessages',
