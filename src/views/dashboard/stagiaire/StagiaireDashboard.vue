@@ -9,14 +9,14 @@
             </div>
           </div>
           <div class="flex items-center">
-            <div class="relative">
+            <div class="relative notifications-dropdown">
               <button @click="toggleNotifications" class="p-2 text-gray-600 hover:text-gray-800 relative">
                 <i class="fas fa-bell"></i>
                 <span v-if="hasNotifications" class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
               </button>
               
             <!-- Menu déroulant des notifications -->
-              <div v-if="showNotifications" class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg py-1 z-50">
+              <div v-if="showNotifications" class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg py-1 z-[100]">
                 <div class="px-4 py-2 border-b border-gray-200">
                   <div class="flex justify-between items-center">
                     <h3 class="font-semibold text-gray-800">Notifications</h3>
