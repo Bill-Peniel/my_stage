@@ -146,6 +146,8 @@ export default {
     return {
       userName,
       hasNotifications,
+      showNotifications,
+      recentNotifications,
       toggleNotifications,
       logout
     }
