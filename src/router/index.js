@@ -133,6 +133,11 @@ const routes = [
         path: 'messages',
         name: 'TuteurMessages',
         component: () => import('../views/dashboard/tuteur/Messages.vue')
+      },
+      {
+        path: 'themes',
+        name: 'TuteurThemes',
+        component: () => import('../views/dashboard/tuteur/Themes.vue')
       }
     ]
   },
