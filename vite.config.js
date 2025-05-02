@@ -1,25 +1,21 @@
+
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import path from 'path'
+import { fileURLToPath, URL } from 'node:url'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-  css: {
-    preprocessorOptions: {
-      css: {
-        charset: false
-      }
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
   server: {
-    port: 5000,
     host: '0.0.0.0',
-    allowedHosts: ['a4131803-dd21-48e9-9fcc-59bac66bfa0a-00-2amhmm3fppdvx.picard.replit.dev', 'faf4b8e5-25de-497c-b8b3-b5cf55fceee5-00-3lhwrmszjnyel.janeway.replit.dev', '5808255a-19e6-4285-9170-2b674ae6ca4a-00-2e7554vqe2l3r.worf.replit.dev', '8e63dc4a-00d3-4cec-ad50-c24b973a8406-00-3850p6aqi9ols.spock.replit.dev', 'b7c8e52d-3504-4dd0-bc86-b87a4082eec0-00-3tg7y5f7cymm0.worf.replit.dev', 'a926de7e-bcf9-4fb8-b683-46875491b772-00-307cs00b4pauo.worf.replit.dev', 'd0075198-267d-4b7f-990b-d39623bf1b0e-00-93buyapmdokm.picard.replit.dev', '1173fe4b-20a9-48f4-8216-2647ac473296-00-ucbanc10340w.spock.replit.dev']
+    port: 5000,
+    strictPort: true,
+    hmr: {
+      clientPort: 443
+    }
   }
 })
