@@ -36,14 +36,24 @@
       </div>
 
       <div class="bg-white p-6 rounded-lg shadow lg:col-span-2">
-        <h3 class="text-lg font-medium mb-4">Activités hebdomadaires</h3>
+        <h3 class="text-lg font-medium mb-4">Description du Thème</h3>
         <div class="space-y-4">
-          <div v-for="(week, index) in weeks" :key="index" class="border-b pb-4 last:border-0">
-            <div class="flex justify-between items-center mb-2">
-              <h4 class="font-medium">Semaine {{ week.number }}</h4>
-              <span :class="getStatusClass(week.status)">{{ week.status }}</span>
+          <div class="prose max-w-none">
+            <h4 class="font-medium text-primary mb-3">Gestion financière</h4>
+            <p class="text-gray-600">
+              Ce stage porte sur l'étude et l'analyse des processus de gestion financière au sein de la Direction des Finances. 
+              Il comprend l'apprentissage des procédures budgétaires, l'analyse des flux financiers et la participation 
+              à la planification financière des projets en cours.
+            </p>
+            <div class="mt-4">
+              <h5 class="font-medium text-gray-700 mb-2">Objectifs principaux :</h5>
+              <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                <li>Comprendre les processus de gestion budgétaire</li>
+                <li>Maîtriser les outils d'analyse financière</li>
+                <li>Participer à l'élaboration des rapports financiers</li>
+                <li>Développer des compétences en planification financière</li>
+              </ul>
             </div>
-            <p class="text-gray-600">{{ week.summary }}</p>
           </div>
         </div>
       </div>
