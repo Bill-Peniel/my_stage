@@ -42,11 +42,14 @@
             <router-link to="/dashboard/tuteur/stagiaires" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
               <i class="fas fa-users mr-3"></i> Mes Stagiaires
             </router-link>
-            <router-link to="/dashboard/tuteur/evaluations" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-              <i class="fas fa-star mr-3"></i> Évaluations
+            <router-link to="/dashboard/tuteur/messages" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+              <i class="fas fa-envelope mr-3"></i> Messages
             </router-link>
-            <router-link to="/dashboard/tuteur/rapports" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-              <i class="fas fa-file-alt mr-3"></i> Rapports
+            <router-link to="/dashboard/tuteur/themes" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+              <i class="fas fa-bookmark mr-3"></i> Thèmes
+            </router-link>
+            <router-link to="/dashboard/tuteur/parametres" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+              <i class="fas fa-cog mr-3"></i> Paramètres
             </router-link>
           </nav>
         </div>
