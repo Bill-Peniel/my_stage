@@ -9,10 +9,10 @@
         </div>
         <div class="flex items-center space-x-4">
           <div class="relative">
-            <button class="p-2 text-gray-600 hover:text-gray-800">
+            <router-link to="/dashboard/tuteur/notifications" class="p-2 text-gray-600 hover:text-gray-800 inline-block">
               <i class="fas fa-bell"></i>
               <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
-            </button>
+            </router-link>
           </div>
           <button @click="logout" class="flex items-center text-gray-600 hover:text-gray-800">
             <i class="fas fa-sign-out-alt mr-2"></i>
