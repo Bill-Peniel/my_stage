@@ -138,6 +138,11 @@ const routes = [
         path: 'themes',
         name: 'TuteurThemes',
         component: () => import('../views/dashboard/tuteur/Themes.vue')
+      },
+      {
+        path: 'parametres',
+        name: 'TuteurParametres',
+        component: () => import('../views/dashboard/tuteur/Parametres.vue')
       }
     ]
   },
