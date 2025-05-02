@@ -222,11 +222,14 @@ export default {
           // Redirection en fonction du rôle de l'utilisateur
           if (user.role === 'tuteur') {
             router.push('/dashboard/tuteur')
-          } else if (['admin', 'dpaf', 'structure'].includes(user.role)) {
+          } else if (user.role === 'dpaf') {
+            router.push('/dashboard/dpaf')
+          } else if (user.role === 'structure') {
+            router.push('/dashboard/structure')
+          } else if (user.role === 'stagiaire') {
+            router.push('/dashboard/stagiaire')
+          } else if (user.role === 'admin') {
             router.push('/dashboard')
-          } else {
-            // Rediriger les stagiaires vers leur espace personnel
-            router.push('/espace-stagiaire')
           }
           
         } catch (err) {
