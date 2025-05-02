@@ -1,16 +1,25 @@
 
 <template>
   <div class="min-h-screen bg-gray-100">
-    <header class="bg-primary shadow">
+    <header class="bg-white border-b">
       <div class="px-4 py-4 flex justify-between items-center">
         <div class="flex items-center gap-4">
-          <img src="@/assets/finance-logo1.png" alt="Logo" class="h-12 w-auto" />
-          <h1 class="text-2xl font-bold text-white">Tableau de bord Tuteur</h1>
+          <img src="@/assets/finance-logo1.png" alt="Logo" class="h-8 w-auto" />
+          <div class="flex items-center">
+            <i class="fas fa-phone-alt text-gray-600 mr-2"></i>
+            <span class="text-gray-600">+1 (416) 365-9642</span>
+          </div>
         </div>
         <div class="flex items-center space-x-4">
-          <span class="text-white">Dr. {{ store.state.user?.name }}</span>
-          <button @click="logout" class="text-white hover:text-gray-200">
-            <i class="fas fa-sign-out-alt"></i> Déconnexion
+          <div class="relative">
+            <button class="p-2 text-gray-600 hover:text-gray-800">
+              <i class="fas fa-bell"></i>
+              <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+            </button>
+          </div>
+          <button @click="logout" class="flex items-center text-gray-600 hover:text-gray-800">
+            <i class="fas fa-sign-out-alt mr-2"></i>
+            <span>Déconnexion</span>
           </button>
         </div>
       </div>
@@ -19,27 +28,27 @@
     <div class="flex">
       <!-- Sidebar -->
       <aside class="w-64 bg-white shadow-lg min-h-screen">
-        <div class="p-4 flex flex-col">
+        <div class="p-4">
           <div class="flex items-center mb-8">
-            <div class="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center">
-              <i class="fas fa-user-md text-2xl text-gray-600"></i>
+            <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+              <img src="@/assets/finance-logo1.png" alt="Profile" class="h-8 w-8 rounded-full" />
             </div>
             <div class="ml-3">
-              <p class="font-semibold">{{ store.state.user?.name }}</p>
-              <p class="text-sm text-gray-600">Tuteur de Stage</p>
+              <p class="font-medium">Dr. {{ store.state.user?.name }}</p>
+              <p class="text-sm text-gray-500">Tuteur de Stage</p>
             </div>
           </div>
           <nav class="space-y-2">
-            <router-link to="/dashboard/tuteur" class="flex items-center px-4 py-2 text-blue-600 bg-blue-50 rounded-lg">
+            <router-link to="/dashboard/tuteur" class="flex items-center px-4 py-2 text-primary bg-blue-50 rounded-lg">
               <i class="fas fa-home mr-3"></i> Tableau de bord
             </router-link>
-            <router-link to="/dashboard/tuteur/stagiaires" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <router-link to="/dashboard/tuteur/stagiaires" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
               <i class="fas fa-users mr-3"></i> Mes Stagiaires
             </router-link>
-            <router-link to="/dashboard/tuteur/evaluations" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <router-link to="/dashboard/tuteur/evaluations" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
               <i class="fas fa-star mr-3"></i> Évaluations
             </router-link>
-            <router-link to="/dashboard/tuteur/rapports" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <router-link to="/dashboard/tuteur/rapports" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
               <i class="fas fa-file-alt mr-3"></i> Rapports
             </router-link>
           </nav>
@@ -50,85 +59,124 @@
       <div class="flex-1 p-8">
         <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div class="bg-white rounded-lg p-6 shadow flex items-center">
-            <div class="rounded-full bg-blue-100 p-3 mr-4">
-              <i class="fas fa-users text-blue-600 text-xl"></i>
-            </div>
-            <div>
-              <p class="text-gray-600">Total Stagiaires</p>
-              <p class="text-2xl font-bold text-gray-900">1500</p>
-            </div>
-          </div>
-
-          <div class="bg-white rounded-lg p-6 shadow flex items-center">
-            <div class="rounded-full bg-green-100 p-3 mr-4">
-              <i class="fas fa-calendar-check text-green-600 text-xl"></i>
-            </div>
-            <div>
-              <p class="text-gray-600">Aujourd'hui</p>
-              <p class="text-2xl font-bold text-gray-900">160</p>
+          <div class="bg-white rounded-lg p-6 shadow-sm">
+            <div class="flex items-center">
+              <div class="rounded-full p-3 bg-pink-100">
+                <i class="fas fa-users text-pink-600 text-xl"></i>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-gray-500 text-sm">Total Patients</h4>
+                <div class="flex items-baseline">
+                  <p class="text-2xl font-semibold">1500</p>
+                  <p class="text-green-500 text-sm ml-2">+2.5%</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="bg-white rounded-lg p-6 shadow flex items-center">
-            <div class="rounded-full bg-purple-100 p-3 mr-4">
-              <i class="fas fa-clipboard-list text-purple-600 text-xl"></i>
+          <div class="bg-white rounded-lg p-6 shadow-sm">
+            <div class="flex items-center">
+              <div class="rounded-full p-3 bg-blue-100">
+                <i class="fas fa-calendar-check text-blue-600 text-xl"></i>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-gray-500 text-sm">Aujourd'hui</h4>
+                <div class="flex items-baseline">
+                  <p class="text-2xl font-semibold">160</p>
+                  <span class="text-sm text-gray-500 ml-2">Patients</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <p class="text-gray-600">En attente</p>
-              <p class="text-2xl font-bold text-gray-900">85</p>
+          </div>
+
+          <div class="bg-white rounded-lg p-6 shadow-sm">
+            <div class="flex items-center">
+              <div class="rounded-full p-3 bg-purple-100">
+                <i class="fas fa-calendar-alt text-purple-600 text-xl"></i>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-gray-500 text-sm">En attente</h4>
+                <div class="flex items-baseline">
+                  <p class="text-2xl font-semibold">85</p>
+                  <span class="text-sm text-gray-500 ml-2">Patients</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Table Section -->
-        <div class="bg-white rounded-lg shadow">
+        <!-- Patient Table -->
+        <div class="bg-white rounded-lg shadow-sm">
           <div class="p-6">
             <div class="flex justify-between items-center mb-6">
-              <h2 class="text-xl font-semibold">Entretien avec le patient</h2>
-              <button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark">
-                <i class="fas fa-plus mr-2"></i> Nouveau
-              </button>
+              <h2 class="text-xl font-semibold text-gray-800">Entretien avec le patient</h2>
+              <div class="flex items-center gap-4">
+                <div class="relative">
+                  <input type="text" placeholder="Rechercher..." class="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                  <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark">
+                  <i class="fas fa-plus mr-2"></i> Nouveau
+                </button>
+              </div>
             </div>
+
             <div class="overflow-x-auto">
               <table class="min-w-full">
                 <thead>
                   <tr class="border-b">
-                    <th class="text-left py-3 px-4">Nom du patient</th>
-                    <th class="text-left py-3 px-4">Date d'application</th>
-                    <th class="text-left py-3 px-4">État</th>
-                    <th class="text-left py-3 px-4">Type</th>
-                    <th class="text-left py-3 px-4">Montant payé</th>
-                    <th class="text-right py-3 px-4">Actions</th>
+                    <th class="text-left py-3 px-4 text-gray-500 font-medium">Nom du patient</th>
+                    <th class="text-left py-3 px-4 text-gray-500 font-medium">Date d'application</th>
+                    <th class="text-left py-3 px-4 text-gray-500 font-medium">État</th>
+                    <th class="text-left py-3 px-4 text-gray-500 font-medium">Type</th>
+                    <th class="text-left py-3 px-4 text-gray-500 font-medium">Montant payé</th>
+                    <th class="text-center py-3 px-4 text-gray-500 font-medium">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="stagiaire in stagiaires" :key="stagiaire.id" class="border-b hover:bg-gray-50">
+                  <tr v-for="patient in patients" :key="patient.id" class="border-b hover:bg-gray-50">
                     <td class="py-3 px-4">
                       <div class="flex items-center">
-                        <div class="w-8 h-8 rounded-full bg-gray-200 mr-3"></div>
-                        {{ stagiaire.nom }}
+                        <img :src="patient.avatar" alt="Avatar" class="w-8 h-8 rounded-full mr-3" />
+                        {{ patient.nom }}
                       </div>
                     </td>
-                    <td class="py-3 px-4">{{ stagiaire.dateDebut }}</td>
+                    <td class="py-3 px-4 text-gray-600">{{ patient.date }}</td>
                     <td class="py-3 px-4">
-                      <span :class="getStatusClass(stagiaire.statut)" class="px-3 py-1 rounded-full text-sm">
-                        {{ stagiaire.statut }}
+                      <span :class="getStatusClass(patient.statut)" class="px-3 py-1 rounded-full text-sm">
+                        {{ patient.statut }}
                       </span>
                     </td>
-                    <td class="py-3 px-4">{{ stagiaire.type }}</td>
-                    <td class="py-3 px-4">{{ stagiaire.montant }} DH</td>
-                    <td class="py-3 px-4 text-right">
-                      <button class="text-blue-600 hover:text-blue-800 mr-2">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button class="text-red-600 hover:text-red-800">
-                        <i class="fas fa-trash"></i>
-                      </button>
+                    <td class="py-3 px-4 text-gray-600">{{ patient.type }}</td>
+                    <td class="py-3 px-4 text-gray-600">{{ patient.montant }}</td>
+                    <td class="py-3 px-4">
+                      <div class="flex justify-center space-x-2">
+                        <button class="text-green-600 hover:text-green-800">
+                          <i class="fas fa-check"></i>
+                        </button>
+                        <button class="text-blue-600 hover:text-blue-800">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="text-red-600 hover:text-red-800">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
               </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-between items-center mt-6">
+              <p class="text-gray-600">Affichage de 1 à 10 sur 50 entrées</p>
+              <div class="flex space-x-2">
+                <button class="px-3 py-1 border rounded hover:bg-gray-100">Précédent</button>
+                <button class="px-3 py-1 bg-primary text-white rounded">1</button>
+                <button class="px-3 py-1 border rounded hover:bg-gray-100">2</button>
+                <button class="px-3 py-1 border rounded hover:bg-gray-100">3</button>
+                <button class="px-3 py-1 border rounded hover:bg-gray-100">Suivant</button>
+              </div>
             </div>
           </div>
         </div>
@@ -148,22 +196,33 @@ export default {
     const store = useStore()
     const router = useRouter()
 
-    const stagiaires = ref([
+    const patients = ref([
       {
         id: 1,
         nom: 'Michel Wilson',
-        dateDebut: '5 novembre 2024',
+        avatar: 'https://ui-avatars.com/api/?name=Michel+Wilson',
+        date: '5 novembre 2024',
         type: 'Généraliste',
         statut: 'Nouveau patient',
-        montant: '150'
+        montant: '150 DH'
       },
       {
         id: 2,
         nom: 'Charlotte Reed',
-        dateDebut: '3 novembre 2024',
+        avatar: 'https://ui-avatars.com/api/?name=Charlotte+Reed',
+        date: '3 novembre 2024',
         type: 'Généraliste',
         statut: 'Vieux patient',
-        montant: '200'
+        montant: '200 DH'
+      },
+      {
+        id: 3,
+        nom: 'Steve Moore',
+        avatar: 'https://ui-avatars.com/api/?name=Steve+Moore',
+        date: '2 novembre 2024',
+        type: 'Urgence',
+        statut: 'En attente',
+        montant: '250 DH'
       }
     ])
 
@@ -173,7 +232,7 @@ export default {
         'Vieux patient': 'bg-blue-100 text-blue-800',
         'En attente': 'bg-yellow-100 text-yellow-800'
       }
-      return classes[statut]
+      return classes[statut] || 'bg-gray-100 text-gray-800'
     }
 
     const logout = async () => {
@@ -183,7 +242,7 @@ export default {
 
     return {
       store,
-      stagiaires,
+      patients,
       getStatusClass,
       logout
     }
