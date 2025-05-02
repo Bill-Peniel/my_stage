@@ -47,9 +47,6 @@
             <router-link to="/dashboard/stagiaire/documents" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
               <i class="fas fa-file-alt mr-3"></i> Documents
             </router-link>
-            <router-link to="/dashboard/stagiaire/rapports" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-              <i class="fas fa-book mr-3"></i> Rapports
-            </router-link>
             <router-link to="/dashboard/stagiaire/messages" class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
               <i class="fas fa-envelope mr-3"></i> Messages
             </router-link>
