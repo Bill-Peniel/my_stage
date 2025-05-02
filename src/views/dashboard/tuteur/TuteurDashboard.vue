@@ -4,11 +4,8 @@
     <header class="bg-white border-b">
       <div class="px-4 py-4 flex justify-between items-center">
         <div class="flex items-center gap-4">
-          <img src="@/assets/finance-logo1.png" alt="Logo" class="h-8 w-auto" />
-          <div class="flex items-center">
-            <i class="fas fa-phone-alt text-gray-600 mr-2"></i>
-            <span class="text-gray-600">+1 (416) 365-9642</span>
-          </div>
+          <img src="@/assets/finance-logo.png" alt="Logo" class="h-12 w-auto" />
+          
         </div>
         <div class="flex items-center space-x-4">
           <div class="relative">
