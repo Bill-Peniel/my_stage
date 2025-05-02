@@ -1,7 +1,7 @@
 
 <template>
   <div class="min-h-screen bg-gray-100">
-    <header class="bg-white border-b">
+    <header class="bg-white border-b fixed top-0 left-0 right-0 z-50">
       <div class="px-4 py-4 flex justify-between items-center">
         <div class="flex items-center gap-4">
           <img src="@/assets/finance-logo.png" alt="Logo" class="h-12 w-auto" />
@@ -22,9 +22,9 @@
       </div>
     </header>
 
-    <div class="flex">
+    <div class="flex pt-20">
       <!-- Sidebar -->
-      <aside class="w-64 bg-white shadow-lg min-h-screen">
+      <aside class="w-64 bg-white shadow-lg min-h-screen fixed left-0 top-20">
         <div class="p-4">
           <div class="flex items-center mb-8">
             <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
@@ -56,7 +56,7 @@
       </aside>
 
       <!-- Main Content -->
-      <div class="flex-1">
+      <div class="flex-1 ml-64">
         <router-view></router-view>
       </div>
     </div>
